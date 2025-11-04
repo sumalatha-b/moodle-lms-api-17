@@ -1,0 +1,81 @@
+[
+  {
+    "id": 1,
+    "shortname": "Your site",
+    "categoryid": 0,
+    "categorysortorder": 1,
+    "fullname": "Your site",
+    "displayname": "Your site",
+    "idnumber": "",
+    "summary": "",
+    "summaryformat": 0,
+    "format": "site",
+    "showgrades": 1,
+    "newsitems": 3,
+    "startdate": 0,
+    "enddate": 0,
+    "numsections": 1,
+    "maxbytes": 0,
+    "showreports": 0,
+    "visible": 1,
+    "groupmode": 0,
+    "groupmodeforce": 0,
+    "defaultgroupingid": 0,
+    "timecreated": 1434677711,
+    "timemodified": 1686021291,
+    "enablecompletion": 0,
+    "completionnotify": 0,
+    "lang": "",
+    "forcetheme": "",
+    "courseformatoptions": [
+      {
+        "name": "numsections",
+        "value": 1
+      }
+    ],
+    "showactivitydates": false,
+    "showcompletionconditions": null
+  },
+  {
+    "id": 8,
+    "shortname": "Starting with Moodle",
+    "categoryid": 1,
+    "categorysortorder": 0,
+    "fullname": "Starting with Moodle",
+    "displayname": "Starting with Moodle",
+    "idnumber": "",
+    "summary": "<p dir=\"ltr\" style=\"text-align:left;\">Get started with creating your first Moodle course</p>",
+    "summaryformat": 1,
+    "format": "topics",
+    "showgrades": 1,
+    "newsitems": 0,
+    "startdate": 1689264000,
+    "enddate": 0,
+    "numsections": 2,
+    "maxbytes": 512000,
+    "showreports": 1,
+    "visible": 0,
+    "hiddensections": 0,
+    "groupmode": 0,
+    "groupmodeforce": 0,
+    "defaultgroupingid": 0,
+    "timecreated": 1684412561,
+    "timemodified": 1697089842,
+    "enablecompletion": 1,
+    "completionnotify": 0,
+    "lang": "",
+    "forcetheme": "",
+    "courseformatoptions": [
+      {
+        "name": "hiddensections",
+        "value": 0
+      },
+      {
+        "name": "coursedisplay",
+        "value": 0
+      }
+    ],
+    "showactivitydates": true,
+    "showcompletionconditions": true
+  }
+]

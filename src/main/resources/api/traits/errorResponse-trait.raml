@@ -1,0 +1,34 @@
+#%RAML 1.0 Trait
+
+responses:
+  400:
+    description: Bad Request
+    body:
+      application/json:
+        type: !include ../datatypes/common/errorResponse-dataType.raml
+        example: !include ../examples/common/errorResponse-example.json
+  401:
+    description: Unauthorized
+    body:
+      application/json:
+        type: !include ../datatypes/common/errorResponse-dataType.raml
+        example: !include ../examples/common/errorResponse-example.json
+  404:
+    description: Not Found
+    body:
+      application/json:
+        type: !include ../datatypes/common/errorResponse-dataType.raml
+        example: !include ../examples/common/errorResponse-example.json
+  403:
+    description: Forbidden or client error
+    body:
+      application/json:
+        type: !include ../datatypes/common/errorResponse-dataType.raml
+        example: !include ../examples/common/errorResponse-example.json
+  500:
+    description: Internal Server Error
+    body:
+      application/json:
+        type: !include ../datatypes/common/errorResponse-dataType.raml
+        example: !include ../examples/common/errorResponse-example.json
+         

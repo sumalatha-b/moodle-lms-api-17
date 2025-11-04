@@ -1,0 +1,42 @@
+#%RAML 1.0 DataType
+type: array
+items:
+  type: object
+  properties:
+    id?: integer
+    shortname?: string
+    categoryid?: integer
+    categorysortorder?: integer
+    fullname?: string
+    displayname?: string
+    idnumber?: string
+    summary?: string
+    summaryformat?: integer
+    format?: string
+    showgrades?: integer
+    newsitems?: integer
+    startdate?: integer
+    enddate?: integer
+    numsections?: integer
+    maxbytes?: integer
+    showreports?: integer
+    visible?: integer
+    hiddensections?: integer
+    groupmode?: integer
+    groupmodeforce?: integer
+    defaultgroupingid?: integer
+    timecreated?: integer
+    timemodified?: integer
+    enablecompletion?: integer
+    completionnotify?: integer
+    lang?: string
+    forcetheme?: string
+    courseformatoptions?:
+      type: array
+      items:
+        type: object
+        properties:
+          name?: string
+          value?: integer
+    showactivitydates?: boolean
+    showcompletionconditions?: boolean | nil

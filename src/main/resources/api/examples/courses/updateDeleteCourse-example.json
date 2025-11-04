@@ -1,0 +1,16 @@
+{
+  "warnings": [
+    {
+      "item": "course",
+      "itemid": 9,
+      "warningcode": "invalidcourse",
+      "message": "The course ID is invalid or not found."
+    },
+    {
+      "item": "category",
+      "itemid": 2,
+      "warningcode": "invalidcategory",
+      "message": "The category ID does not exist."
+    }
+  ]
+}

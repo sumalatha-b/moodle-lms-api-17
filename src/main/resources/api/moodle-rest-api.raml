@@ -1,0 +1,1126 @@
+#%RAML 1.0
+title: Moodle
+version: v1
+baseUri: https://nexturn.moodlecloud.com/webservice/rest/server.php
+protocols: [ HTTPS ]
+mediaType:
+  - application/json
+  - application/x-www-form-urlencoded
+description: Moodle LMS (Learning Management System) is a widely used open-source platform designed for managing, delivering, and measuring online learning and training. It offers a fully customizable online learning environment suitable for various educational settings, from K–12 classrooms to large universities and enterprises.
+
+traits:
+  errorResponse: !include /traits/errorResponse-trait.raml
+  commonHeaders: !include /traits/commonHeaders-trait.raml
+types:
+  commonResponse: !include /datatypes/common/common-dataType.raml
+  coreCourseGetCourses: !include /datatypes/courses/coreCourseGetCourse-dataType.raml
+  createCourse: !include /datatypes/courses/createCourse-dataType.raml
+  getCourseByField: !include /datatypes/courses/getCoursesByField-dataType.raml
+  updateDeleteCourse: !include /datatypes/courses/updateDeleteCourse-dataType.raml
+  
+  getAssignments: !include /datatypes/assignments/getAssignments-dataType.raml
+  getAssignmentSubmission: !include /datatypes/assignments/getAssignmentSubmission-dataType.raml
+  getAssignmentGrades: !include /datatypes/assignments/getAssignmentGrades-dataType.raml
+  coreUserGetUsersResponse: !include /datatypes/user/getUsers-dataType.raml
+  coreUserGetUsersByFieldResponse: !include /datatypes/user/getUsersById-dataType.raml
+  coreUserCreateUsersResponse: !include /datatypes/user/createUser-dataType.raml
+  coreUserUpdateUsersResponse: !include /datatypes/user/updateUser-dataType.raml
+  
+  coreCourseGetCategories: !include /datatypes/courseCategory/getCategories-dataType.raml
+  coreCourseCreateCategories: !include /datatypes/courseCategory/createCategories-dataType.raml
+  getCourseGrades: !include /datatypes/grades/getCourseGrades-dataType.raml
+  enrolManualEnrolUsers: !include /datatypes/enrollment/enrolManualEnrolUsers-dataType.raml
+  enrolManualUnenrolUsers: !include /datatypes/enrollment/enrolManualUnenrolUsers-dataType.raml
+  coreEnrolGetEnrolledUsers: !include /datatypes/enrollment/getEnrolledUsers-dataType.raml
+  coreEnrolGetUsersCoursesResponse: !include /datatypes/enrollment/getUsersCourses-datatype.raml
+  coreEnrolUnenrolUserEnrolment: !include /datatypes/enrollment/unenrolUserEnrolment-dataType.raml
+  
+
+
+/core_course_get_courses:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course - Get Courses
+    description: Get list of courses from Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_get_courses
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreCourseGetCourses
+            example: !include /examples/courses/coreCourseGetCourse-example.json
+
+/core_course_create_courses:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course - Create Courses
+    description: Create Courses
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_create_courses
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          courses[0][fullname]:
+            type: string
+            required: true
+            example: Sample Full Course Name
+          courses[0][shortname]:
+            type: string
+            required: true
+          courses[0][categoryid]:
+            type: integer
+            required: true
+          courses[0][idnumber]:
+            type: string
+            required: true
+          courses[0][summary]:
+            type: string
+            required: false
+          courses[0][summaryformat]?: integer
+          courses[0][format]?: string
+          courses[0][showgrades]?: integer
+          courses[0][newsitems]?: integer
+          courses[0][startdate]?: integer
+          courses[0][enddate]?: integer
+          courses[0][numsections]?: integer
+          courses[0][maxbytes]?: integer
+          courses[0][showreports]?: integer
+          courses[0][visible]?: integer
+          courses[0][hiddensections]?: integer
+          courses[0][groupmode]?: integer
+          courses[0][groupmodeforce]?: integer
+          courses[0][defaultgroupingid]?: integer
+          courses[0][enablecompletion]?: integer
+          courses[0][completionnotify]?: integer
+          courses[0][lang]?: string
+          courses[0][forcetheme]?: string
+          courses[0][courseformatoptions][0][name]?: string
+          courses[0][courseformatoptions][0][value]?: integer
+          courses[0][customfields][0][shortname]?: string
+          courses[0][customfields][0][value]?: string
+    responses:
+      200:
+        body:
+          application/json:
+            type: createCourse
+            example: !include /examples/courses/createCourse-example.json
+
+/core_course_get_courses_by_field:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course - Get Courses by Field
+    description: Get Courses by Field
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_get_courses_by_field
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          field?: any
+    responses:
+      200:
+        body:
+          application/json:
+            type: getCourseByField
+            example: !include /examples/courses/getCoursesByField-example.json
+/core_course_update_courses:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course - Update Courses
+    description: Update Courses
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_update_courses
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          courses[0][id]: integer
+          courses[0][fullname]:
+            type: string
+            required: true
+            example: Sample Full Course Name
+          courses[0][shortname]:
+            type: string
+            required: true
+          courses[0][categoryid]:
+            type: integer
+            required: true
+          courses[0][idnumber]:
+            type: string
+            required: true
+          courses[0][summary]:
+            type: string
+            required: false
+          courses[0][summaryformat]?: integer
+          courses[0][format]?: string
+          courses[0][showgrades]?: integer
+          courses[0][newsitems]?: integer
+          courses[0][startdate]?: integer
+          courses[0][enddate]?: integer
+          courses[0][numsections]?: integer
+          courses[0][maxbytes]?: integer
+          courses[0][showreports]?: integer
+          courses[0][visible]?: integer
+          courses[0][hiddensections]?: integer
+          courses[0][groupmode]?: integer
+          courses[0][groupmodeforce]?: integer
+          courses[0][defaultgroupingid]?: integer
+          courses[0][enablecompletion]?: integer
+          courses[0][completionnotify]?: integer
+          courses[0][lang]?: string
+          courses[0][forcetheme]?: string
+          courses[0][courseformatoptions][0][name]?: string
+          courses[0][courseformatoptions][0][value]?: integer
+          courses[0][customfields][0][shortname]?: string
+          courses[0][customfields][0][value]?: string
+    responses:
+      200:
+        body:
+          application/json:
+            type: updateDeleteCourse
+            example: !include /examples/courses/updateDeleteCourse-example.json
+/core_course_delete_courses:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course - Delete Courses
+    description: Delete Courses
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_delete_courses
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          courseids[0]: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: updateDeleteCourse
+            example: !include /examples/courses/updateDeleteCourse-example.json
+
+
+
+
+/mod_assign_get_assignments:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Assignments - Get all the course assignments
+    description: Get all the course assignments
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: mod_assign_get_assignments
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          courseids[0]: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: getAssignments
+            example: !include /examples/assignments/getAssignments-example.json
+
+/mod_assign_get_submission_status:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Assignments - Get assignment submissions
+    description: Get assignment submissions
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: mod_assign_get_submission_status
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          assignid: integer
+          userid?: integer
+          groupid?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: getAssignmentSubmission
+            example: !include /examples/assignments/getAssignmentSubmission-examlple.json
+/mod_assign_get_grades:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Assignments - Get assignment grades
+    description: Get assignment grades
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: mod_assign_get_grades
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          assignmentids[0]: integer
+          
+    responses:
+      200:
+        body:
+          application/json:
+            type: getAssignmentGrades
+            example: !include /examples/assignments/getAssignmentGrades-example.json
+/core_user_get_users:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: User - Get Users
+    description: Search for users matching criteria
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_user_get_users
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          criteria[0][key]:
+            description: Search criteria key (e.g. username, email)
+            type: string
+            required: true
+            example: firstname
+          criteria[0][value]:
+            description: Search criteria value
+            type: string
+            required: true
+            example: Swayam
+          # Add additional criteria as needed
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreUserGetUsersResponse
+            example: !include /examples/user/getUsers-example.json
+/core_user_get_users_by_field:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: User - Get Users by Id
+    description: Retrieve users' information for a specified unique field
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_user_get_users_by_field
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          field:
+            description: Search field (id, idnumber, username, email)
+            type: string
+            required: true
+            example: id
+          values[0]:
+            description: Value to match for the search field
+            type: integer
+            required: true
+            example: 14
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreUserGetUsersByFieldResponse
+            example: !include /examples/user/getUsersById-example.json
+/core_user_create_users:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: User - Create users
+    description: Create new users in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_user_create_users
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          users[0][createpassword]:
+            description: True if password should be created and mailed to user
+            type: integer
+            example: 0
+          users[0][username]:
+            description: Username (must follow Moodle policy)
+            type: string
+            example: swayam2002
+          users[0][auth]:
+            description: Authentication plugin (default manual)
+            type: string
+            example: manual
+          users[0][password]:
+            description: User password (plain text)
+            type: string
+            example: Test@1234
+          users[0][firstname]:
+            type: string
+            example: Swayam
+          users[0][lastname]:
+            type: string
+            example: Prusty
+          users[0][email]:
+            type: string
+            example: swayam@example.com
+          users[0][city]:
+            type: string
+            example: Bhubaneswar
+          users[0][country]:
+            type: string
+            example: IN
+          users[0][idnumber]:
+            type: string
+            example: STU12345
+          users[0][customfields][0][type]:
+            type: string
+            example: moodle_custom_field
+          users[0][customfields][0][value]:
+            type: string
+            example: Custom Value
+          users[0][preferences][0][type]:
+            type: string
+            example: maildigest
+          users[0][preferences][0][value]:
+            type: string
+            example: preferencevalue1
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreUserCreateUsersResponse
+            example: !include /examples/user/createUser-example.json
+/core_user_update_users:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: User - Update Users
+    description: Update existing users in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_user_update_users
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          users[0][id]:
+            description: User ID to be updated
+            type: integer
+            required: true
+            example: 21
+          users[0][firstname]:
+            type: string
+            example: Swayam Updated
+          users[0][lastname]:
+            type: string
+            example: Prusty
+          users[0][email]:
+            type: string
+            example: swayam.updated@example.com
+          users[0][suspended]:
+            type: integer
+            example: 0
+          users[0][customfields][0][type]:
+            type: string
+            example: moodle_custom_field
+          users[0][customfields][0][value]:
+            type: string
+            example: Updated Value
+          users[0][preferences][0][type]:
+            type: string
+            example: maildigest
+          users[0][preferences][0][value]:
+            type: string
+            example: UpdatedPreferenceValue
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreUserUpdateUsersResponse
+            example: !include /examples/user/updateUser-example.json
+/core_user_delete_users:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: User - Delete Users
+    description: Delete users from Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_user_delete_users
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          userids[0]:
+            description: User ID to delete
+            type: integer
+            required: true
+            example: 21
+          
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+
+
+/core_course_get_categories:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course Category - Get Categories
+    description: Get list of course categories from Moodle with optional filtering criteria.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_get_categories
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          criteria[0][key]:
+            description: Key for filter (id, ids, name, parent, idnumber, visible, theme)
+            type: string
+            example: name
+          criteria[0][value]:
+            description: Value for filter key
+            type: string
+            example: Science
+          addsubcategories:
+            description: Return subcategories info (1 = yes, 0 = no)
+            type: integer
+            default: 1
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreCourseGetCategories
+            example: !include /examples/courseCategory/getCategories-example.json
+
+/core_course_create_categories:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course Category - Create Categories
+    description: Create one or more new course categories
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle webservice token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_create_categories
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          categories[0][name]:
+            description: Category name
+            type: string
+            required: true
+          categories[0][parent]:
+            description: Parent category id (0 = root)
+            type: integer
+            default: 0
+          categories[0][idnumber]:
+            description: Category idnumber (optional)
+            type: string
+          categories[0][description]:
+            description: Category description (optional)
+            type: string
+          categories[0][descriptionformat]:
+            description: Description format (1=HTML, 0=MOODLE, 2=PLAIN, 4=MARKDOWN)
+            type: integer
+            default: 1
+          categories[0][theme]:
+            description: Theme, optional
+            type: string
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreCourseCreateCategories
+            example: !include /examples/courseCategory/createCategories-example.json
+
+/core_course_update_categories:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course Category - Update Categories
+    description: Update one or more existing course categories
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle webservice token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_update_categories
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          categories[0][id]:
+            description: Category id to update (required)
+            type: integer
+            required: true
+            example: 5
+          categories[0][name]:
+            description: New category name (optional)
+            type: string
+            example: Updated Category Name
+          categories[0][idnumber]:
+            description: New category idnumber (optional)
+            type: string
+            example: CAT2025
+          categories[0][parent]:
+            description: New parent category id (optional)
+            type: integer
+            example: 0
+          categories[0][description]:
+            description: New description (optional)
+            type: string
+            example: Updated description here.
+          categories[0][descriptionformat]:
+            description: Description format (1=HTML, 0=MOODLE, 2=PLAIN, 4=MARKDOWN)
+            type: integer
+            default: 1
+            example: 1
+          categories[0][theme]:
+            description: New theme name (optional)
+            type: string
+            example: default
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+            
+/core_course_delete_categories:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Course Category - Delete Categories
+    description: Delete one or more course categories
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle web service token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_course_delete_categories
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          categories[0][id]:
+            description: Category id to delete (required)
+            type: integer
+            required: true
+            example: 123
+          categories[0][newparent]:
+            description: Category id to move contents to (optional, cannot be root)
+            type: integer
+            example: 5
+          categories[0][recursive]:
+            description: Delete recursively flag (1 = delete all contents recursively, 0 = move contents to newparent)
+            type: integer
+            default: 0
+            example: 0
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+
+
+
+
+
+
+/enrol_manual_enrol_users:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Enrollment - Enroll Users
+    description: Enrol users into a course in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token
+            type: string
+            required: true
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: enrol_manual_enrol_users
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          enrolments[0][roleid]:
+            description: Role to assign 
+            type: integer
+            required: true
+            example: 5
+          enrolments[0][userid]:
+            description: User ID to enrol
+            type: integer
+            required: true
+            example: 15
+          enrolments[0][courseid]:
+            description: Course ID to enrol user in
+            type: integer
+            required: true
+            example: 8
+          enrolments[0][timestart]?:
+            description: Optional enrolment start timestamp
+            type: integer
+            example: 1689264000
+          enrolments[0][timeend]?:
+            description: Optional enrolment end timestamp
+            type: integer
+            example: 1691865600
+          enrolments[0][suspend]?:
+            description: Suspend status 
+            type: integer
+            example: 0
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+
+/enrol_manual_unenrol_users:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Enrollment - Unenroll Users
+    description: Unenrol users from a course in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token
+            type: string
+            required: true
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: enrol_manual_unenrol_users
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          enrolments[0][userid]:
+            description: User ID to unenrol
+            type: integer
+            required: true
+            example: 15
+          enrolments[0][courseid]:
+            description: Course ID to unenrol from
+            type: integer
+            required: true
+            example: 8
+          enrolments[0][roleid]?:
+            description: Optional role ID
+            type: integer
+            example: 5
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+
+/core_enrol_get_enrolled_users:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Enrollment - Get Enrolled Users
+    description: Retrieve a list of users enrolled in a specific course.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            type: string
+            required: true
+            example: core_enrol_get_enrolled_users
+          moodlewsrestformat:
+            type: string
+            required: true
+            example: json
+          courseid:
+            description: Course ID to fetch enrolled users from
+            type: integer
+            required: true
+            example: 8
+          options[0][name]?:
+            description: Optional filter option name (e.g. withcapability, groupid, onlyactive, etc.)
+            type: string
+            example: withcapability
+          options[0][value]?:
+            description: Value for the option
+            type: string
+            example: moodle/course:update
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreEnrolGetEnrolledUsers
+            example: !include /examples/enrollment/getEnrolledUsers-example.json
+
+/core_enrol_get_users_courses:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Enrollment - Get User's Courses
+    description: Retrieve a list of courses a specific user is enrolled in.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            type: string
+            required: true
+            example: core_enrol_get_users_courses
+          moodlewsrestformat:
+            type: string
+            required: true
+            example: json
+          userid:
+            description: User ID
+            type: integer
+            required: true
+            example: 25
+          returnusercount?:
+            description: Whether to include count of enrolled users for each course (1 = yes, 0 = no). Default is 1.
+            type: integer
+            example: 0
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreEnrolGetUsersCoursesResponse
+            example: !include /examples/enrollment/getUsersCourses-example.json
+
+
+/core_enrol_unenrol_user_enrolment:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Enrollment - Unenroll Users
+    description: Unenrol a user from a course using their enrolment ID in Moodle.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            description: Authentication token
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            type: string
+            required: true
+            description: Moodle function name
+            example: core_enrol_unenrol_user_enrolment
+          moodlewsrestformat:
+            type: string
+            required: true
+            description: Response format
+            example: json
+          ueid:
+            type: integer
+            required: true
+            description: User enrolment ID
+            example: 123
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreEnrolUnenrolUserEnrolment
+            example: !include /examples/enrollment/unenrolUserEnrolment-example.json
+/core_role_assign_roles:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: User Roles - Assign Roles
+    description: Assign Roles
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_role_assign_roles
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          assignments[0][roleid]: integer
+          assignments[0][userid]: integer
+          assignments[0][contextid]?: integer
+          assignments[0][contextlevel]?: string
+          assignments[0][instanceid]?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/core_role_unassign_roles:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName:  User Roles - Unassign Roles
+    description: Unassign Roles
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_role_unassign_roles
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          unassignments[0][roleid]: integer
+          unassignments[0][userid]: integer
+          unassignments[0][contextid]?: integer
+          unassignments[0][contextlevel]?: string
+          unassignments[0][instanceid]?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/gradereport_overview_get_course_grades:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Grade Report - Get Course Grades
+    description: Get Course Grades
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: gradereport_overview_get_course_grades
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          userid: integer       
+    responses:
+      200:
+        body:
+          application/json:
+            type: getCourseGrades
+            example: !include /examples/grades/getCourseGrades-example.json
+
+
+
+            

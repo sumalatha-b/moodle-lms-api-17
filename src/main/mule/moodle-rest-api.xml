@@ -1,0 +1,1300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd">
+    
+    <flow name="moodle-rest-api-main">
+        <http:listener config-ref="moodle-rest-api-httpListenerConfig" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="moodle-rest-api-config" />
+    </flow>
+    <flow name="moodle-rest-api-console">
+        <http:listener config-ref="moodle-rest-api-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="moodle-rest-api-config" />
+    </flow>
+    <flow name="post:\core_course_create_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 12,
+    name: "New Category Example"
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_create_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 9,
+    shortname: "SFCN101"
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_delete_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_delete_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  warnings: [
+    {
+      item: "course",
+      itemid: 9,
+      warningcode: "invalidcourse",
+      message: "The course ID is invalid or not found."
+    }, 
+    {
+      item: "category",
+      itemid: 2,
+      warningcode: "invalidcategory",
+      message: "The category ID does not exist."
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_get_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 1,
+    name: "Top-level category",
+    idnumber: "",
+    description: "Main category description",
+    descriptionformat: 1,
+    parent: 0,
+    sortorder: 100,
+    coursecount: 5,
+    visible: 1,
+    visibleold: 1,
+    timemodified: 1694265600,
+    depth: 1,
+    path: "/1/",
+    theme: ""
+  }, 
+  {
+    id: 2,
+    name: "Subcategory example",
+    idnumber: "SUBCAT001",
+    description: "A subcategory",
+    descriptionformat: 1,
+    parent: 1,
+    sortorder: 110,
+    coursecount: 2,
+    visible: 1,
+    visibleold: 1,
+    timemodified: 1695000000,
+    depth: 2,
+    path: "/1/2/",
+    theme: "default"
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_get_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 1,
+    shortname: "Your site",
+    categoryid: 0,
+    categorysortorder: 1,
+    fullname: "Your site",
+    displayname: "Your site",
+    idnumber: "",
+    summary: "",
+    summaryformat: 0,
+    format: "site",
+    showgrades: 1,
+    newsitems: 3,
+    startdate: 0,
+    enddate: 0,
+    numsections: 1,
+    maxbytes: 0,
+    showreports: 0,
+    visible: 1,
+    groupmode: 0,
+    groupmodeforce: 0,
+    defaultgroupingid: 0,
+    timecreated: 1434677711,
+    timemodified: 1686021291,
+    enablecompletion: 0,
+    completionnotify: 0,
+    lang: "",
+    forcetheme: "",
+    courseformatoptions: [
+      {
+        name: "numsections",
+        value: 1
+      }
+    ],
+    showactivitydates: false,
+    showcompletionconditions: null
+  }, 
+  {
+    id: 8,
+    shortname: "Starting with Moodle",
+    categoryid: 1,
+    categorysortorder: 0,
+    fullname: "Starting with Moodle",
+    displayname: "Starting with Moodle",
+    idnumber: "",
+    summary: "<p dir=\"ltr\" style=\"text-align:left;\">Get started with creating your first Moodle course</p>",
+    summaryformat: 1,
+    format: "topics",
+    showgrades: 1,
+    newsitems: 0,
+    startdate: 1689264000,
+    enddate: 0,
+    numsections: 2,
+    maxbytes: 512000,
+    showreports: 1,
+    visible: 0,
+    hiddensections: 0,
+    groupmode: 0,
+    groupmodeforce: 0,
+    defaultgroupingid: 0,
+    timecreated: 1684412561,
+    timemodified: 1697089842,
+    enablecompletion: 1,
+    completionnotify: 0,
+    lang: "",
+    forcetheme: "",
+    courseformatoptions: [
+      {
+        name: "hiddensections",
+        value: 0
+      }, 
+      {
+        name: "coursedisplay",
+        value: 0
+      }
+    ],
+    showactivitydates: true,
+    showcompletionconditions: true
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_get_courses_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  courses: [
+    {
+      id: 1,
+      fullname: "Your site",
+      displayname: "Your site",
+      shortname: "Your site",
+      courseimage: "https://swayam.moodlecloud.com/pluginfile.php/2/course/generated/course.svg",
+      categoryid: 0,
+      categoryname: "",
+      sortorder: 1,
+      summary: "",
+      summaryformat: 0,
+      summaryfiles: [],
+      overviewfiles: [],
+      showactivitydates: false,
+      showcompletionconditions: null,
+      contacts: [],
+      enrollmentmethods: [],
+      idnumber: "",
+      format: "site",
+      showgrades: 1,
+      newsitems: 3,
+      startdate: 0,
+      enddate: 0,
+      maxbytes: 0,
+      showreports: 0,
+      visible: 1,
+      groupmode: 0,
+      groupmodeforce: 0,
+      defaultgroupingid: 0,
+      enablecompletion: 0,
+      completionnotify: 0,
+      lang: "",
+      theme: "",
+      marker: 0,
+      legacyfiles: 0,
+      calendartype: "",
+      timecreated: 1434677711,
+      timemodified: 1686021291,
+      requested: 0,
+      cacherev: 1753974748,
+      filters: [
+        {
+          filter: "mathjaxloader",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "displayh5p",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "activitynames",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "mediaplugin",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "emoticon",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "urltolink",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "glossary",
+          localstate: 0,
+          inheritedstate: 1
+        }
+      ]
+    }, 
+    {
+      id: 8,
+      fullname: "Starting with Moodle",
+      displayname: "Starting with Moodle",
+      shortname: "Starting with Moodle",
+      courseimage: "https://swayam.moodlecloud.com/pluginfile.php/81/course/overviewfiles/iPad_screen-Cloud-785x1000.jpg",
+      categoryid: 1,
+      categoryname: "Category 1",
+      sortorder: 10002,
+      summary: "<p dir=\"ltr\" style=\"text-align:left;\">Get started with creating your first Moodle course</p>",
+      summaryformat: 1,
+      summaryfiles: [],
+      overviewfiles: [
+        {
+          filename: "iPad_screen-Cloud-785x1000.jpg",
+          filepath: "/",
+          filesize: 84602,
+          fileurl: "https://swayam.moodlecloud.com/webservice/pluginfile.php/81/course/overviewfiles/iPad_screen-Cloud-785x1000.jpg",
+          timemodified: 1690869362,
+          mimetype: "image/jpeg"
+        }
+      ],
+      showactivitydates: true,
+      showcompletionconditions: true,
+      contacts: [
+        {
+          id: 2,
+          fullname: "SWAYAM SANKET PRUSTY"
+        }
+      ],
+      enrollmentmethods: [
+        "manual"
+      ],
+      idnumber: "",
+      format: "topics",
+      showgrades: 1,
+      newsitems: 0,
+      startdate: 1689264000,
+      enddate: 0,
+      maxbytes: 512000,
+      showreports: 1,
+      visible: 0,
+      groupmode: 0,
+      groupmodeforce: 0,
+      defaultgroupingid: 0,
+      enablecompletion: 1,
+      completionnotify: 0,
+      lang: "",
+      theme: "",
+      marker: 0,
+      legacyfiles: 0,
+      calendartype: "",
+      timecreated: 1684412561,
+      timemodified: 1697089842,
+      requested: 0,
+      cacherev: 1753974748,
+      filters: [
+        {
+          filter: "mathjaxloader",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "displayh5p",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "activitynames",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "mediaplugin",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "emoticon",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "urltolink",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "glossary",
+          localstate: 0,
+          inheritedstate: 1
+        }
+      ],
+      courseformatoptions: [
+        {
+          name: "hiddensections",
+          value: 0
+        }, 
+        {
+          name: "coursedisplay",
+          value: 0
+        }, 
+        {
+          name: "indentation",
+          value: "1"
+        }
+      ]
+    }, 
+    {
+      id: 9,
+      fullname: "Sample Full Course Name",
+      displayname: "Sample Full Course Name",
+      shortname: "SFCN101",
+      courseimage: "https://swayam.moodlecloud.com/pluginfile.php/94/course/generated/course.svg",
+      categoryid: 1,
+      categoryname: "Category 1",
+      sortorder: 10001,
+      summary: "This is a test course summary.",
+      summaryformat: 1,
+      summaryfiles: [],
+      overviewfiles: [],
+      showactivitydates: true,
+      showcompletionconditions: true,
+      contacts: [],
+      enrollmentmethods: [
+        "manual"
+      ],
+      idnumber: "SFCN-ID-001",
+      format: "topics",
+      showgrades: 1,
+      newsitems: 5,
+      startdate: 1731172800,
+      enddate: 1733788200,
+      maxbytes: 2097152,
+      showreports: 0,
+      visible: 1,
+      groupmode: 1,
+      groupmodeforce: 0,
+      defaultgroupingid: 0,
+      enablecompletion: 1,
+      completionnotify: 0,
+      lang: "en",
+      theme: "",
+      marker: 0,
+      legacyfiles: 0,
+      calendartype: "",
+      timecreated: 1757399720,
+      timemodified: 1757399720,
+      requested: 0,
+      cacherev: 1757399733,
+      filters: [
+        {
+          filter: "mathjaxloader",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "displayh5p",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "activitynames",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "mediaplugin",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "emoticon",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "urltolink",
+          localstate: 0,
+          inheritedstate: 1
+        }, 
+        {
+          filter: "glossary",
+          localstate: 0,
+          inheritedstate: 1
+        }
+      ],
+      courseformatoptions: [
+        {
+          name: "hiddensections",
+          value: 0
+        }, 
+        {
+          name: "coursedisplay",
+          value: 0
+        }, 
+        {
+          name: "indentation",
+          value: "1"
+        }
+      ]
+    }
+  ],
+  warnings: []
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_update_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_course_update_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  warnings: [
+    {
+      item: "course",
+      itemid: 9,
+      warningcode: "invalidcourse",
+      message: "The course ID is invalid or not found."
+    }, 
+    {
+      item: "category",
+      itemid: 2,
+      warningcode: "invalidcategory",
+      message: "The category ID does not exist."
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_enrol_get_enrolled_users:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 15,
+    username: "john.smith",
+    firstname: "John",
+    lastname: "Smith",
+    fullname: "John Smith",
+    email: "john.smith@example.com",
+    city: "London",
+    country: "GB",
+    lastaccess: 1693545600,
+    profileimageurl: "https://moodle.example.com/pluginfile.php/15/user/icon",
+    roles: [
+      {
+        roleid: 5,
+        name: "Student",
+        shortname: "student",
+        sortorder: 0
+      }
+    ],
+    groups: [
+      {
+        id: 2,
+        name: "Group A",
+        description: "First group",
+        descriptionformat: 1
+      }
+    ],
+    customfields: [
+      {
+        "type": "text",
+        value: "Computer Science",
+        name: "Major",
+        shortname: "major"
+      }
+    ],
+    enrolledcourses: [
+      {
+        id: 8,
+        fullname: "Mathematics 101",
+        shortname: "MATH101"
+      }
+    ]
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_enrol_get_users_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 12,
+    shortname: "MATH101",
+    fullname: "Mathematics 101",
+    displayname: "Mathematics 101",
+    enrolledusercount: 45,
+    idnumber: "MATH101-2024",
+    visible: 1,
+    summary: "An introduction to mathematics.",
+    summaryformat: 1,
+    format: "topics",
+    courseimage: "https://moodle.example.com/pluginfile.php/12/course/image",
+    showgrades: 1,
+    lang: "en",
+    enablecompletion: 1,
+    completionhascriteria: 1,
+    completionusertracked: 1,
+    category: 3,
+    progress: 67.5,
+    completed: 0,
+    startdate: 1693612800,
+    enddate: 1704067200,
+    marker: 0,
+    lastaccess: 1694786400,
+    isfavourite: 1,
+    hidden: 0,
+    overviewfiles: [
+      {
+        filename: "intro.pdf",
+        filepath: "/",
+        filesize: 20480,
+        fileurl: "https://moodle.example.com/pluginfile.php/12/course/overviewfiles/intro.pdf",
+        timemodified: 1693612850,
+        mimetype: "application/pdf",
+        isexternalfile: 0,
+        repositorytype: "upload",
+        icon: "f/pdf"
+      }
+    ],
+    showactivitydates: 1,
+    showcompletionconditions: 1,
+    timemodified: 1694000000
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_enrol_unenrol_user_enrolment:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  result: 1,
+  errors: []
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_role_assign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_role_unassign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_user_create_users:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 21,
+    username: "swayam2002"
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_user_delete_users:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_user_get_users:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  users: [
+    {
+      id: 123,
+      username: "johnsmith",
+      firstname: "John",
+      lastname: "Smith",
+      fullname: "John Smith",
+      email: "john.smith@example.com",
+      address: "123 Main St",
+      phone1: "555-1234",
+      phone2: "555-5678",
+      department: "IT",
+      institution: "Example University",
+      idnumber: "ID123456",
+      interests: "coding,reading",
+      firstaccess: 1610000000,
+      lastaccess: 1650000000,
+      auth: "manual",
+      suspended: 0,
+      confirmed: 1,
+      lang: "en",
+      calendartype: "gregorian",
+      theme: "standard",
+      timezone: "Australia/Perth",
+      mailformat: 1,
+      trackforums: 0,
+      description: "A sample user profile description.",
+      descriptionformat: 1,
+      city: "Perth",
+      country: "AU",
+      profileimageurlsmall: "https://example.com/profile_small.jpg",
+      profileimageurl: "https://example.com/profile_large.jpg",
+      customfields: [
+        {
+          "type": "text",
+          value: "Custom value",
+          displayvalue: "Custom Value",
+          name: "Custom Field Name",
+          shortname: "customfield"
+        }
+      ],
+      preferences: [
+        {
+          name: "preference1",
+          value: "value1"
+        }
+      ]
+    }
+  ],
+  warnings: [
+    {
+      item: "key",
+      itemid: 1,
+      warningcode: "WARN001",
+      message: "Invalid search key provided."
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_user_get_users_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 12,
+    username: "swayam2002",
+    firstname: "Swayam",
+    lastname: "Prusty",
+    fullname: "Swayam Prusty",
+    email: "swayam@example.com",
+    address: "Bhubaneswar, India",
+    phone1: "9876543210",
+    phone2: "",
+    department: "Engineering",
+    institution: "Moodle Institute",
+    idnumber: "STU12345",
+    interests: "MuleSoft, Moodle, API",
+    firstaccess: 1686000000,
+    lastaccess: 1694000000,
+    auth: "manual",
+    suspended: 0,
+    confirmed: 1,
+    lang: "en",
+    calendartype: "gregorian",
+    theme: "standard",
+    timezone: "Asia/Kolkata",
+    mailformat: 1,
+    trackforums: 1,
+    description: "Learning enthusiast",
+    descriptionformat: 1,
+    city: "Bhubaneswar",
+    country: "IN",
+    profileimageurlsmall: "https://swayam.moodlecloud.com/pluginfile.php/12/small.jpg",
+    profileimageurl: "https://swayam.moodlecloud.com/pluginfile.php/12/large.jpg",
+    customfields: [
+      {
+        "type": "text",
+        value: "Custom Value",
+        displayvalue: "Custom Display Value",
+        name: "Custom Field Name",
+        shortname: "custom_field"
+      }
+    ],
+    preferences: [
+      {
+        name: "maildigest",
+        value: "1"
+      }
+    ]
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_user_update_users:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  warnings: [
+    {
+      item: "email",
+      itemid: 21,
+      warningcode: "invalidemail",
+      message: "The email address provided is invalid"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\enrol_manual_enrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\enrol_manual_unenrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\gradereport_overview_get_course_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  grades: [
+    {
+      courseid: 101,
+      grade: "85%",
+      rawgrade: "85.00",
+      rank: 5
+    }, 
+    {
+      courseid: 102,
+      grade: "A",
+      rawgrade: "90.50"
+    }
+  ],
+  warnings: [
+    {
+      item: "course",
+      itemid: 102,
+      warningcode: "missinggrade",
+      message: "Grade not available for this course"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\mod_assign_get_assignments:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  courses: [
+    {
+      id: 101,
+      fullname: "Computer Science 101",
+      shortname: "CS101",
+      timemodified: 1728610000,
+      assignments: [
+        {
+          id: 201,
+          cmid: 301,
+          course: 101,
+          name: "Final Project Report",
+          nosubmissions: 0,
+          submissiondrafts: 1,
+          sendnotifications: 1,
+          sendlatenotifications: 1,
+          sendstudentnotifications: 1,
+          duedate: 1729000000,
+          allowsubmissionsfromdate: 1728600000,
+          grade: 100,
+          gradepenalty: 0,
+          timemodified: 1728615000,
+          completionsubmit: 1,
+          cutoffdate: 1729500000,
+          gradingduedate: 1729600000,
+          teamsubmission: 0,
+          requireallteammemberssubmit: 0,
+          teamsubmissiongroupingid: 0,
+          blindmarking: 0,
+          hidegrader: 0,
+          revealidentities: 1,
+          attemptreopenmethod: "none",
+          maxattempts: 1,
+          markingworkflow: 1,
+          markingallocation: 0,
+          markinganonymous: 0,
+          requiresubmissionstatement: 1,
+          preventsubmissionnotingroup: 0,
+          submissionstatement: "I declare that this work is my own.",
+          submissionstatementformat: 2,
+          configs: [
+            {
+              id: 1,
+              assignment: 201,
+              plugin: "online",
+              subtype: "submission",
+              name: "submissiondrafts",
+              value: "1"
+            }, 
+            {
+              id: 2,
+              assignment: 201,
+              plugin: "file",
+              subtype: "submission",
+              name: "maxfilesubmissions",
+              value: "3"
+            }
+          ],
+          intro: "Submit your final project report in PDF format.",
+          introformat: 1,
+          introfiles: [
+            {
+              filename: "instructions.pdf",
+              filepath: "/assignments/finalproject/",
+              filesize: 204800,
+              fileurl: "https://example.com/files/instructions.pdf",
+              timemodified: 1728609000,
+              mimetype: "application/pdf",
+              isexternalfile: 0,
+              repositorytype: "upload",
+              icon: "pdf-icon.png"
+            }
+          ],
+          introattachments: [
+            {
+              filename: "template.docx",
+              filepath: "/assignments/finalproject/",
+              filesize: 102400,
+              fileurl: "https://example.com/files/template.docx",
+              timemodified: 1728609500,
+              mimetype: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              isexternalfile: 0,
+              repositorytype: "upload",
+              icon: "word-icon.png"
+            }
+          ],
+          activity: "Prepare and submit a detailed project report.",
+          activityformat: 2,
+          activityattachments: [
+            {
+              filename: "guidelines.txt",
+              filepath: "/assignments/finalproject/",
+              filesize: 2048,
+              fileurl: "https://example.com/files/guidelines.txt",
+              timemodified: 1728609700,
+              mimetype: "text/plain",
+              isexternalfile: 0,
+              repositorytype: "upload",
+              icon: "text-icon.png"
+            }
+          ],
+          timelimit: 0,
+          submissionattachments: 1
+        }
+      ]
+    }
+  ],
+  warnings: [
+    {
+      item: "course",
+      itemid: 999,
+      warningcode: "2",
+      message: "User is not enrolled in this course."
+    }, 
+    {
+      item: "module",
+      itemid: 888,
+      warningcode: "1",
+      message: "User has no access rights to this module."
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\mod_assign_get_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  assignments: [
+    {
+      assignmentid: 201,
+      grades: [
+        {
+          id: 1001,
+          assignment: 201,
+          userid: 501,
+          attemptnumber: 1,
+          timecreated: 1728610000,
+          timemodified: 1728615000,
+          grader: 45,
+          grade: "85.00",
+          gradefordisplay: "85/100"
+        }, 
+        {
+          id: 1002,
+          assignment: 201,
+          userid: 502,
+          attemptnumber: 1,
+          timecreated: 1728612000,
+          timemodified: 1728616000,
+          grader: -1,
+          grade: "78.00",
+          gradefordisplay: "78/100"
+        }
+      ]
+    }, 
+    {
+      assignmentid: 202,
+      grades: [
+        {
+          id: 1003,
+          assignment: 202,
+          userid: 503,
+          attemptnumber: 2,
+          timecreated: 1728613000,
+          timemodified: 1728617000,
+          grader: 60,
+          grade: "92.00",
+          gradefordisplay: "92/100"
+        }
+      ]
+    }
+  ],
+  warnings: [
+    {
+      item: "assignment",
+      itemid: 201,
+      warningcode: "3",
+      message: "No grades found for this assignment."
+    }, 
+    {
+      item: "assignment",
+      itemid: 202,
+      warningcode: "1",
+      message: "User does not have permission to view grades for this assignment."
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<moodle:post-mod-assign-get-assignments doc:name="Assignments - Get all the course assignments" doc:id="a00f97b1-c4e5-4b45-a537-96955f3c1078" />
+    </flow>
+    <flow name="post:\mod_assign_get_submission_status:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  gradingsummary: {
+    participantcount: 30,
+    submissiondraftscount: 5,
+    submissionsenabled: 1,
+    submissionssubmittedcount: 20,
+    submissionsneedgradingcount: 3,
+    warnofungroupedusers: "warningrequired"
+  },
+  lastattempt: {
+    submission: {
+      id: 101,
+      userid: 501,
+      attemptnumber: 1,
+      timecreated: 1728610000,
+      timemodified: 1728615000,
+      timestarted: 1728609000,
+      status: "submitted",
+      groupid: 10,
+      assignment: 201,
+      latest: 1,
+      plugins: [
+        {
+          "type": "file",
+          name: "File submissions",
+          fileareas: [
+            {
+              area: "submission_files",
+              files: [
+                {
+                  filename: "report.pdf",
+                  filepath: "/assignments/reports/",
+                  filesize: 234567,
+                  fileurl: "https://moodle.example.com/pluginfile.php/123/assign/report.pdf",
+                  timemodified: 1728614000,
+                  mimetype: "application/pdf",
+                  isexternalfile: 0,
+                  repositorytype: "upload",
+                  icon: "/pix/f/pdf-64.png"
+                }
+              ]
+            }
+          ],
+          editorfields: [
+            {
+              name: "onlinetext",
+              description: "Online text submission",
+              text: "This is my final project report.",
+              format: 1
+            }
+          ]
+        }
+      ]
+    },
+    gradingstatus: "notgraded"
+  },
+  teamsubmission: {
+    id: 102,
+    userid: 502,
+    attemptnumber: 1,
+    timecreated: 1728612000,
+    timemodified: 1728617000,
+    status: "draft",
+    groupid: 20,
+    assignment: 201,
+    latest: 1,
+    plugins: [],
+    gradingstatus: "notgraded"
+  },
+  submissiongroup: 20,
+  submissiongroupmemberswhoneedtosubmit: [
+    503, 
+    504
+  ],
+  submissionsenabled: 1,
+  locked: 0,
+  graded: 0,
+  canedit: 1,
+  caneditowner: 1,
+  cansubmit: 1,
+  extensionduedate: 1728700000,
+  timelimit: 3600,
+  blindmarking: 0,
+  gradingstatus: "gradinginprogress",
+  usergroups: [
+    10, 
+    20
+  ],
+  feedback: {
+    grade: {
+      id: 301,
+      assignment: 201,
+      userid: 501,
+      attemptnumber: 1,
+      timecreated: 1728618000,
+      timemodified: 1728619000,
+      grader: 45,
+      grade: "85.00",
+      gradefordisplay: "85/100"
+    },
+    gradefordisplay: "85/100",
+    gradeddate: 1728619000,
+    plugins: []
+  },
+  previousattempts: [
+    {
+      attemptnumber: 0,
+      submission: {
+        id: 100,
+        userid: 501,
+        attemptnumber: 0,
+        timecreated: 1728600000,
+        timemodified: 1728601000,
+        status: "draft",
+        groupid: 10,
+        assignment: 201,
+        latest: 0,
+        plugins: []
+      },
+      gradingstatus: "notgraded"
+    }
+  ],
+  assignmentdata: {
+    attachments: {
+      intro: {
+        files: [
+          {
+            filename: "instructions.pdf",
+            filepath: "/assignments/instructions/",
+            filesize: 54321,
+            fileurl: "https://moodle.example.com/pluginfile.php/456/assign/instructions.pdf",
+            timemodified: 1728608000,
+            mimetype: "application/pdf",
+            isexternalfile: 0,
+            repositorytype: "upload",
+            icon: "/pix/f/pdf-64.png"
+          }
+        ]
+      },
+      activity: {
+        files: []
+      }
+    },
+    activity: "Complete the project report and upload as PDF.",
+    activityformat: 1
+  },
+  warnings: [
+    {
+      item: "submission",
+      itemid: 101,
+      warningcode: "late",
+      message: "Submission was made after the due date."
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+</mule>

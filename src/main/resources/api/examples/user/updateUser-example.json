@@ -1,0 +1,10 @@
+{
+  "warnings": [
+    {
+      "item": "email",
+      "itemid": 21,
+      "warningcode": "invalidemail",
+      "message": "The email address provided is invalid"
+    }
+  ]
+}

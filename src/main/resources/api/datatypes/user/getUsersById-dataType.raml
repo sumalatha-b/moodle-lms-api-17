@@ -1,0 +1,52 @@
+#%RAML 1.0 DataType
+type: array
+items:
+  type: object
+  properties:
+    id: integer
+    username?: string
+    firstname?: string
+    lastname?: string
+    fullname: string
+    email?: string
+    address?: string
+    phone1?: string
+    phone2?: string
+    department?: string
+    institution?: string
+    idnumber?: string
+    interests?: string
+    firstaccess?: integer
+    lastaccess?: integer
+    auth?: string
+    suspended?: integer
+    confirmed?: integer
+    lang?: string
+    calendartype?: string
+    theme?: string
+    timezone?: string
+    mailformat?: integer
+    trackforums?: integer
+    description?: string
+    descriptionformat?: integer
+    city?: string
+    country?: string
+    profileimageurlsmall: string
+    profileimageurl: string
+    customfields?:
+      type: array
+      items:
+        type: object
+        properties:
+          type: string
+          value: string
+          displayvalue?: string
+          name: string
+          shortname: string
+    preferences?:
+      type: array
+      items:
+        type: object
+        properties:
+          name: string
+          value: string

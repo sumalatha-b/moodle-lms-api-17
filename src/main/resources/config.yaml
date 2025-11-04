@@ -1,0 +1,15 @@
+https:
+  host: "localhost"
+  port: "8081"
+  
+moodle:
+  baseUri: "https://nexturn.moodlecloud.com/webservice/rest/server.php"
+  tokenBaseUri: "https://nexturn.moodlecloud.com/login/token.php"
+  username: ""
+  password: ""
+  service: ""
+
+sf:
+  username: "aurosmit.sahoo@nexturn.comauro.edu"
+  password: "Aurosmit@2001"
+  securityToken: "mlXoqVnVqAN6ciAVNNYyGG9Xz"

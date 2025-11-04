@@ -1,0 +1,149 @@
+{
+  "gradingsummary": {
+    "participantcount": 30,
+    "submissiondraftscount": 5,
+    "submissionsenabled": 1,
+    "submissionssubmittedcount": 20,
+    "submissionsneedgradingcount": 3,
+    "warnofungroupedusers": "warningrequired"
+  },
+  "lastattempt": {
+    "submission": {
+      "id": 101,
+      "userid": 501,
+      "attemptnumber": 1,
+      "timecreated": 1728610000,
+      "timemodified": 1728615000,
+      "timestarted": 1728609000,
+      "status": "submitted",
+      "groupid": 10,
+      "assignment": 201,
+      "latest": 1,
+      "plugins": [
+        {
+          "type": "file",
+          "name": "File submissions",
+          "fileareas": [
+            {
+              "area": "submission_files",
+              "files": [
+                {
+                  "filename": "report.pdf",
+                  "filepath": "/assignments/reports/",
+                  "filesize": 234567,
+                  "fileurl": "https://moodle.example.com/pluginfile.php/123/assign/report.pdf",
+                  "timemodified": 1728614000,
+                  "mimetype": "application/pdf",
+                  "isexternalfile": 0,
+                  "repositorytype": "upload",
+                  "icon": "/pix/f/pdf-64.png"
+                }
+              ]
+            }
+          ],
+          "editorfields": [
+            {
+              "name": "onlinetext",
+              "description": "Online text submission",
+              "text": "This is my final project report.",
+              "format": 1
+            }
+          ]
+        }
+      ]
+    },
+    "gradingstatus": "notgraded"
+  },
+  "teamsubmission": {
+    "id": 102,
+    "userid": 502,
+    "attemptnumber": 1,
+    "timecreated": 1728612000,
+    "timemodified": 1728617000,
+    "status": "draft",
+    "groupid": 20,
+    "assignment": 201,
+    "latest": 1,
+    "plugins": [],
+    "gradingstatus": "notgraded"
+  },
+  "submissiongroup": 20,
+  "submissiongroupmemberswhoneedtosubmit": [503, 504],
+  "submissionsenabled": 1,
+  "locked": 0,
+  "graded": 0,
+  "canedit": 1,
+  "caneditowner": 1,
+  "cansubmit": 1,
+  "extensionduedate": 1728700000,
+  "timelimit": 3600,
+  "blindmarking": 0,
+  "gradingstatus": "gradinginprogress",
+  "usergroups": [10, 20],
+  "feedback": {
+    "grade": {
+      "id": 301,
+      "assignment": 201,
+      "userid": 501,
+      "attemptnumber": 1,
+      "timecreated": 1728618000,
+      "timemodified": 1728619000,
+      "grader": 45,
+      "grade": "85.00",
+      "gradefordisplay": "85/100"
+    },
+    "gradefordisplay": "85/100",
+    "gradeddate": 1728619000,
+    "plugins": []
+  },
+  "previousattempts": [
+    {
+      "attemptnumber": 0,
+      "submission": {
+        "id": 100,
+        "userid": 501,
+        "attemptnumber": 0,
+        "timecreated": 1728600000,
+        "timemodified": 1728601000,
+        "status": "draft",
+        "groupid": 10,
+        "assignment": 201,
+        "latest": 0,
+        "plugins": []
+      },
+      "gradingstatus": "notgraded"
+    }
+  ],
+  "assignmentdata": {
+    "attachments": {
+      "intro": {
+        "files": [
+          {
+            "filename": "instructions.pdf",
+            "filepath": "/assignments/instructions/",
+            "filesize": 54321,
+            "fileurl": "https://moodle.example.com/pluginfile.php/456/assign/instructions.pdf",
+            "timemodified": 1728608000,
+            "mimetype": "application/pdf",
+            "isexternalfile": 0,
+            "repositorytype": "upload",
+            "icon": "/pix/f/pdf-64.png"
+          }
+        ]
+      },
+      "activity": {
+        "files": []
+      }
+    },
+    "activity": "Complete the project report and upload as PDF.",
+    "activityformat": 1
+  },
+  "warnings": [
+    {
+      "item": "submission",
+      "itemid": 101,
+      "warningcode": "late",
+      "message": "Submission was made after the due date."
+    }
+  ]
+}

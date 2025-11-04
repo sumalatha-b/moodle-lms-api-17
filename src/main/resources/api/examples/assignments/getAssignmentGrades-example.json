@@ -1,0 +1,61 @@
+{
+  "assignments": [
+    {
+      "assignmentid": 201,
+      "grades": [
+        {
+          "id": 1001,
+          "assignment": 201,
+          "userid": 501,
+          "attemptnumber": 1,
+          "timecreated": 1728610000,
+          "timemodified": 1728615000,
+          "grader": 45,
+          "grade": "85.00",
+          "gradefordisplay": "85/100"
+        },
+        {
+          "id": 1002,
+          "assignment": 201,
+          "userid": 502,
+          "attemptnumber": 1,
+          "timecreated": 1728612000,
+          "timemodified": 1728616000,
+          "grader": -1,
+          "grade": "78.00",
+          "gradefordisplay": "78/100"
+        }
+      ]
+    },
+    {
+      "assignmentid": 202,
+      "grades": [
+        {
+          "id": 1003,
+          "assignment": 202,
+          "userid": 503,
+          "attemptnumber": 2,
+          "timecreated": 1728613000,
+          "timemodified": 1728617000,
+          "grader": 60,
+          "grade": "92.00",
+          "gradefordisplay": "92/100"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "item": "assignment",
+      "itemid": 201,
+      "warningcode": "3",
+      "message": "No grades found for this assignment."
+    },
+    {
+      "item": "assignment",
+      "itemid": 202,
+      "warningcode": "1",
+      "message": "User does not have permission to view grades for this assignment."
+    }
+  ]
+}

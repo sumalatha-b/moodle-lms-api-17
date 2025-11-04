@@ -1,0 +1,47 @@
+#%RAML 1.0 DataType
+type: array
+items:
+  type: object
+  properties:
+    id: integer
+    shortname: string
+    fullname: string
+    displayname?: string
+    enrolledusercount?: integer
+    idnumber: string
+    visible: integer
+    summary?: string
+    summaryformat?: integer
+    format?: string
+    courseimage?: string
+    showgrades?: integer
+    lang?: string
+    enablecompletion?: integer
+    completionhascriteria?: integer
+    completionusertracked?: integer
+    category?: integer
+    progress?: number
+    completed?: integer
+    startdate?: integer
+    enddate?: integer
+    marker?: integer
+    lastaccess?: integer
+    isfavourite?: integer
+    hidden?: integer
+    overviewfiles?:
+      type: array
+      items:
+        type: object
+        properties:
+          filename?: string
+          filepath?: string
+          filesize?: integer
+          fileurl?: string
+          timemodified?: integer
+          mimetype?: string
+          isexternalfile?: integer
+          repositorytype?: string
+          icon?: string
+    showactivitydates?: integer
+    showcompletionconditions?: integer
+    timemodified?: integer

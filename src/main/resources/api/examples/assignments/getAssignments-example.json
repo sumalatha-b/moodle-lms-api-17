@@ -1,0 +1,123 @@
+{
+  "courses": [
+    {
+      "id": 101,
+      "fullname": "Computer Science 101",
+      "shortname": "CS101",
+      "timemodified": 1728610000,
+      "assignments": [
+        {
+          "id": 201,
+          "cmid": 301,
+          "course": 101,
+          "name": "Final Project Report",
+          "nosubmissions": 0,
+          "submissiondrafts": 1,
+          "sendnotifications": 1,
+          "sendlatenotifications": 1,
+          "sendstudentnotifications": 1,
+          "duedate": 1729000000,
+          "allowsubmissionsfromdate": 1728600000,
+          "grade": 100,
+          "gradepenalty": 0,
+          "timemodified": 1728615000,
+          "completionsubmit": 1,
+          "cutoffdate": 1729500000,
+          "gradingduedate": 1729600000,
+          "teamsubmission": 0,
+          "requireallteammemberssubmit": 0,
+          "teamsubmissiongroupingid": 0,
+          "blindmarking": 0,
+          "hidegrader": 0,
+          "revealidentities": 1,
+          "attemptreopenmethod": "none",
+          "maxattempts": 1,
+          "markingworkflow": 1,
+          "markingallocation": 0,
+          "markinganonymous": 0,
+          "requiresubmissionstatement": 1,
+          "preventsubmissionnotingroup": 0,
+          "submissionstatement": "I declare that this work is my own.",
+          "submissionstatementformat": 2,
+          "configs": [
+            {
+              "id": 1,
+              "assignment": 201,
+              "plugin": "online",
+              "subtype": "submission",
+              "name": "submissiondrafts",
+              "value": "1"
+            },
+            {
+              "id": 2,
+              "assignment": 201,
+              "plugin": "file",
+              "subtype": "submission",
+              "name": "maxfilesubmissions",
+              "value": "3"
+            }
+          ],
+          "intro": "Submit your final project report in PDF format.",
+          "introformat": 1,
+          "introfiles": [
+            {
+              "filename": "instructions.pdf",
+              "filepath": "/assignments/finalproject/",
+              "filesize": 204800,
+              "fileurl": "https://example.com/files/instructions.pdf",
+              "timemodified": 1728609000,
+              "mimetype": "application/pdf",
+              "isexternalfile": 0,
+              "repositorytype": "upload",
+              "icon": "pdf-icon.png"
+            }
+          ],
+          "introattachments": [
+            {
+              "filename": "template.docx",
+              "filepath": "/assignments/finalproject/",
+              "filesize": 102400,
+              "fileurl": "https://example.com/files/template.docx",
+              "timemodified": 1728609500,
+              "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "isexternalfile": 0,
+              "repositorytype": "upload",
+              "icon": "word-icon.png"
+            }
+          ],
+          "activity": "Prepare and submit a detailed project report.",
+          "activityformat": 2,
+          "activityattachments": [
+            {
+              "filename": "guidelines.txt",
+              "filepath": "/assignments/finalproject/",
+              "filesize": 2048,
+              "fileurl": "https://example.com/files/guidelines.txt",
+              "timemodified": 1728609700,
+              "mimetype": "text/plain",
+              "isexternalfile": 0,
+              "repositorytype": "upload",
+              "icon": "text-icon.png"
+            }
+          ],
+          "timelimit": 0,
+          "submissionattachments": 1
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "item": "course",
+      "itemid": 999,
+      "warningcode": "2",
+      "message": "User is not enrolled in this course."
+    },
+    {
+      "item": "module",
+      "itemid": 888,
+      "warningcode": "1",
+      "message": "User has no access rights to this module."
+    }
+  ]
+}

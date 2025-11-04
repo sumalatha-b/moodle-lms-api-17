@@ -1,0 +1,45 @@
+[
+  {
+    "id": 12,
+    "shortname": "MATH101",
+    "fullname": "Mathematics 101",
+    "displayname": "Mathematics 101",
+    "enrolledusercount": 45,
+    "idnumber": "MATH101-2024",
+    "visible": 1,
+    "summary": "An introduction to mathematics.",
+    "summaryformat": 1,
+    "format": "topics",
+    "courseimage": "https://moodle.example.com/pluginfile.php/12/course/image",
+    "showgrades": 1,
+    "lang": "en",
+    "enablecompletion": 1,
+    "completionhascriteria": 1,
+    "completionusertracked": 1,
+    "category": 3,
+    "progress": 67.5,
+    "completed": 0,
+    "startdate": 1693612800,
+    "enddate": 1704067200,
+    "marker": 0,
+    "lastaccess": 1694786400,
+    "isfavourite": 1,
+    "hidden": 0,
+    "overviewfiles": [
+      {
+        "filename": "intro.pdf",
+        "filepath": "/",
+        "filesize": 20480,
+        "fileurl": "https://moodle.example.com/pluginfile.php/12/course/overviewfiles/intro.pdf",
+        "timemodified": 1693612850,
+        "mimetype": "application/pdf",
+        "isexternalfile": 0,
+        "repositorytype": "upload",
+        "icon": "f/pdf"
+      }
+    ],
+    "showactivitydates": 1,
+    "showcompletionconditions": 1,
+    "timemodified": 1694000000
+  }
+]

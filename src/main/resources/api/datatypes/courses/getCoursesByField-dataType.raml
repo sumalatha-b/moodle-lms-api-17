@@ -1,0 +1,99 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  courses:
+    type: array
+    items:
+      type: object
+      properties:
+        id: integer
+        fullname: string
+        displayname: string
+        shortname: string
+        courseimage?: string
+        categoryid: integer
+        categoryname: string
+        sortorder?: integer
+        summary: string
+        summaryformat: integer
+        summaryfiles:
+          type: array
+          items:
+            type: object
+            properties:
+              filename?: string
+              filepath?: string
+              filesize?: integer
+              fileurl?: string
+              timemodified?: integer
+              mimetype?: string
+        overviewfiles:
+          type: array
+          items:
+            type: object
+            properties:
+              filename: string
+              filepath: string
+              filesize: integer
+              fileurl: string
+              timemodified: integer
+              mimetype: string
+        showactivitydates: boolean
+        showcompletionconditions: boolean | nil
+        contacts:
+          type: array
+          items:
+            type: object
+            properties:
+              id: integer
+              fullname: string
+        enrollmentmethods:
+          type: array
+          items: string
+        idnumber: string
+        format: string
+        showgrades: integer
+        newsitems: integer
+        startdate: integer
+        enddate: integer
+        maxbytes: integer
+        showreports: integer
+        visible: integer
+        groupmode: integer
+        groupmodeforce: integer
+        defaultgroupingid: integer
+        enablecompletion: integer
+        completionnotify: integer
+        lang: string
+        theme: string
+        marker: integer
+        legacyfiles: integer
+        calendartype: string
+        timecreated: integer
+        timemodified: integer
+        requested: integer
+        cacherev: integer
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              filter: string
+              localstate: integer
+              inheritedstate: integer
+        courseformatoptions?:
+          type: array
+          items:
+            type: object
+            properties:
+              name: string
+              value: string | integer
+  warnings:
+    type: array
+    items:
+      type: object
+      properties:
+        item?: string
+        itemid?: integer
+        warningcode?: string
+        message?: string

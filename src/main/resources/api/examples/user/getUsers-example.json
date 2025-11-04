@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": 123,
+      "username": "johnsmith",
+      "firstname": "John",
+      "lastname": "Smith",
+      "fullname": "John Smith",
+      "email": "john.smith@example.com",
+      "address": "123 Main St",
+      "phone1": "555-1234",
+      "phone2": "555-5678",
+      "department": "IT",
+      "institution": "Example University",
+      "idnumber": "ID123456",
+      "interests": "coding,reading",
+      "firstaccess": 1610000000,
+      "lastaccess": 1650000000,
+      "auth": "manual",
+      "suspended": 0,
+      "confirmed": 1,
+      "lang": "en",
+      "calendartype": "gregorian",
+      "theme": "standard",
+      "timezone": "Australia/Perth",
+      "mailformat": 1,
+      "trackforums": 0,
+      "description": "A sample user profile description.",
+      "descriptionformat": 1,
+      "city": "Perth",
+      "country": "AU",
+      "profileimageurlsmall": "https://example.com/profile_small.jpg",
+      "profileimageurl": "https://example.com/profile_large.jpg",
+      "customfields": [
+        {
+          "type": "text",
+          "value": "Custom value",
+          "displayvalue": "Custom Value",
+          "name": "Custom Field Name",
+          "shortname": "customfield"
+        }
+      ],
+      "preferences": [
+        {
+          "name": "preference1",
+          "value": "value1"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "item": "key",
+      "itemid": 1,
+      "warningcode": "WARN001",
+      "message": "Invalid search key provided."
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+{
+    "courses": [
+        {
+            "id": 1,
+            "fullname": "Your site",
+            "displayname": "Your site",
+            "shortname": "Your site",
+            "courseimage": "https://swayam.moodlecloud.com/pluginfile.php/2/course/generated/course.svg",
+            "categoryid": 0,
+            "categoryname": "",
+            "sortorder": 1,
+            "summary": "",
+            "summaryformat": 0,
+            "summaryfiles": [],
+            "overviewfiles": [],
+            "showactivitydates": false,
+            "showcompletionconditions": null,
+            "contacts": [],
+            "enrollmentmethods": [],
+            "idnumber": "",
+            "format": "site",
+            "showgrades": 1,
+            "newsitems": 3,
+            "startdate": 0,
+            "enddate": 0,
+            "maxbytes": 0,
+            "showreports": 0,
+            "visible": 1,
+            "groupmode": 0,
+            "groupmodeforce": 0,
+            "defaultgroupingid": 0,
+            "enablecompletion": 0,
+            "completionnotify": 0,
+            "lang": "",
+            "theme": "",
+            "marker": 0,
+            "legacyfiles": 0,
+            "calendartype": "",
+            "timecreated": 1434677711,
+            "timemodified": 1686021291,
+            "requested": 0,
+            "cacherev": 1753974748,
+            "filters": [
+                {
+                    "filter": "mathjaxloader",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "displayh5p",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "activitynames",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "mediaplugin",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "emoticon",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "urltolink",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "glossary",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "fullname": "Starting with Moodle",
+            "displayname": "Starting with Moodle",
+            "shortname": "Starting with Moodle",
+            "courseimage": "https://swayam.moodlecloud.com/pluginfile.php/81/course/overviewfiles/iPad_screen-Cloud-785x1000.jpg",
+            "categoryid": 1,
+            "categoryname": "Category 1",
+            "sortorder": 10002,
+            "summary": "<p dir=\"ltr\" style=\"text-align:left;\">Get started with creating your first Moodle course</p>",
+            "summaryformat": 1,
+            "summaryfiles": [],
+            "overviewfiles": [
+                {
+                    "filename": "iPad_screen-Cloud-785x1000.jpg",
+                    "filepath": "/",
+                    "filesize": 84602,
+                    "fileurl": "https://swayam.moodlecloud.com/webservice/pluginfile.php/81/course/overviewfiles/iPad_screen-Cloud-785x1000.jpg",
+                    "timemodified": 1690869362,
+                    "mimetype": "image/jpeg"
+                }
+            ],
+            "showactivitydates": true,
+            "showcompletionconditions": true,
+            "contacts": [
+                {
+                    "id": 2,
+                    "fullname": "SWAYAM SANKET PRUSTY"
+                }
+            ],
+            "enrollmentmethods": [
+                "manual"
+            ],
+            "idnumber": "",
+            "format": "topics",
+            "showgrades": 1,
+            "newsitems": 0,
+            "startdate": 1689264000,
+            "enddate": 0,
+            "maxbytes": 512000,
+            "showreports": 1,
+            "visible": 0,
+            "groupmode": 0,
+            "groupmodeforce": 0,
+            "defaultgroupingid": 0,
+            "enablecompletion": 1,
+            "completionnotify": 0,
+            "lang": "",
+            "theme": "",
+            "marker": 0,
+            "legacyfiles": 0,
+            "calendartype": "",
+            "timecreated": 1684412561,
+            "timemodified": 1697089842,
+            "requested": 0,
+            "cacherev": 1753974748,
+            "filters": [
+                {
+                    "filter": "mathjaxloader",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "displayh5p",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "activitynames",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "mediaplugin",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "emoticon",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "urltolink",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "glossary",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                }
+            ],
+            "courseformatoptions": [
+                {
+                    "name": "hiddensections",
+                    "value": 0
+                },
+                {
+                    "name": "coursedisplay",
+                    "value": 0
+                },
+                {
+                    "name": "indentation",
+                    "value": "1"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "fullname": "Sample Full Course Name",
+            "displayname": "Sample Full Course Name",
+            "shortname": "SFCN101",
+            "courseimage": "https://swayam.moodlecloud.com/pluginfile.php/94/course/generated/course.svg",
+            "categoryid": 1,
+            "categoryname": "Category 1",
+            "sortorder": 10001,
+            "summary": "This is a test course summary.",
+            "summaryformat": 1,
+            "summaryfiles": [],
+            "overviewfiles": [],
+            "showactivitydates": true,
+            "showcompletionconditions": true,
+            "contacts": [],
+            "enrollmentmethods": [
+                "manual"
+            ],
+            "idnumber": "SFCN-ID-001",
+            "format": "topics",
+            "showgrades": 1,
+            "newsitems": 5,
+            "startdate": 1731172800,
+            "enddate": 1733788200,
+            "maxbytes": 2097152,
+            "showreports": 0,
+            "visible": 1,
+            "groupmode": 1,
+            "groupmodeforce": 0,
+            "defaultgroupingid": 0,
+            "enablecompletion": 1,
+            "completionnotify": 0,
+            "lang": "en",
+            "theme": "",
+            "marker": 0,
+            "legacyfiles": 0,
+            "calendartype": "",
+            "timecreated": 1757399720,
+            "timemodified": 1757399720,
+            "requested": 0,
+            "cacherev": 1757399733,
+            "filters": [
+                {
+                    "filter": "mathjaxloader",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "displayh5p",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "activitynames",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "mediaplugin",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "emoticon",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "urltolink",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                },
+                {
+                    "filter": "glossary",
+                    "localstate": 0,
+                    "inheritedstate": 1
+                }
+            ],
+            "courseformatoptions": [
+                {
+                    "name": "hiddensections",
+                    "value": 0
+                },
+                {
+                    "name": "coursedisplay",
+                    "value": 0
+                },
+                {
+                    "name": "indentation",
+                    "value": "1"
+                }
+            ]
+        }
+    ],
+    "warnings": []
+}

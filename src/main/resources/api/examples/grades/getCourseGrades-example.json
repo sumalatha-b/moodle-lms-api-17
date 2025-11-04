@@ -1,0 +1,23 @@
+{
+  "grades": [
+    {
+      "courseid": 101,
+      "grade": "85%",
+      "rawgrade": "85.00",
+      "rank": 5
+    },
+    {
+      "courseid": 102,
+      "grade": "A",
+      "rawgrade": "90.50"
+    }
+  ],
+  "warnings": [
+    {
+      "item": "course",
+      "itemid": 102,
+      "warningcode": "missinggrade",
+      "message": "Grade not available for this course"
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  gradingsummary?:
+    type: object
+    properties:
+      participantcount: integer
+      submissiondraftscount: integer
+      submissionsenabled: integer
+      submissionssubmittedcount: integer
+      submissionsneedgradingcount: integer
+      warnofungroupedusers: string
+  lastattempt?:
+    type: object
+    properties:
+      submission?:
+        type: object
+        properties:
+          id: integer
+          userid: integer
+          attemptnumber: integer
+          timecreated: integer
+          timemodified: integer
+          timestarted?: integer
+          status: string
+          groupid: integer
+          assignment?: integer
+          latest?: integer
+          plugins?:
+            type: array
+            items:
+              type: object
+              properties:
+                type: string
+                name: string
+                fileareas?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      area: string
+                      files?:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            filename?: string
+                            filepath?: string
+                            filesize?: integer
+                            fileurl?: string
+                            timemodified?: integer
+                            mimetype?: string
+                            isexternalfile?: integer
+                            repositorytype?: string
+                            icon?: string
+                editorfields?:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name: string
+                      description: string
+                      text: string
+                      format: integer
+      gradingstatus?: string
+  teamsubmission?:
+    type: object
+    properties:
+      id: integer
+      userid: integer
+      attemptnumber: integer
+      timecreated: integer
+      timemodified: integer
+      timestarted?: integer
+      status: string
+      groupid: integer
+      assignment?: integer
+      latest?: integer
+      plugins?: array
+      gradingstatus?: string
+  submissiongroup?: integer
+  submissiongroupmemberswhoneedtosubmit?:
+    type: array
+    items: integer
+  submissionsenabled: integer
+  locked: integer
+  graded: integer
+  canedit: integer
+  caneditowner: integer
+  cansubmit: integer
+  extensionduedate: integer
+  timelimit?: integer
+  blindmarking: integer
+  gradingstatus: string
+  usergroups:
+    type: array
+    items: integer
+  feedback?:
+    type: object
+    properties:
+      grade?:
+        type: object
+        properties:
+          id: integer
+          assignment?: integer
+          userid: integer
+          attemptnumber: integer
+          timecreated: integer
+          timemodified: integer
+          grader: integer
+          grade: string
+          gradefordisplay?: string
+      gradefordisplay: string
+      gradeddate: integer
+      plugins?: array
+  previousattempts?:
+    type: array
+    items:
+      type: object
+      properties:
+        attemptnumber: integer
+        submission?:
+          type: object
+          properties:
+            id: integer
+            userid: integer
+            attemptnumber: integer
+            timecreated: integer
+            timemodified: integer
+            timestarted?: integer
+            status: string
+            groupid: integer
+            assignment?: integer
+            latest?: integer
+            plugins?: array
+        gradingstatus?: string
+  assignmentdata?:
+    type: object
+    properties:
+      attachments?:
+        type: object
+        properties:
+          intro?:
+            type: object
+            properties:
+              files?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    filename?: string
+                    filepath?: string
+                    filesize?: integer
+                    fileurl?: string
+                    timemodified?: integer
+                    mimetype?: string
+                    isexternalfile?: integer
+                    repositorytype?: string
+                    icon?: string
+          activity?:
+            type: object
+            properties:
+              files?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    filename?: string
+                    filepath?: string
+                    filesize?: integer
+                    fileurl?: string
+                    timemodified?: integer
+                    mimetype?: string
+                    isexternalfile?: integer
+                    repositorytype?: string
+                    icon?: string
+      activity?: string
+      activityformat?: integer
+  warnings?:
+    type: array
+    items:
+      type: object
+      properties:
+        item?: string
+        itemid?: integer
+        warningcode: string
+        message: string

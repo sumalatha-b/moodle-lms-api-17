@@ -1,0 +1,117 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  courses:
+    type: array
+    items:
+      type: object
+      properties:
+        id: integer
+        fullname: string
+        shortname: string
+        timemodified: integer
+        assignments:
+          type: array
+          items:
+            type: object
+            properties:
+              id: integer
+              cmid: integer
+              course: integer
+              name: string
+              nosubmissions: integer
+              submissiondrafts: integer
+              sendnotifications: integer
+              sendlatenotifications: integer
+              sendstudentnotifications: integer
+              duedate: integer
+              allowsubmissionsfromdate: integer
+              grade: integer
+              gradepenalty: integer
+              timemodified: integer
+              completionsubmit: integer
+              cutoffdate: integer
+              gradingduedate: integer
+              teamsubmission: integer
+              requireallteammemberssubmit: integer
+              teamsubmissiongroupingid: integer
+              blindmarking: integer
+              hidegrader: integer
+              revealidentities: integer
+              attemptreopenmethod: string
+              maxattempts: integer
+              markingworkflow: integer
+              markingallocation: integer
+              markinganonymous: integer
+              requiresubmissionstatement: integer
+              preventsubmissionnotingroup?: integer
+              submissionstatement?: string
+              submissionstatementformat?: integer
+              configs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id?: integer
+                    assignment?: integer
+                    plugin: string
+                    subtype: string
+                    name: string
+                    value: string
+              intro?: string
+              introformat?: integer
+              introfiles?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    filename?: string
+                    filepath?: string
+                    filesize?: integer
+                    fileurl?: string
+                    timemodified?: integer
+                    mimetype?: string
+                    isexternalfile?: integer
+                    repositorytype?: string
+                    icon?: string
+              introattachments?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    filename?: string
+                    filepath?: string
+                    filesize?: integer
+                    fileurl?: string
+                    timemodified?: integer
+                    mimetype?: string
+                    isexternalfile?: integer
+                    repositorytype?: string
+                    icon?: string
+              activity?: string
+              activityformat?: integer
+              activityattachments?:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    filename?: string
+                    filepath?: string
+                    filesize?: integer
+                    fileurl?: string
+                    timemodified?: integer
+                    mimetype?: string
+                    isexternalfile?: integer
+                    repositorytype?: string
+                    icon?: string
+              timelimit?: integer
+              submissionattachments?: integer
+  warnings?:
+    type: array
+    items:
+      type: object
+      properties:
+        item?: string
+        itemid?: integer
+        warningcode: string
+        message: string

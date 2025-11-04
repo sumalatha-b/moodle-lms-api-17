@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Top-level category",
+    "idnumber": "",
+    "description": "Main category description",
+    "descriptionformat": 1,
+    "parent": 0,
+    "sortorder": 100,
+    "coursecount": 5,
+    "visible": 1,
+    "visibleold": 1,
+    "timemodified": 1694265600,
+    "depth": 1,
+    "path": "/1/",
+    "theme": ""
+  },
+  {
+    "id": 2,
+    "name": "Subcategory example",
+    "idnumber": "SUBCAT001",
+    "description": "A subcategory",
+    "descriptionformat": 1,
+    "parent": 1,
+    "sortorder": 110,
+    "coursecount": 2,
+    "visible": 1,
+    "visibleold": 1,
+    "timemodified": 1695000000,
+    "depth": 2,
+    "path": "/1/2/",
+    "theme": "default"
+  }
+]

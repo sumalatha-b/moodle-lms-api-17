@@ -1,0 +1,49 @@
+[
+  {
+    "id": 12,
+    "username": "swayam2002",
+    "firstname": "Swayam",
+    "lastname": "Prusty",
+    "fullname": "Swayam Prusty",
+    "email": "swayam@example.com",
+    "address": "Bhubaneswar, India",
+    "phone1": "9876543210",
+    "phone2": "",
+    "department": "Engineering",
+    "institution": "Moodle Institute",
+    "idnumber": "STU12345",
+    "interests": "MuleSoft, Moodle, API",
+    "firstaccess": 1686000000,
+    "lastaccess": 1694000000,
+    "auth": "manual",
+    "suspended": 0,
+    "confirmed": 1,
+    "lang": "en",
+    "calendartype": "gregorian",
+    "theme": "standard",
+    "timezone": "Asia/Kolkata",
+    "mailformat": 1,
+    "trackforums": 1,
+    "description": "Learning enthusiast",
+    "descriptionformat": 1,
+    "city": "Bhubaneswar",
+    "country": "IN",
+    "profileimageurlsmall": "https://swayam.moodlecloud.com/pluginfile.php/12/small.jpg",
+    "profileimageurl": "https://swayam.moodlecloud.com/pluginfile.php/12/large.jpg",
+    "customfields": [
+      {
+        "type": "text",
+        "value": "Custom Value",
+        "displayvalue": "Custom Display Value",
+        "name": "Custom Field Name",
+        "shortname": "custom_field"
+      }
+    ],
+    "preferences": [
+      {
+        "name": "maildigest",
+        "value": "1"
+      }
+    ]
+  }
+]

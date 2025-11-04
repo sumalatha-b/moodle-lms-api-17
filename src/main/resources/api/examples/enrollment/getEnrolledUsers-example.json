@@ -1,0 +1,45 @@
+[
+  {
+    "id": 15,
+    "username": "john.smith",
+    "firstname": "John",
+    "lastname": "Smith",
+    "fullname": "John Smith",
+    "email": "john.smith@example.com",
+    "city": "London",
+    "country": "GB",
+    "lastaccess": 1693545600,
+    "profileimageurl": "https://moodle.example.com/pluginfile.php/15/user/icon",
+    "roles": [
+      {
+        "roleid": 5,
+        "name": "Student",
+        "shortname": "student",
+        "sortorder": 0
+      }
+    ],
+    "groups": [
+      {
+        "id": 2,
+        "name": "Group A",
+        "description": "First group",
+        "descriptionformat": 1
+      }
+    ],
+    "customfields": [
+      {
+        "type": "text",
+        "value": "Computer Science",
+        "name": "Major",
+        "shortname": "major"
+      }
+    ],
+    "enrolledcourses": [
+      {
+        "id": 8,
+        "fullname": "Mathematics 101",
+        "shortname": "MATH101"
+      }
+    ]
+  }
+]
