@@ -17,13 +17,14 @@ http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/m
 <salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="57ac21b4-aed7-497b-b683-b4a8f0681b10" >
 		<salesforce:basic-connection username="${sf.username}" password="${sf.password}" securityToken="${sf.securityToken}"/>
 	</salesforce:sfdc-config>
-		<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="828ca4aa-5437-4f65-a203-ea8758ccb2e0" >
-		<http:listener-connection host="0.0.0.0" port="8082" />
-	</http:listener-config>
 	<configuration-properties doc:name="Configuration properties" doc:id="e5dddb1f-64af-4c93-9632-f326a933a339" file="config.yaml" />
 	<configuration doc:name="Configuration" doc:id="e9e914ec-58c4-47a5-80c5-10e21d8d3ebf" defaultErrorHandler-ref="Global-Error-Handler" />
 	<http:listener-config name="moodle-rest-api-httpListenerConfig">
-        <http:listener-connection host="0.0.0.0" port="8081" />
+        <http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS">
+			<tls:context >
+				<tls:key-store type="jks" path="Client-Keystore.jks" keyPassword="Mule12345" password="Mule12345"/>
+			</tls:context>
+		</http:listener-connection>
     </http:listener-config>
     <apikit:config name="moodle-rest-api-config" api="moodle-rest-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
 	<moodle-access-token:config name="Moodle_Access_Token_Config" doc:name="Moodle Access Token Config" doc:id="58cf1d72-e3c4-440b-a3cd-5b010b98a565" >
