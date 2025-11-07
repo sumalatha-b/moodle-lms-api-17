@@ -5,9 +5,9 @@ https:
 moodle:
   baseUri: "https://nexturn.moodlecloud.com/webservice/rest/server.php"
   tokenBaseUri: "https://nexturn.moodlecloud.com/login/token.php"
-  username: ""
-  password: ""
-  service: ""
+  username: "admin"
+  password: "Nexturn12345"
+  service: "apis"
 
 sf:
   username: "aurosmit.sahoo@nexturn.comauro.edu"
