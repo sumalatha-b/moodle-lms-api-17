@@ -6,7 +6,7 @@
 http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/schema/mule/moodle-access-token/current/mule-moodle-access-token.xsd">
 	<sub-flow name="accesstoken_Flow" doc:id="882a51ef-aefd-47b1-8a55-f51e0274c4e2" >
 		<logger level="INFO" doc:name="Token Flow Started  Logger" doc:id="211b5ca3-4b74-4731-953e-82730a9b0ff0" message="Token Flow Started "/>
-		<moodle-access-token:get-login-token doc:name="Moodle Access Token" doc:id="19716186-dbdc-4302-b44f-a651c3a4a5be" arg5="#[correlationId]" config-ref="Moodle_Access_Token_Config" arg2='"admin"' arg3='"Nexturn12345"' arg4='"apis"'/>
+		<moodle-access-token:get-login-token doc:name="Moodle Access Token" doc:id="19716186-dbdc-4302-b44f-a651c3a4a5be" arg5="#[correlationId]" config-ref="Moodle_Access_Token_Config" arg2="#[p('moodle.username')]" arg3="#[p('moodle.password')]" arg4="#[p('moodle.service')]"/>
 		<set-variable value="#[payload.token]" doc:name="Set Variable" doc:id="06320996-ed66-43c9-b8cc-569157cf6ba7" variableName="moodleToken"/>
 		<logger level="INFO" doc:name="Token Flow Ended Logger" doc:id="ae62b100-c0ac-4e82-a11e-3d413547a292" message="Token Flow Ended  "/>
 	</sub-flow>
