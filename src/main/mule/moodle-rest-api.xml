@@ -39,7 +39,7 @@ http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                    
+    wstoken: vars.moodleToken.token,                    
     wsfunction: "core_course_create_categories",
     moodlewsrestformat: "json",
     "categories[0][name]": payload.'categories[0][name]',
@@ -63,7 +63,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                            
+    wstoken: vars.moodleToken.token,                            
     wsfunction: "core_course_create_courses",
     moodlewsrestformat: "json",
     'courses[0][fullname]': payload.'courses[0][fullname]',
@@ -108,7 +108,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                      
+    wstoken: vars.moodleToken.token,                      
     wsfunction: "core_course_delete_categories",
     moodlewsrestformat: "json",
     "categories[0][id]": payload.'categories[0][id]',                  
@@ -129,7 +129,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                
+    wstoken: vars.moodleToken.token,                
     wsfunction: "core_course_delete_courses",
     moodlewsrestformat: "json",
     "courseids[0]": payload.'courseids[0]'        
@@ -148,7 +148,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                         
+    wstoken: vars.moodleToken.token,                         
     wsfunction: "core_course_get_categories",
     moodlewsrestformat: "json",
     "criteria[0][key]": payload.'criteria[0][key]',           
@@ -169,7 +169,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,            
+    wstoken: vars.moodleToken.token,            
     wsfunction: payload.wsfunction,
     moodlewsrestformat: "json"
 }]]]></moodle:post-core-course-get-courses-body>
@@ -187,7 +187,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,              
+    wstoken: vars.moodleToken.token,              
     wsfunction: payload.wsfunction,
     moodlewsrestformat: "json"
 }]]]></moodle:post-core-course-get-courses-by-field-body>
@@ -205,7 +205,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                    
+    wstoken: vars.moodleToken.token,                    
     wsfunction: payload.wsfunction,
     moodlewsrestformat: "json",
     "categories[0][id]": payload.'categories[0][id]',                  
@@ -230,7 +230,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                    
+    wstoken: vars.moodleToken.token,                    
     wsfunction: "core_course_update_courses",
     moodlewsrestformat: "json",
 
@@ -277,7 +277,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,           
+    wstoken: vars.moodleToken.token,           
     wsfunction: "core_enrol_get_enrolled_users",
     moodlewsrestformat: "json",
     courseid: payload.courseid               
@@ -296,7 +296,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,               
+    wstoken: vars.moodleToken.token,               
     wsfunction: "core_enrol_get_users_courses",
     moodlewsrestformat: "json",
     userid: payload.userid,                  
@@ -316,7 +316,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,     
+    wstoken: vars.moodleToken.token,     
     wsfunction: "core_enrol_unenrol_user_enrolment",
     moodlewsrestformat: "json",
     ueid: payload.ueid               
@@ -335,7 +335,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "core_role_assign_roles",
     moodlewsrestformat: "json",
     "assignments[0][roleid]": payload.'assignments[0][roleid]',
@@ -358,7 +358,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "core_role_unassign_roles",
     moodlewsrestformat: "json",
     "unassignments[0][roleid]": payload.'unassignments[0][roleid]',
@@ -381,7 +381,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "core_user_create_users",
     moodlewsrestformat: "json",
     "users[0][createpassword]": payload."users[0][createpassword]",
@@ -430,7 +430,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "core_user_delete_users",
     moodlewsrestformat: "json",
     "userids[0]": payload.'userids[0]'
@@ -449,7 +449,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "core_user_get_users_by_field",
     moodlewsrestformat: "json",
     field: payload.field,
@@ -469,7 +469,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "core_user_get_users_by_field",
     moodlewsrestformat: "json",
     field: payload.field,
@@ -489,7 +489,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "core_user_update_users",
     moodlewsrestformat: "json",
  
@@ -561,7 +561,7 @@ output application/json
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "enrol_manual_unenrol_users",
     moodlewsrestformat: "json",
  
@@ -582,7 +582,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "gradereport_overview_get_course_grades",
     moodlewsrestformat: "json",
  
@@ -602,7 +602,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "mod_assign_get_assignments",
     moodlewsrestformat: "json",
     'courseids[0]': payload.'courseids[0]'
@@ -622,7 +622,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: payload.wsfunction,
     moodlewsrestformat: "json",
     'assignmentids[0]': payload.'assignmentids[0]'
@@ -641,7 +641,7 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
+    wstoken: vars.moodleToken.token,
     wsfunction: "mod_assign_get_submission_status",
     moodlewsrestformat: "json",
     assignid: payload.assignid,
