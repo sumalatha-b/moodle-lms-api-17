@@ -6,7 +6,7 @@ moodle:
   baseUri: "https://mulesoft.moodlecloud.com/webservice/rest/server.php"
   tokenBaseUri: "https://mulesoft.moodlecloud.com/login/token.php"
   username: "admin"
-  password: "Nexturn12345"
+  password: "Nexturn@12345"
   service: "apis"
 
 sf:
