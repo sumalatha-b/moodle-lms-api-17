@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:moodle-rest-lms="http://www.mulesoft.org/schema/mule/moodle-rest-lms"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/moodle-rest-lms http://www.mulesoft.org/schema/mule/moodle-rest-lms/current/mule-moodle-rest-lms.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd">
+	
+	<flow name="sftomoodleCreateFlow" doc:id="53befdd5-28d8-40b1-9983-352b92ca7777" >
+		<salesforce:new-object-listener doc:name="On New Object" doc:id="0cc59da1-d381-49a7-8830-a9d17c5b7a25" config-ref="Salesforce_Config" objectType="Moodle_Course__c">
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</salesforce:new-object-listener>
+		<logger level="INFO" doc:name="Salesforce to Moodle Create Flow Started Logger" doc:id="afe6d3e5-1ec4-48b6-b142-aeac99e86909" message="Salesforce to Moodle Create Flow Started"/>
+		<flow-ref doc:name="accesstoken_Flow" doc:id="3fd4b19b-9e29-44cb-acfe-2b55bdb23ce5" name="accesstoken_Flow"/>
+		<ee:transform doc:name="Moodle Request Payload" doc:id="9efdfe90-d33f-49f4-af2c-837024ab1729" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  wstoken: vars.moodleToken.token,
+  wsfunction:"core_course_create_courses",
+  moodlewsrestformat:"json",
+  "courses[0][fullname]":payload.Name default "",
+  "courses[0][shortname]": payload.Short_Name__c default "",
+  "courses[0][categoryid]": payload.Category_ID__c as Number default 1,
+  "courses[0][idnumber]": payload.ID_Number__c default "",
+  "courses[0][summary]": payload.Summary__c default "",
+  "courses[0][summaryformat]": payload.Summary_Format__c as Number default 1 ,
+  "courses[0][format]": payload.Format__c default "topics",
+  "courses[0][showgrades]": if(payload.Show_Grades__c == true) 1 else 0,
+  "courses[0][newsitems]": payload.News_Items__c as Number default 5 ,
+  "courses[0][startdate]" : payload.End_Date__c as Number,
+  "courses[0][enddate]": payload.End_Date__c as Number,
+  "courses[0][numsections]": payload.Num_Sections__c as Number default 10 ,
+  "courses[0][maxbytes]": payload.Max_File_Size__c as Number default 2097152,
+  "courses[0][showreports]": if(payload.Show_Reports__c == true) 1 else 0,
+  "courses[0][visible]": if(payload.Visible__c == true) 1 else 0,
+  "courses[0][hiddensections]": payload.Hidden_Sections__c as Number default 0,
+  "courses[0][groupmode]": payload.Group_Mode__c as Number default 1 ,
+  "courses[0][groupmodeforce]": if(payload.Group_Mode_Force__c == true) 1 else 0,
+  "courses[0][defaultgroupingid]": payload.Default_Grouping_ID__c as Number default 0 ,
+  "courses[0][enablecompletion]": if(payload.Enable_Completion__c == true) 1 else 0,
+  "courses[0][completionnotify]": if(payload.Completion_Notify__c == true) 1 else 0,
+  "courses[0][lang]": payload.Forced_Language__c default "en",
+  "courses[0][forcetheme]": payload.Force_Theme__c default "boost",
+  "courses[0][courseformatoptions][0][name]": "numsections",
+  "courses[0][courseformatoptions][0][value]": "10",
+  "courses[0][customfields][0][shortname]": "customcode",
+  "courses[0][customfields][0][value]": "XYZ123"
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Moodle Request Payload Logger" doc:id="63e368cd-9e4f-48b6-938f-b803d0e9eb46" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="329d087c-7658-4e7c-bca2-8edc5347df5a" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]"/>
+		<logger level="INFO" doc:name="Moodle Response Payload Logger" doc:id="ddb2c2e7-5804-4281-be07-540922fa7f99" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<ee:transform doc:name="Moodle Response Payload" doc:id="7a8e9b9d-07ef-4338-9808-ff16c89f6c9f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Salesforce to Moodle Create Flow Ended Logger" doc:id="17b0f81b-3a64-432e-9841-c14e67ff40a8" message="Salesforce to Moodle Create Flow Ended"/>
+	</flow>
+</mule>
