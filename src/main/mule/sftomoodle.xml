@@ -15,6 +15,7 @@ http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/m
 			</scheduling-strategy>
 		</salesforce:new-object-listener>
 		<logger level="INFO" doc:name="Salesforce to Moodle Create Flow Started Logger" doc:id="afe6d3e5-1ec4-48b6-b142-aeac99e86909" message="Salesforce to Moodle Create Flow Started"/>
+		<logger level="INFO" doc:name="SF Request Payload Logger" doc:id="015a6770-40bc-4913-9d3b-6a90e12180ca" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
 		<flow-ref doc:name="accesstoken_Flow" doc:id="3fd4b19b-9e29-44cb-acfe-2b55bdb23ce5" name="accesstoken_Flow"/>
 		<ee:transform doc:name="Moodle Request Payload" doc:id="9efdfe90-d33f-49f4-af2c-837024ab1729" >
 			<ee:message >
