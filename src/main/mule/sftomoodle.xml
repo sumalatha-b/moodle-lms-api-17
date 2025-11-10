@@ -58,7 +58,12 @@ output application/json
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Moodle Request Payload Logger" doc:id="63e368cd-9e4f-48b6-938f-b803d0e9eb46" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
-		<moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="329d087c-7658-4e7c-bca2-8edc5347df5a" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]"/>
+		<moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="329d087c-7658-4e7c-bca2-8edc5347df5a" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+			<moodle:post-core-course-create-courses-body ><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+---
+payload]]]></moodle:post-core-course-create-courses-body>
+		</moodle:post-core-course-create-courses>
 		<logger level="INFO" doc:name="Moodle Response Payload Logger" doc:id="ddb2c2e7-5804-4281-be07-540922fa7f99" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
 		<ee:transform doc:name="Moodle Response Payload" doc:id="7a8e9b9d-07ef-4338-9808-ff16c89f6c9f" >
 			<ee:message >
