@@ -75,4 +75,113 @@ payload]]></ee:set-payload>
 		</ee:transform>
 		<logger level="INFO" doc:name="Salesforce to Moodle Create Flow Ended Logger" doc:id="17b0f81b-3a64-432e-9841-c14e67ff40a8" message="Salesforce to Moodle Create Flow Ended"/>
 	</flow>
+	<flow name="sftomoodleUpdateFlow" doc:id="cecf220e-c800-4824-a1de-f19d3f8d4892" >
+		<salesforce:modified-object-listener doc:name="On Modified Object" doc:id="7eec03ce-417f-4d8f-92c0-bc6124bfb64b" config-ref="Salesforce_Config" objectType="Moodle_Course__c">
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</salesforce:modified-object-listener>
+		<logger level="INFO" doc:name="Salesforce to Moodle Update Flow Started Logger" doc:id="3c434a3f-c144-4ae7-b885-f1b01c1085ab" message="Salesforce to Moodle Update Flow Started"/>
+		<logger level="INFO" doc:name="SF Request Payload Logger" doc:id="2a860979-43ae-4033-8ba2-cc7b7243eee0" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<flow-ref doc:name="accesstoken_Flow" doc:id="f83dc020-81e9-4a05-b634-c010bd4da885" name="accesstoken_Flow"/>
+		<ee:transform doc:name="Moodle Request Payload" doc:id="e11b98f3-a3b4-4065-93e7-e20a0f113303" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  wstoken:vars.moodleToken.token,
+  wsfunction:"core_course_update_courses",
+  moodlewsrestformat:"json",
+  "courses[0][id]":payload.Moodle_Course_ID__c as Number default 1,
+  "courses[0][fullname]":payload.Name default "",
+  "courses[0][shortname]": payload.Short_Name__c default "",
+  "courses[0][categoryid]": payload.Category_ID__c as Number default 1,
+  "courses[0][idnumber]": payload.ID_Number__c default "",
+  "courses[0][summary]": payload.Summary__c default "",
+  "courses[0][summaryformat]": payload.Summary_Format__c as Number default 1 ,
+  "courses[0][format]": payload.Format__c default "topics",
+  "courses[0][showgrades]": if(payload.Show_Grades__c) 1 else 0,
+  "courses[0][newsitems]": payload.News_Items__c as Number default 5 ,
+  "courses[0][startdate]" : payload.End_Date__c as Number,
+  "courses[0][enddate]": payload.End_Date__c as Number,
+  "courses[0][numsections]": payload.Num_Sections__c as Number default 10 ,
+  "courses[0][maxbytes]": payload.Max_File_Size__c as Number default 2097152,
+  "courses[0][showreports]": if(payload.Show_Reports__c) 1 else 0,
+  "courses[0][visible]": if(payload.Visible__c) 1 else 0,
+  "courses[0][hiddensections]": payload.Hidden_Sections__c as Number default 0,
+  "courses[0][groupmode]": payload.Group_Mode__c as Number default 1 ,
+  "courses[0][groupmodeforce]": if(payload.Group_Mode_Force__c) 1 else 0,
+  "courses[0][defaultgroupingid]": payload.Default_Grouping_ID__c as Number default 0 ,
+  "courses[0][enablecompletion]": if(payload.Enable_Completion__c) 1 else 0,
+  "courses[0][completionnotify]": if(payload.Completion_Notify__c) 1 else 0,
+  "courses[0][lang]": payload.Forced_Language__c default "en",
+  "courses[0][forcetheme]": payload.Force_Theme__c default "boost",
+  "courses[0][courseformatoptions][0][name]": "numsections",
+  "courses[0][courseformatoptions][0][value]": "10",
+  "courses[0][customfields][0][shortname]": "customcode",
+  "courses[0][customfields][0][value]": "XYZ123"
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Moodle Request Payload Logger" doc:id="b19b6af8-2b7b-42d5-82ca-8777ba601603" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<moodle:post-core-course-update-courses doc:name="Course - Update Courses" doc:id="cfeccdf5-86bb-41f4-a58b-7047adc37caf" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+			<moodle:post-core-course-update-courses-body ><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+---
+payload]]]></moodle:post-core-course-update-courses-body>
+		</moodle:post-core-course-update-courses>
+		<logger level="INFO" doc:name="Moodle Response Payload Logger" doc:id="9cd4e8b2-1009-42ff-b250-3425e3bcbf94" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<ee:transform doc:name="Moodle Response Payload" doc:id="f3bff457-1b03-4a5c-af6f-892635f0d762" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Salesforce to Moodle Update Flow Ended Logger" doc:id="17fc96ed-40c3-4fe1-b2a4-ababb60f514b" message="Salesforce to Moodle Update Flow Ended"/>
+	</flow>
+	<flow name="sftomoodleDeleteFlow" doc:id="09db9918-e3cc-49c9-9001-bf5df9a18a14" >
+		<salesforce:deleted-object-listener doc:name="On Deleted Object" doc:id="637d3e82-b50a-470e-a04f-c882d89bcc47" config-ref="Salesforce_Config" objectType="Moodle_Course__c">
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</salesforce:deleted-object-listener>
+		<logger level="INFO" doc:name="Salesforce to Moodle Delete Flow Started Logger" doc:id="134a40d7-149f-4e6f-bbbd-ca25b01395c5" message="Salesforce to Moodle Delete Flow Started"/>
+		<logger level="INFO" doc:name="SF Request Payload Logger" doc:id="53da2808-cdb0-4416-9dfb-3ce4f2f61edd" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<flow-ref doc:name="accesstoken_Flow" doc:id="e2fcbea1-5884-4c8a-b6fa-cbb0b5963625" name="accesstoken_Flow"/>
+		<ee:transform doc:name="Moodle Request Payload" doc:id="63545c6f-93cb-4d9a-aa14-a04876b146b8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  wstoken:vars.moodleToken.token,
+  wsfunction:"core_course_delete_courses",
+  moodlewsrestformat:"json",
+  "courseids[0]":payload.Moodle_Course_ID__c as Number default 1
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Moodle Request Payload Logger" doc:id="aa29fbe7-118f-44ea-b2d4-29a3e65cbf52" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<moodle:post-core-course-delete-courses doc:name="Course - Delete Courses" doc:id="979a8e62-df59-44cd-b800-322ab2bcee85" config-ref="Moodle_Config" correlationIdHeader="correlationId">
+			<moodle:post-core-course-delete-courses-body ><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+---
+payload]]]></moodle:post-core-course-delete-courses-body>
+		</moodle:post-core-course-delete-courses>
+		<logger level="INFO" doc:name="Moodle Response Payload Logger" doc:id="e80ebf0b-949a-42f8-a41a-6383f1535def" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<ee:transform doc:name="Moodle Response Payload" doc:id="3dbc151d-81fb-47a2-970f-a98087f0e3c6" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Salesforce to Moodle Delete Flow Ended Logger" doc:id="2c740a09-47f3-4caa-852d-fdc5cff09221" message="Salesforce to Moodle Delete Flow Ended"/>
+	</flow>
 </mule>
