@@ -1,0 +1,20 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  id: integer
+  name: string
+  idnumber: string
+  description: string
+  descriptionformat: integer
+  visible: integer
+  theme?: string
+  customfields?:
+    type: array
+    items:
+      type: object
+      properties:
+        name: string
+        shortname: string
+        type: string
+        valueraw: string
+        value: string

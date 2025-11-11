@@ -1,0 +1,32 @@
+#%RAML 1.0 DataType
+type: array
+items:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: Group record ID
+    courseid:
+      type: integer
+      description: ID of course
+    name:
+      type: string
+      description: Group name
+    description:
+      type: string
+      description: Group description text
+    descriptionformat:
+      type: integer
+      description: Description format (1=HTML, 0=MOODLE, 2=PLAIN, 4=MARKDOWN)
+    enrolmentkey:
+      type: string
+      description: Group enrol secret phrase
+    idnumber:
+      type: string
+      description: Group id number
+    visibility:
+      type: integer
+      description: Group visibility mode (0=Visible to all, 1=Visible to members, 2=See own membership, 3=Membership hidden)
+    participation:
+      type: integer
+      description: Participation mode

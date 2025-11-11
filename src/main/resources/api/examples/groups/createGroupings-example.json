@@ -1,0 +1,16 @@
+[
+  {
+    "id": 7,
+    "courseid": 15,
+    "name": "Lab Grouping A",
+    "description": "This grouping is for lab sessions",
+    "descriptionformat": 1,
+    "idnumber": "GRP-2025-01",
+    "customfields": [
+      {
+        "shortname": "priority",
+        "value": "high"
+      }
+    ]
+  }
+]

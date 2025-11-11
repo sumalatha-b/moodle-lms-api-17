@@ -1,0 +1,13 @@
+[
+  {
+    "id": 12,
+    "courseid": 101,
+    "name": "Group One",
+    "description": "Description for Group One",
+    "descriptionformat": 1,
+    "enrolmentkey": "secret123",
+    "idnumber": "G001",
+    "visibility": 0,
+    "participation": 1
+  }
+]

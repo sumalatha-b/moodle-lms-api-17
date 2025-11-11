@@ -17,7 +17,12 @@ types:
   createCourse: !include /datatypes/courses/createCourse-dataType.raml
   getCourseByField: !include /datatypes/courses/getCoursesByField-dataType.raml
   updateDeleteCourse: !include /datatypes/courses/updateDeleteCourse-dataType.raml
-  
+  getGrades: !include /datatypes/grades/getGrades-dataType.raml
+  getCourseGrades: !include /datatypes/grades/getCourseGrades-dataType.raml
+  createCalendar: !include /datatypes/calendar/createCalendar-dataType.raml
+  getCalendar: !include /datatypes/calendar/getCalendar-dataType.raml
+  getCalendarById: !include /datatypes/calendar/getCalendarById-dataType.raml
+  getCalendarTimesort: !include /datatypes/calendar/getCalendarTimesort-dataType.raml
   getAssignments: !include /datatypes/assignments/getAssignments-dataType.raml
   getAssignmentSubmission: !include /datatypes/assignments/getAssignmentSubmission-dataType.raml
   getAssignmentGrades: !include /datatypes/assignments/getAssignmentGrades-dataType.raml
@@ -25,17 +30,26 @@ types:
   coreUserGetUsersByFieldResponse: !include /datatypes/user/getUsersById-dataType.raml
   coreUserCreateUsersResponse: !include /datatypes/user/createUser-dataType.raml
   coreUserUpdateUsersResponse: !include /datatypes/user/updateUser-dataType.raml
-  
+  coreGroupCreateGroupingsResponse: !include /datatypes/groups/createGroupings-dataType.raml
+  coreGroupGetGroupMembersResponse: !include /datatypes/groups/getGroupMembers-datatype.raml
   coreCourseGetCategories: !include /datatypes/courseCategory/getCategories-dataType.raml
   coreCourseCreateCategories: !include /datatypes/courseCategory/createCategories-dataType.raml
-  getCourseGrades: !include /datatypes/grades/getCourseGrades-dataType.raml
+  coreGroupGetGroups: !include /datatypes/groups/getGroups-dataType.raml
+  coreGroupCreateGroups: !include /datatypes/groups/createGroups-dataType.raml
+  coreGroupGetCourseGroups: !include /datatypes/groups/getCourseGroups-dataType.raml
+  coreGroupGetCourseGroupings: !include /datatypes/groups/getCourseGroupings-dataType.raml
   enrolManualEnrolUsers: !include /datatypes/enrollment/enrolManualEnrolUsers-dataType.raml
   enrolManualUnenrolUsers: !include /datatypes/enrollment/enrolManualUnenrolUsers-dataType.raml
   coreEnrolGetEnrolledUsers: !include /datatypes/enrollment/getEnrolledUsers-dataType.raml
   coreEnrolGetUsersCoursesResponse: !include /datatypes/enrollment/getUsersCourses-datatype.raml
   coreEnrolUnenrolUserEnrolment: !include /datatypes/enrollment/unenrolUserEnrolment-dataType.raml
-  
-
+  Cohort: !include /datatypes/cohort/cohort-dataType.raml
+  AddCohortMemberResponse: !include /datatypes/cohort/addCohortMember-dataType.raml
+  DeleteCohortResponse: !include /datatypes/cohort/deleteCohort-dataType.raml
+  DeleteCohortMemberResponse: !include /datatypes/cohort/deleteCohortMember-dataType.raml
+  GetCohortMembers: !include /datatypes/cohort/getCohortMembers-dataType.raml
+  CohortItem: !include /datatypes/cohort/getCohorts-dataType.raml
+  CohortTypes: !include /datatypes/cohort/updateCohorts-dataType.raml
 
 /core_course_get_courses:
   post:
@@ -263,9 +277,331 @@ types:
           application/json:
             type: updateDeleteCourse
             example: !include /examples/courses/updateDeleteCourse-example.json
+/core_role_assign_roles:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: User Roles - Assign Roles
+    description: Assign Roles
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_role_assign_roles
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          assignments[0][roleid]: integer
+          assignments[0][userid]: integer
+          assignments[0][contextid]?: integer
+          assignments[0][contextlevel]?: string
+          assignments[0][instanceid]?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/core_role_unassign_roles:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName:  User Roles - Unassign Roles
+    description: Unassign Roles
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_role_unassign_roles
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          unassignments[0][roleid]: integer
+          unassignments[0][userid]: integer
+          unassignments[0][contextid]?: integer
+          unassignments[0][contextlevel]?: string
+          unassignments[0][instanceid]?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/gradereport_user_get_grade_items:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Grade Report - Get Grade Items
+    description: Get Grade Items
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: gradereport_user_get_grade_items
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          courseid: integer
+          userid?: integer
+          groupid?: integer
+          
+    responses:
+      200:
+        body:
+          application/json:
+            type: getGrades
+            example: !include /examples/grades/getGrades-example.json
 
+/gradereport_overview_get_course_grades:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Grade Report - Get Course Grades
+    description: Get Course Grades
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: gradereport_overview_get_course_grades
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          userid: integer       
+    responses:
+      200:
+        body:
+          application/json:
+            type: getCourseGrades
+            example: !include /examples/grades/getCourseGrades-example.json
 
+/core_calendar_create_calendar_events:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Calendar - Create Calendar Events
+    description: Create Calendar Events
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_calendar_create_calendar_events
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          events[0][name]: string
+          events[0][description]: string
+          events[0][format]: integer
+          events[0][courseid]: integer
+          events[0][groupid]: integer
+          events[0][repeats]?: integer
+          events[0][eventtype]: string
+          events[0][timestart]?: integer
+          events[0][timeduration]?: integer
+          events[0][visible]?: integer
+          events[0][sequence]?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: createCalendar
+            example: !include /examples/calendar/createCalendar-example.json
+/core_calendar_get_calendar_events:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Calendar - Get Calendar Events
+    description: Get Calendar Events
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_calendar_get_calendar_events
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          events[0][courseid]?: integer
+          events[0][groupid]?: integer
+          events[0][eventids]?: integer
+          events[0][categoryids]?: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: getCalendar
+            example: !include /examples/calendar/getCalendar-example.json
+ 
+/core_calendar_delete_calendar_events:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Calendar - Delete Calendar Events
+    description: Delete Calendar Events
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_calendar_delete_calendar_events
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          events[0][eventid]: integer
+          events[0][repeat]: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
 
+/core_calendar_get_calendar_event_by_id:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Calendar - Get Calendar Event by Id
+    description: Get Calendar Event by Id
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_calendar_get_calendar_event_by_id
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          eventid: integer
+    responses:
+      200:
+        body:
+          application/json:
+            type: getCalendarById
+            example: !include /examples/calendar/getCalendarById-example.json
+
+/core_calendar_get_action_events_by_timesort:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Calendar - Get Calendar events for students
+    description: Get Calendar events for students
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_calendar_get_action_events_by_timesort
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          timesortfrom: 
+            type: integer
+            required: false
+            default: 0
+          timesortto:
+            type: integer
+            required: false
+            default: null
+          aftereventid:
+            type: integer
+            required: false
+            default: 0
+          limitnum:
+            type: integer
+            required: false
+            default: 20
+          limittononsuspendedevents:
+            type: integer
+            required: false
+          userid:
+            type: integer
+            required: false
+          searchvalue:
+            type: string
+            required: false
+            default: null
+    responses:
+      200:
+        body:
+          application/json:
+            type: getCalendarTimesort
+            example: !include /examples/calendar/getCalendarTimesort-example.json
 
 /mod_assign_get_assignments:
   post:
@@ -608,7 +944,298 @@ types:
           application/json:
             type: commonResponse
             example: !include /examples/common/common-example.json
-
+/core_group_add_group_members:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Add Group Members
+    description: Add users as members to groups in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_add_group_members
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          members[0][groupid]:
+            description: Group ID
+            type: integer
+            required: true
+            example: 5
+          members[0][userid]:
+            description: User ID
+            type: integer
+            required: true
+            example: 21
+          
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/core_group_delete_group_members:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Delete Group Members
+    description: Delete users from groups in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_delete_group_members
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          members[0][groupid]:
+            description: Group ID
+            type: integer
+            required: true
+            example: 5
+          members[0][userid]:
+            description: User ID
+            type: integer
+            required: true
+            example: 21
+          
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/core_group_assign_grouping:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Assign Groupings
+    description: Assign groups to groupings in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_assign_grouping
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          assignments[0][groupingid]:
+            description: Grouping ID
+            type: integer
+            required: true
+            example: 2
+          assignments[0][groupid]:
+            description: Group ID
+            type: integer
+            required: true
+            example: 10
+          
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/core_group_create_groupings:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Create Groupings
+    description: Create new groupings in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_create_groupings
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          groupings[0][courseid]:
+            description: Course ID
+            type: integer
+            required: true
+            example: 15
+          groupings[0][name]:
+            description: Grouping name
+            type: string
+            required: true
+            example: "Lab Grouping A"
+          groupings[0][description]:
+            description: Grouping description
+            type: string
+            required: true
+            example: "This grouping is for lab sessions"
+          groupings[0][descriptionformat]:
+            description: Description format (1 = HTML, 0 = MOODLE, 2 = PLAIN, 4 = MARKDOWN)
+            type: integer
+            required: true
+            default: 1
+            example: 1
+          groupings[0][idnumber]:
+            description: ID number
+            type: string
+            required: true
+            example: "GRP-2025-01"
+          groupings[0][customfields][0][shortname]:
+            description: Custom field shortname
+            type: string
+            required: false
+            example: "priority"
+          groupings[0][customfields][0][value]:
+            description: Custom field value
+            type: string
+            required: false
+            example: "high"
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreGroupCreateGroupingsResponse
+            example: !include /examples/groups/createGroupings-example.json
+/core_group_get_group_members:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Get Group Members
+    description: Get members of the specified groups in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_get_group_members
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          groupids[0]:
+            description: Group ID
+            type: integer
+            required: true
+            example: 5       
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreGroupGetGroupMembersResponse
+            example: !include /examples/groups/getGroupMembers-example.json
+/core_group_unassign_grouping:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Unassign Groupings
+    description: Unassign groups from groupings in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_unassign_grouping
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          unassignments[0][groupingid]:
+            description: Grouping record ID
+            type: integer
+            required: true
+            example: 2
+          unassignments[0][groupid]:
+            description: Group record ID
+            type: integer
+            required: true
+            example: 5
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/core_group_delete_groupings:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Delete Groupings
+    description: Delete all specified groupings in Moodle
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Token for authentication
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_delete_groupings
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          groupingids[0]:
+            description: Grouping ID
+            type: integer
+            required: true
+            example: 3   
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
 
 /core_course_get_categories:
   post:
@@ -806,12 +1433,369 @@ types:
           application/json:
             type: commonResponse
             example: !include /examples/common/common-example.json
+/core_group_get_groups:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Get Group
+    description: Returns detailed information for specified groups.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle web service token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_get_groups
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          groupids[0]:
+            description: Group ID to fetch details for (use multiple with incremented indices)
+            type: integer
+            required: true
+            example: 12
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreGroupGetGroups
+            example: !include /examples/groups/getGroups-example.json
+          
+/core_group_create_groups:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Create Group
+    description: Creates new groups in a course.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle web service token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_create_groups
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          groups[0][courseid]:
+            description: ID of the course where the group will be created
+            type: integer
+            required: true
+            example: 101
+          groups[0][name]:
+            description: Multilang compatible group name unique within course
+            type: string
+            required: true
+            example: Example Group Name
+          groups[0][description]:
+            description: Group description text
+            type: string
+            required: true
+            example: Description for the group
+          groups[0][descriptionformat]:
+            description: Description format (1=HTML, 0=MOODLE, 2=PLAIN, 4=MARKDOWN)
+            type: integer
+            default: 1
+            example: 1
+          groups[0][enrolmentkey]:
+            description: Optional group enrol secret phrase
+            type: string
+            required: false
+            example: secret123
+          groups[0][idnumber]:
+            description: Optional ID number for the group
+            type: string
+            required: false
+            example: GRP001
+          groups[0][visibility]:
+            description: Group visibility mode (0=Visible to all, 1=Visible to members, 2=See own membership, 3=Membership hidden)
+            type: integer
+            default: 0
+            example: 0
+          groups[0][participation]:
+            description: Activity participation enabled? Only for “all” and “members” visibility, default true
+            type: integer
+            default: 1
+            example: 1
+          groups[0][customfields][0][shortname]:
+            description: Custom field shortname (optional)
+            type: string
+            required: false
+            example: customfield1
+          groups[0][customfields][0][value]:
+            description: Custom field value (optional)
+            type: string
+            required: false
+            example: customvalue1
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreGroupCreateGroups
+            example: !include /examples/groups/createGroups-example.json
 
-
-
-
-
-
+/core_group_update_groups:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Update Group
+    description: Update one or more existing groups
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            description: Moodle web service token
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            type: string
+            required: true
+            description: Moodle function name
+            example: core_group_update_groups
+          moodlewsrestformat:
+            type: string
+            required: true
+            description: Response format (json/xml)
+            example: json
+          groups[0][id]:
+            type: integer
+            required: true
+            description: ID of the group to update
+            example: 12
+          groups[0][name]:
+            type: string
+            required: true
+            description: Multilang compatible group name
+            example: Updated Group Name
+          groups[0][description]:
+            type: string
+            required: false
+            description: Group description text
+            example: Updated description
+          groups[0][descriptionformat]:
+            type: integer
+            required: false
+            default: 1
+            description: Description format (1=HTML, 0=MOODLE, 2=PLAIN, 4=MARKDOWN)
+            example: 1
+          groups[0][enrolmentkey]:
+            type: string
+            required: false
+            description: Group enrol secret phrase
+            example: newsecret
+          groups[0][idnumber]:
+            type: string
+            required: false
+            description: Group id number
+            example: GRP001
+          groups[0][visibility]:
+            type: string
+            required: false
+            description: Group visibility mode (0=all,1=members,2=own membership,3=hidden)
+            example: "0"
+          groups[0][participation]:
+            type: integer
+            required: false
+            description: Activity participation enabled? Only for “all” and “members” visibility
+            example: 1
+          groups[0][customfields][0][shortname]:
+            type: string
+            required: false
+            description: Custom field shortname
+            example: customfield1
+          groups[0][customfields][0][value]:
+            type: string
+            required: false
+            description: Custom field value
+            example: customvalue1
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+           
+/core_group_delete_groups:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Delete Group
+    description: Delete one or more specified groups.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            description: Moodle web service token
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            type: string
+            required: true
+            description: Moodle function name
+            example: core_group_delete_groups
+          moodlewsrestformat:
+            type: string
+            required: true
+            description: Response format (json/xml)
+            example: json
+          groupids[0]:
+            type: integer
+            required: true
+            description: Group ID to delete (use incremented index for multiple)
+            example: 123
+          groupids[1]:
+            type: integer
+            description: Additional Group ID to delete (optional)
+            example: 456
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
+/core_group_get_course_groups:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Get Course Groups
+    description: Returns all groups in the specified course
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle web service token
+            type: string
+            required: true
+            example: db6ccaf6e69123c284e4a5710be8b875
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_get_course_groups
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          courseid:
+            description: ID of course to fetch groups for
+            type: integer
+            required: true
+            example: 101
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreGroupGetCourseGroups
+            example: !include /examples/groups/getCourseGroups-example.json
+/core_group_get_course_groupings:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Get Groupings
+    description: Returns all groupings in the specified course.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle web service token
+            type: string
+            required: true
+            example: abcdef1234567890abcdef1234567890
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_get_course_groupings
+          moodlewsrestformat:
+            description: Response format
+            type: string
+            required: true
+            example: json
+          courseid:
+            description: ID of course to fetch groupings for
+            type: integer
+            required: true
+            example: 101
+    responses:
+      200:
+        body:
+          application/json:
+            type: coreGroupGetCourseGroupings
+            example: !include /examples/groups/getCourseGroupings-example.json
+/core_group_update_groupings:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Groups - Update Groupings
+    description: Updates existing groupings
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            description: Moodle web service token
+            type: string
+            required: true
+            example: abcdef1234567890abcdef1234567890
+          wsfunction:
+            description: Moodle function name
+            type: string
+            required: true
+            example: core_group_update_groupings
+          moodlewsrestformat:
+            description: Response format (json or xml)
+            type: string
+            required: true
+            example: json
+          groupings[0][id]:
+            description: ID of the grouping to update
+            type: integer
+            required: true
+            example: 42
+          groupings[0][name]:
+            description: Multilang compatible grouping name, course unique
+            type: string
+            required: true
+            example: Updated Grouping Name
+          groupings[0][description]:
+            description: Grouping description text
+            type: string
+            required: true
+            example: Updated description text
+          groupings[0][descriptionformat]:
+            description: Description format (1=HTML, 0=MOODLE, 2=PLAIN, 4=MARKDOWN)
+            type: integer
+            default: 1
+            example: 1
+          groupings[0][idnumber]:
+            description: Optional grouping id number
+            type: string
+            example: GRPUPD1
+          groupings[0][customfields][0][shortname]:
+            description: Custom field shortname (optional)
+            type: string
+            example: customfield1
+          groupings[0][customfields][0][value]:
+            description: Custom field value (optional)
+            type: string
+            example: customvalue1
+    responses:
+      200:
+        body:
+          application/json:
+            type: commonResponse
+            example: !include /examples/common/common-example.json
 /enrol_manual_enrol_users:
   post:
     is: [commonHeaders,errorResponse]
@@ -1022,105 +2006,285 @@ types:
           application/json:
             type: coreEnrolUnenrolUserEnrolment
             example: !include /examples/enrollment/unenrolUserEnrolment-example.json
-/core_role_assign_roles:
+
+/core_cohort_create_cohorts:
   post:
     is: [commonHeaders,errorResponse]
-    displayName: User Roles - Assign Roles
-    description: Assign Roles
+    displayName: Cohort - Create Cohorts
+    description: Creates one or more cohorts in Moodle
     body:
       application/x-www-form-urlencoded:
         properties:
           wstoken:
-            description: token
             type: string
             required: true
-            example: db6ccaf6e69123c284e4a5710be8b875
           wsfunction:
-            description: Moodle function name
             type: string
+            enum: [ core_cohort_create_cohorts ]
             required: true
-            example: core_role_assign_roles
           moodlewsrestformat:
-            description: Response format
+            type: string
+            enum: [ json ]
+            required: true
+          cohorts[0][categorytype][type]:
             type: string
             required: true
-            example: json
-          assignments[0][roleid]: integer
-          assignments[0][userid]: integer
-          assignments[0][contextid]?: integer
-          assignments[0][contextlevel]?: string
-          assignments[0][instanceid]?: integer
+            example: system
+          cohorts[0][categorytype][value]:
+            type: string
+            required: true
+            example: "0"
+          cohorts[0][name]:
+            type: string
+            required: true
+            example: IT Cohort 123
+          cohorts[0][idnumber]:
+            type: string
+            required: true
+            example: ITC123
+          cohorts[0][description]?:
+            type: string
+            example: This is a test cohort
+          cohorts[0][descriptionformat]?:
+            type: string   # must be string because x-www-form-urlencoded encodes numbers as strings
+            example: "1"
+          cohorts[0][visible]?:
+            type: string   # keep string here, not integer
+            example: "1"
+          cohorts[0][theme]?:
+            type: string
+            example: boost
     responses:
       200:
         body:
           application/json:
-            type: commonResponse
-            example: !include /examples/common/common-example.json
-/core_role_unassign_roles:
+            type: Cohort[]
+            example: !include /examples/cohort/createCohorts-example.json
+
+/core_cohort_add_cohort_members:
   post:
     is: [commonHeaders,errorResponse]
-    displayName:  User Roles - Unassign Roles
-    description: Unassign Roles
+    displayName: Cohort - Add Cohort Members
+    description: Adds one or more users to a cohort.
     body:
       application/x-www-form-urlencoded:
         properties:
           wstoken:
-            description: token
             type: string
             required: true
-            example: db6ccaf6e69123c284e4a5710be8b875
+            example: "yourtokenhere"
           wsfunction:
-            description: Moodle function name
             type: string
             required: true
-            example: core_role_unassign_roles
+            example: core_cohort_add_cohort_members
           moodlewsrestformat:
-            description: Response format
             type: string
             required: true
             example: json
-          unassignments[0][roleid]: integer
-          unassignments[0][userid]: integer
-          unassignments[0][contextid]?: integer
-          unassignments[0][contextlevel]?: string
-          unassignments[0][instanceid]?: integer
+          members[0][cohorttype][type]:
+            type: string
+            example: id
+          members[0][cohorttype][value]:
+            type: string
+            example: "3"
+          members[0][usertype][type]:
+            type: string
+            example: id
+          members[0][usertype][value]:
+            type: string
+            example: "15"
     responses:
       200:
         body:
           application/json:
-            type: commonResponse
-            example: !include /examples/common/common-example.json
-/gradereport_overview_get_course_grades:
+            type: AddCohortMemberResponse
+            example: !include /examples/cohort/addCohortMembers-example.json
+
+/core_cohort_delete_cohorts:
   post:
     is: [commonHeaders,errorResponse]
-    displayName: Grade Report - Get Course Grades
-    description: Get Course Grades
+    displayName: Cohort - Delete Cohort
+    description: Deletes one or more cohorts.
     body:
       application/x-www-form-urlencoded:
         properties:
           wstoken:
-            description: token
             type: string
             required: true
-            example: db6ccaf6e69123c284e4a5710be8b875
+            example: "yourtokenhere"
           wsfunction:
-            description: Moodle function name
             type: string
             required: true
-            example: gradereport_overview_get_course_grades
+            example: core_cohort_delete_cohorts
           moodlewsrestformat:
-            description: Response format
             type: string
             required: true
             example: json
-          userid: integer       
+          cohortids[0]:
+            type: integer
+            required: true
+            example: 3
+    responses:
+      200:
+        description: Successful deletion response
+        body:
+          application/json:
+            type: DeleteCohortResponse
+            example: !include /examples/cohort/deleteCohorts-example.json   
+
+/core_cohort_delete_cohort_members:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Cohort - Delete Cohort Member
+    description: Deletes one or more users from a cohort.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            example: "yourtokenhere"
+          wsfunction:
+            type: string
+            required: true
+            example: core_cohort_delete_cohort_members
+          moodlewsrestformat:
+            type: string
+            required: true
+            example: json
+          members[0][cohortid]:
+            type: integer
+            required: true
+            example: 3
+          members[0][userid]:
+            type: integer
+            required: true
+            example: 15
+    responses:
+      200:
+        description: Successful deletion response
+        body:
+          application/json:
+            type: DeleteCohortMemberResponse
+            example: !include /examples/cohort/deleteCohortMembers-example.json
+
+/core_cohort_get_cohort_members:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Cohort - Get Cohort Members
+    description: Returns the list of users in one or more cohorts.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            example: "yourtokenhere"
+          wsfunction:
+            type: string
+            required: true
+            example: core_cohort_get_cohort_members
+          moodlewsrestformat:
+            type: string
+            required: true
+            example: json
+          cohortids[0]:
+            type: integer
+            required: true
+            example: 3
+    responses:
+      200:
+        description: Successful response with cohort members
+        body:
+          application/json:
+            type: GetCohortMembers
+            example: !include /examples/cohort/getCohortMembers-example.json
+
+/core_cohort_get_cohorts:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Cohort - Get Cohorts
+    description: Returns details of one or more cohorts. If no IDs are passed, all cohorts will be returned.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+            example: "yourtokenhere"
+          wsfunction:
+            type: string
+            required: true
+            example: core_cohort_get_cohorts
+          moodlewsrestformat:
+            type: string
+            required: true
+            example: json
+          cohortids[0]?:
+            type: integer
+            example: 3
+    responses:
+      200:
+        description: Successful response with cohort details
+        body:
+          application/json:
+            type: CohortItem[]
+            example: !include /examples/cohort/getCohorts-example.json
+/core_cohort_update_cohorts:
+  post:
+    is: [commonHeaders,errorResponse]
+    displayName: Cohort - Update Cohorts
+    description: Updates one or more cohorts in Moodle.
+    body:
+      application/x-www-form-urlencoded:
+        properties:
+          wstoken:
+            type: string
+            required: true
+          wsfunction:
+            type: string
+            enum: [ core_cohort_update_cohorts ]
+            required: true
+          moodlewsrestformat:
+            type: string
+            enum: [ json ]
+            required: true
+          cohorts[0][id]:
+            type: integer
+            example: 3
+          cohorts[0][categorytype][type]:
+            type: string
+            example: system
+          cohorts[0][categorytype][value]:
+            type: string
+            example: "0"
+          cohorts[0][name]:
+            type: string
+            example: Updated IT Cohort
+          cohorts[0][idnumber]:
+            type: string
+            example: ITC001
+          cohorts[0][description]?:
+            type: string
+            example: Updated cohort description
+          cohorts[0][descriptionformat]?:
+            type: integer
+            example: 1
+          cohorts[0][visible]?:
+            type: integer
+            example: 1
+          cohorts[0][theme]?:
+            type: string
+            example: boost
+          cohorts[0][customfields][0][shortname]?:
+            type: string
+            example: department
+          cohorts[0][customfields][0][value]?:
+            type: string
+            example: IT
     responses:
       200:
         body:
           application/json:
-            type: getCourseGrades
-            example: !include /examples/grades/getCourseGrades-example.json
-
-
-
-            
+            type: CohortTypes   
+            example: !include /examples/cohort/updateCohorts-example.json

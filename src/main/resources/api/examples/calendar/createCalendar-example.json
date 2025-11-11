@@ -1,0 +1,32 @@
+{
+  "events": [
+    {
+      "id": 12,
+      "name": "Weekly Standup Meeting",
+      "description": "Team weekly sync up",
+      "format": 1,
+      "courseid": 5,
+      "groupid": 0,
+      "userid": 23,
+      "repeatid": null,
+      "modulename": "meeting",
+      "instance": 101,
+      "eventtype": "site",
+      "timestart": 1725945600,
+      "timeduration": 3600,
+      "visible": 1,
+      "uuid": "123e4567-e89b-12d3-a456-426614174000",
+      "sequence": 1,
+      "timemodified": 1725950000,
+      "subscriptionid": null
+    }
+  ],
+  "warnings": [
+    {
+      "item": "course",
+      "itemid": 5,
+      "warningcode": "invalidcourse",
+      "message": "Course not found"
+    }
+  ]
+}

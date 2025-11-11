@@ -1,0 +1,18 @@
+[
+  {
+    "id": 15,
+    "courseid": 101,
+    "name": "Lab Grouping",
+    "description": "All lab groups",
+    "descriptionformat": 1,
+    "idnumber": "LAB2025"
+  },
+  {
+    "id": 16,
+    "courseid": 101,
+    "name": "Project Teams",
+    "description": "Team groupings for project work",
+    "descriptionformat": 1,
+    "idnumber": "PRJTEAM01"
+  }
+]

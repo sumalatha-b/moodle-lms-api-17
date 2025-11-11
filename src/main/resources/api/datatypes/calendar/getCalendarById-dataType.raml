@@ -1,0 +1,115 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  event:
+    type: object
+    properties:
+      id: integer
+      name: string
+      description: string
+      descriptionformat: integer
+      location: string
+      categoryid: integer
+      groupid: integer
+      userid: integer
+      repeatid?: integer | nil
+      eventcount: integer
+      component: string
+      modulename: string
+      activityname: string
+      activitystr: string
+      instance: integer
+      eventtype: string
+      timestart: integer
+      timeduration: integer
+      timesort: integer
+      timeusermidnight: integer
+      visible: integer
+      timemodified: integer
+      overdue: integer
+      icon:
+        type: object
+        properties:
+          key: string
+          component: string
+          alttext: string
+          iconurl: string
+          iconclass: string
+      category:
+        type: object
+        properties:
+          id: integer
+          name: string
+          idnumber: string
+          description: string
+          parent: integer
+          coursecount: integer
+          visible: integer
+          timemodified: integer
+          depth: integer
+          nestedname: string
+          url: string
+      course:
+        type: object
+        properties:
+          id: integer
+          fullname: string
+          shortname: string
+          idnumber: string
+          summary: string
+          summaryformat: integer
+          startdate: integer
+          enddate: integer
+          visible: integer
+          showactivitydates: integer
+          showcompletionconditions: integer
+          pdfexportfont: string
+          fullnamedisplay: string
+          viewurl: string
+          courseimage: string
+          progress: integer
+          hasprogress: integer
+          isfavourite: integer
+          hidden: integer
+          timeaccess: integer
+          showshortname: integer
+          coursecategory: string
+      subscription:
+        type: object
+        properties:
+          displayeventsource: integer
+          subscriptionname: string
+          subscriptionurl: string
+      canedit: integer
+      candelete: integer
+      deleteurl: string
+      editurl: string
+      viewurl: string
+      formattedtime: string
+      formattedlocation: string
+      isactionevent: integer
+      iscourseevent: integer
+      iscategoryevent: integer
+      groupname?: string | nil
+      normalisedeventtype: string
+      normalisedeventtypetext: string
+      action:
+        type: object
+        properties:
+          name: string
+          url: string
+          itemcount: integer
+          actionable: integer
+          showitemcount: integer
+      purpose: string
+      branded: integer
+      url: string
+  warnings?:
+    type: array
+    items:
+      type: object
+      properties:
+        item?: string
+        itemid?: integer
+        warningcode: string
+        message: string

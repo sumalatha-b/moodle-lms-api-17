@@ -1,0 +1,12 @@
+[
+       {
+                  "id": 3,
+                  "name": "IT Cohort 1234567890",
+                  "idnumber": "ITC1234567890",
+                  "description": "This is a test cohort",
+                  "descriptionformat": 1,
+                  "visible": true,
+                  "theme": ""
+    }
+ ]
+

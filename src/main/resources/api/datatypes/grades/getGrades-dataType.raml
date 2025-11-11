@@ -1,0 +1,62 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  usergrades:
+    type: array
+    items:
+      type: object
+      properties:
+        courseid: integer
+        courseidnumber: string
+        userid: integer
+        userfullname: string
+        useridnumber: string
+        maxdepth: integer
+        gradeitems:
+          type: array
+          items:
+            type: object
+            properties:
+              id: integer
+              itemname: string
+              itemtype: string
+              itemmodule: string
+              iteminstance: integer
+              itemnumber: integer
+              idnumber: string
+              categoryid: integer
+              outcomeid: integer
+              scaleid: integer
+              locked?: integer
+              cmid?: integer
+              weightraw?: number
+              weightformatted?: string
+              status?: string
+              graderaw?: number
+              gradedatesubmitted?: integer
+              gradedategraded?: integer
+              gradehiddenbydate?: integer
+              gradeneedsupdate?: integer
+              gradeishidden?: integer
+              gradeislocked?: integer
+              gradeisoverridden?: integer
+              gradeformatted?: string
+              grademin?: number
+              grademax?: number
+              rangeformatted?: string
+              percentageformatted?: string
+              lettergradeformatted?: string
+              rank?: integer
+              numusers?: integer
+              averageformatted?: string
+              feedback?: string
+              feedbackformat?: integer
+  warnings?:
+    type: array
+    items:
+      type: object
+      properties:
+        item?: string
+        itemid?: integer
+        warningcode: string
+        message: string

@@ -1,0 +1,19 @@
+[
+  {
+    "id": 10,
+    "courseid": 101,
+    "name": "Example Group",
+    "description": "Description for the group",
+    "descriptionformat": 1,
+    "enrolmentkey": "secret123",
+    "idnumber": "GRP001",
+    "visibility": 0,
+    "participation": 1,
+    "customfields": [
+      {
+        "shortname": "customfield1",
+        "value": "customvalue1"
+      }
+    ]
+  }
+]

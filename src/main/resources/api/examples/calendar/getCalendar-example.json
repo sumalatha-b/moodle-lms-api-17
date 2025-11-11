@@ -1,0 +1,60 @@
+{
+  "events": [
+    {
+      "id": 101,
+      "name": "Course Orientation",
+      "description": "Introduction to the course and overview of syllabus",
+      "format": 1,
+      "courseid": 5,
+      "categoryid": 2,
+      "groupid": 0,
+      "userid": 23,
+      "repeatid": 0,
+      "modulename": "lecture",
+      "instance": 45,
+      "eventtype": "course",
+      "timestart": 1725945600,
+      "timeduration": 7200,
+      "visible": 1,
+      "uuid": "123e4567-e89b-12d3-a456-426614174000",
+      "sequence": 1,
+      "timemodified": 1725950000,
+      "subscriptionid": null
+    },
+    {
+      "id": 102,
+      "name": "Weekly Lab",
+      "description": "Hands-on session for programming practice",
+      "format": 2,
+      "courseid": 5,
+      "categoryid": null,
+      "groupid": 1,
+      "userid": 23,
+      "repeatid": 10,
+      "modulename": null,
+      "instance": 46,
+      "eventtype": "group",
+      "timestart": 1726032000,
+      "timeduration": 5400,
+      "visible": 1,
+      "uuid": null,
+      "sequence": 2,
+      "timemodified": 1726035000,
+      "subscriptionid": null
+    }
+  ],
+  "warnings": [
+    {
+      "item": "course",
+      "itemid": 5,
+      "warningcode": "invalidcourse",
+      "message": "Course not found"
+    },
+    {
+      "item": "event",
+      "itemid": 102,
+      "warningcode": "invalidevent",
+      "message": "Event ID does not exist"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "usergrades": [
+    {
+      "courseid": 10,
+      "courseidnumber": "CSE101",
+      "userid": 501,
+      "userfullname": "John Doe",
+      "useridnumber": "JD123",
+      "maxdepth": 3,
+      "gradeitems": [
+        {
+          "id": 101,
+          "itemname": "Assignment 1",
+          "itemtype": "mod",
+          "itemmodule": "assign",
+          "iteminstance": 55,
+          "itemnumber": 1,
+          "idnumber": "A1",
+          "categoryid": 20,
+          "outcomeid": 0,
+          "scaleid": 0,
+          "locked": 0,
+          "cmid": 88,
+          "weightraw": 0.2,
+          "weightformatted": "20%",
+          "status": "graded",
+          "graderaw": 85,
+          "gradedatesubmitted": 1694256000,
+          "gradedategraded": 1694300000,
+          "gradehiddenbydate": 0,
+          "gradeneedsupdate": 0,
+          "gradeishidden": 0,
+          "gradeislocked": 0,
+          "gradeisoverridden": 0,
+          "gradeformatted": "85.0",
+          "grademin": 0,
+          "grademax": 100,
+          "rangeformatted": "0–100",
+          "percentageformatted": "85%",
+          "lettergradeformatted": "B",
+          "rank": 5,
+          "numusers": 50,
+          "averageformatted": "72%",
+          "feedback": "Well done!",
+          "feedbackformat": 1
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "item": "course",
+      "itemid": 10,
+      "warningcode": "gradelocked",
+      "message": "Grade item is locked and cannot be updated"
+    }
+  ]
+}

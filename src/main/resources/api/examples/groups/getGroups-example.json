@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "courseid": 1,
+    "name": "Group 1",
+    "description": "Description for group 1",
+    "descriptionformat": 1,
+    "enrolmentkey": "secret123",
+    "idnumber": "G001",
+    "visibility": 0,
+    "participation": 1,
+    "customfields": [
+      {
+        "name": "Custom Field 1",
+        "shortname": "custom1",
+        "type": "text",
+        "valueraw": "raw value",
+        "value": "Custom Value 1"
+      }
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  events:
+    type: array
+    items:
+      type: object
+      properties:
+        id: integer
+        name: string
+        description?: string
+        format: integer
+        courseid: integer
+        categoryid?: integer | nil
+        groupid: integer
+        userid: integer
+        repeatid: integer
+        modulename?: string | nil
+        instance: integer
+        eventtype: string
+        timestart: integer
+        timeduration: integer
+        visible: integer
+        uuid?: string | nil
+        sequence: integer
+        timemodified: integer
+        subscriptionid?: integer | nil
+  warnings?:
+    type: array
+    items:
+      type: object
+      properties:
+        item?: string
+        itemid?: integer
+        warningcode: string
+        message: string

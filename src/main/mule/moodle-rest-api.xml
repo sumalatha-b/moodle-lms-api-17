@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:moodle-access-token="http://www.mulesoft.org/schema/mule/moodle-access-token" xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
-http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd
-http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/schema/mule/moodle-access-token/current/mule-moodle-access-token.xsd">
-    
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns:moodle-access-token="http://www.mulesoft.org/schema/mule/moodle-access-token" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/schema/mule/moodle-access-token/current/mule-moodle-access-token.xsd">
     <flow name="moodle-rest-api-main">
         <http:listener config-ref="moodle-rest-api-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -27,15 +24,15 @@ http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/
         </http:listener>
         <apikit:console config-ref="moodle-rest-api-config" />
     </flow>
-	<flow name="post:\core_course_create_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
+    <flow name="post:\core_course_create_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="21d1cb26-291a-4626-a42a-e35c42c74a19" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_create_categories">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="060ff962-1dc9-421e-87d0-b61a1ef20952" name="accesstoken_Flow"/>
-		<moodle:post-core-course-create-categories doc:name="Course Category - Create Categories" doc:id="5003f9ce-04a5-45a9-a09c-88cbc04136a2" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-create-categories-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="060ff962-1dc9-421e-87d0-b61a1ef20952" name="accesstoken_Flow" />
+        <moodle:post-core-course-create-categories doc:name="Course Category - Create Categories" doc:id="5003f9ce-04a5-45a9-a09c-88cbc04136a2" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-create-categories-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -49,17 +46,17 @@ output application/x-www-form-urlencoded
     "categories[0][descriptionformat]": payload.'categories[0][descriptionformat]',
     "categories[0][theme]": payload.'categories[0][theme]'
 }]]]></moodle:post-core-course-create-categories-body>
-		</moodle:post-core-course-create-categories>
+        </moodle:post-core-course-create-categories>
     </flow>
     <flow name="post:\core_course_create_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="40cea967-8999-4975-87a5-e26573be697a" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_create_courses">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="4113729e-a82b-42be-aaa0-4c7088b6ec9c" name="accesstoken_Flow"/>
-		<moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="0d369d22-6d78-4064-b6b3-dd144108ee7c" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-create-courses-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="4113729e-a82b-42be-aaa0-4c7088b6ec9c" name="accesstoken_Flow" />
+        <moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="0d369d22-6d78-4064-b6b3-dd144108ee7c" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-create-courses-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -94,17 +91,17 @@ output application/x-www-form-urlencoded
     'courses[0][customfields][0][shortname]': payload.'courses[0][customfields][0][shortname]',
     'courses[0][customfields][0][value]': payload.'courses[0][customfields][0][value]'
 }]]]></moodle:post-core-course-create-courses-body>
-		</moodle:post-core-course-create-courses>
+        </moodle:post-core-course-create-courses>
     </flow>
     <flow name="post:\core_course_delete_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="1654668f-2f74-4bb1-9174-849e6c7532ba" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_delete_categories">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="836403e3-a561-4eb1-9699-ba1dd7fb7faa" name="accesstoken_Flow"/>
-		<moodle:post-core-course-delete-categories doc:name="Course Category - Delete Categories" doc:id="5a596d25-c2b8-42ec-9a94-4b5d6e0cc633" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-delete-categories-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="836403e3-a561-4eb1-9699-ba1dd7fb7faa" name="accesstoken_Flow" />
+        <moodle:post-core-course-delete-categories doc:name="Course Category - Delete Categories" doc:id="5a596d25-c2b8-42ec-9a94-4b5d6e0cc633" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-delete-categories-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -115,17 +112,17 @@ output application/x-www-form-urlencoded
     "categories[0][newparent]": payload.'categories[0][newparent]',  
     "categories[0][recursive]": payload.'categories[0][recursive]'    
 }]]]></moodle:post-core-course-delete-categories-body>
-		</moodle:post-core-course-delete-categories>
+        </moodle:post-core-course-delete-categories>
     </flow>
     <flow name="post:\core_course_delete_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="00e2875a-7f5f-42ab-b5e6-76f98ec92d92" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_delete_courses">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="55c7136d-0cec-43e5-ab06-91b482d34605" name="accesstoken_Flow"/>
-		<moodle:post-core-course-delete-courses doc:name="Course - Delete Courses" doc:id="6b9d3fd1-9776-43a5-8ced-94de0c67bae0" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-delete-courses-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="55c7136d-0cec-43e5-ab06-91b482d34605" name="accesstoken_Flow" />
+        <moodle:post-core-course-delete-courses doc:name="Course - Delete Courses" doc:id="6b9d3fd1-9776-43a5-8ced-94de0c67bae0" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-delete-courses-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -134,17 +131,17 @@ output application/x-www-form-urlencoded
     moodlewsrestformat: "json",
     "courseids[0]": payload.'courseids[0]'        
 }]]]></moodle:post-core-course-delete-courses-body>
-		</moodle:post-core-course-delete-courses>
+        </moodle:post-core-course-delete-courses>
     </flow>
     <flow name="post:\core_course_get_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="02ef8500-c1de-4e5f-8156-52b13188ba9f" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_get_categories">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="2e69b3bb-795a-4ac1-8954-58db7cdda618" name="accesstoken_Flow"/>
-		<moodle:post-core-course-get-categories doc:name="Course Category - Get Categories" doc:id="fe0f7684-a033-45b5-9082-f1b0f6791a35" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-get-categories-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="2e69b3bb-795a-4ac1-8954-58db7cdda618" name="accesstoken_Flow" />
+        <moodle:post-core-course-get-categories doc:name="Course Category - Get Categories" doc:id="fe0f7684-a033-45b5-9082-f1b0f6791a35" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-get-categories-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -155,17 +152,17 @@ output application/x-www-form-urlencoded
     "criteria[0][value]": payload.'criteria[0][value]',      
     addsubcategories: payload.addsubcategories         
 }]]]></moodle:post-core-course-get-categories-body>
-		</moodle:post-core-course-get-categories>
+        </moodle:post-core-course-get-categories>
     </flow>
     <flow name="post:\core_course_get_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="bed52dc5-00b3-46d1-8830-110101152233" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_get_courses">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="aae0a814-748b-4b32-9fdc-76a5a976e070" name="accesstoken_Flow"/>
-		<moodle:post-core-course-get-courses doc:name="Course - Get Courses" doc:id="c304cbf9-0e25-4792-ab1f-d01c0d40f25d" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-get-courses-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="aae0a814-748b-4b32-9fdc-76a5a976e070" name="accesstoken_Flow" />
+        <moodle:post-core-course-get-courses doc:name="Course - Get Courses" doc:id="c304cbf9-0e25-4792-ab1f-d01c0d40f25d" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-get-courses-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -173,17 +170,17 @@ output application/x-www-form-urlencoded
     wsfunction: payload.wsfunction,
     moodlewsrestformat: "json"
 }]]]></moodle:post-core-course-get-courses-body>
-		</moodle:post-core-course-get-courses>
+        </moodle:post-core-course-get-courses>
     </flow>
     <flow name="post:\core_course_get_courses_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="7464f4f3-af3b-402b-9595-0cd1f175243c" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_get_courses_by_field">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="1161db3a-3de8-4f13-a3f2-4495a155a0db" name="accesstoken_Flow"/>
-		<moodle:post-core-course-get-courses-by-field doc:name="Course - Get Courses by Field" doc:id="9dc9742c-c1ac-458b-ab4a-233e2e8fc2d8" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-get-courses-by-field-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="1161db3a-3de8-4f13-a3f2-4495a155a0db" name="accesstoken_Flow" />
+        <moodle:post-core-course-get-courses-by-field doc:name="Course - Get Courses by Field" doc:id="9dc9742c-c1ac-458b-ab4a-233e2e8fc2d8" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-get-courses-by-field-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -191,17 +188,17 @@ output application/x-www-form-urlencoded
     wsfunction: payload.wsfunction,
     moodlewsrestformat: "json"
 }]]]></moodle:post-core-course-get-courses-by-field-body>
-		</moodle:post-core-course-get-courses-by-field>
+        </moodle:post-core-course-get-courses-by-field>
     </flow>
     <flow name="post:\core_course_update_categories:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="f533f36e-8576-44fa-a8c3-e278caadd939" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_update_categories">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="a225b05b-14bc-42a0-a5ba-9946df558184" name="accesstoken_Flow"/>
-		<moodle:post-core-course-update-categories doc:name="Course Category - Update Categories" doc:id="1e9a78a7-ac2d-443e-8794-d90f8236abd8" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-update-categories-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="a225b05b-14bc-42a0-a5ba-9946df558184" name="accesstoken_Flow" />
+        <moodle:post-core-course-update-categories doc:name="Course Category - Update Categories" doc:id="1e9a78a7-ac2d-443e-8794-d90f8236abd8" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-update-categories-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -216,17 +213,17 @@ output application/x-www-form-urlencoded
     "categories[0][descriptionformat]": payload.'categories[0][descriptionformat]',
     "categories[0][theme]": payload.'categories[0][theme]'
 }]]]></moodle:post-core-course-update-categories-body>
-		</moodle:post-core-course-update-categories>
+        </moodle:post-core-course-update-categories>
     </flow>
     <flow name="post:\core_course_update_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="fccc7d0f-b7e6-4063-bca0-bbe6720859eb" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_update_courses">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="40101bb0-4fee-49e0-bd42-e2c7f09ab14a" name="accesstoken_Flow"/>
-		<moodle:post-core-course-update-courses doc:name="Course - Update Courses" doc:id="24d84e7b-e1ed-4b3f-929c-39bcdd046b29" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-course-update-courses-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="40101bb0-4fee-49e0-bd42-e2c7f09ab14a" name="accesstoken_Flow" />
+        <moodle:post-core-course-update-courses doc:name="Course - Update Courses" doc:id="24d84e7b-e1ed-4b3f-929c-39bcdd046b29" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-course-update-courses-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -263,17 +260,17 @@ output application/x-www-form-urlencoded
     "courses[0][customfields][0][shortname]": payload.'courses[0][customfields][0][shortname]',
     "courses[0][customfields][0][value]": payload.'courses[0][customfields][0][value]'
 }]]]></moodle:post-core-course-update-courses-body>
-		</moodle:post-core-course-update-courses>
+        </moodle:post-core-course-update-courses>
     </flow>
     <flow name="post:\core_enrol_get_enrolled_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="a5a90b4d-1f8a-40c6-967f-4468ab529845" config-ref="moodle-rest-api-httpListenerConfig" path="/core_enrol_get_enrolled_users">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="bab40b7d-46a7-4be7-a753-1bfcd4169b59" name="accesstoken_Flow"/>
-		<moodle:post-core-enrol-get-enrolled-users doc:name="Enrollment - Get Enrolled Users" doc:id="f7713e43-df66-4486-901e-f0afe94fa851" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-enrol-get-enrolled-users-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="bab40b7d-46a7-4be7-a753-1bfcd4169b59" name="accesstoken_Flow" />
+        <moodle:post-core-enrol-get-enrolled-users doc:name="Enrollment - Get Enrolled Users" doc:id="f7713e43-df66-4486-901e-f0afe94fa851" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-enrol-get-enrolled-users-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -282,17 +279,17 @@ output application/x-www-form-urlencoded
     moodlewsrestformat: "json",
     courseid: payload.courseid               
 }]]]></moodle:post-core-enrol-get-enrolled-users-body>
-		</moodle:post-core-enrol-get-enrolled-users>
+        </moodle:post-core-enrol-get-enrolled-users>
     </flow>
     <flow name="post:\core_enrol_get_users_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="4316ff5d-9d62-4ea6-a1c7-95f96b388f21" config-ref="moodle-rest-api-httpListenerConfig" path="/core_enrol_get_users_courses">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="572b4bbc-642b-49ec-9ca4-5bf4460e2e2d" name="accesstoken_Flow"/>
-		<moodle:post-core-enrol-get-users-courses doc:name="Enrollment - Get User''s Courses" doc:id="c8b207bd-9e3c-43c1-87d5-82ec9bdf68f5" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-enrol-get-users-courses-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="572b4bbc-642b-49ec-9ca4-5bf4460e2e2d" name="accesstoken_Flow" />
+        <moodle:post-core-enrol-get-users-courses doc:name="Enrollment - Get User''s Courses" doc:id="c8b207bd-9e3c-43c1-87d5-82ec9bdf68f5" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-enrol-get-users-courses-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -302,17 +299,17 @@ output application/x-www-form-urlencoded
     userid: payload.userid,                  
     returnusercount: payload.returnusercount
 }]]]></moodle:post-core-enrol-get-users-courses-body>
-		</moodle:post-core-enrol-get-users-courses>
+        </moodle:post-core-enrol-get-users-courses>
     </flow>
     <flow name="post:\core_enrol_unenrol_user_enrolment:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="22e339f4-3d4e-4b45-86ee-db7a18eac235" config-ref="moodle-rest-api-httpListenerConfig" path="/core_enrol_unenrol_user_enrolment">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="a03de330-8bae-4c75-9456-41bc42f3f191" name="accesstoken_Flow"/>
-		<moodle:post-enrol-manual-unenrol-users doc:name="Enrollment - Unenroll Users" doc:id="0bce3b71-0216-43e0-8d88-35bdb226bf7b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-enrol-manual-unenrol-users-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="a03de330-8bae-4c75-9456-41bc42f3f191" name="accesstoken_Flow" />
+        <moodle:post-enrol-manual-unenrol-users doc:name="Enrollment - Unenroll Users" doc:id="0bce3b71-0216-43e0-8d88-35bdb226bf7b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-enrol-manual-unenrol-users-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -321,17 +318,17 @@ output application/x-www-form-urlencoded
     moodlewsrestformat: "json",
     ueid: payload.ueid               
 }]]]></moodle:post-enrol-manual-unenrol-users-body>
-		</moodle:post-enrol-manual-unenrol-users>
+        </moodle:post-enrol-manual-unenrol-users>
     </flow>
     <flow name="post:\core_role_assign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="497317ca-e461-45f4-a1f5-75992af2ae30" config-ref="moodle-rest-api-httpListenerConfig" path="/core_role_assign_roles">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="50f06fe3-96bc-4f14-abd2-88b3714418da" name="accesstoken_Flow"/>
-		<moodle:post-core-role-assign-roles doc:name="User Roles - Assign Roles" doc:id="d6be20cb-b061-4097-a1da-51786fc0dbb1" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-role-assign-roles-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="50f06fe3-96bc-4f14-abd2-88b3714418da" name="accesstoken_Flow" />
+        <moodle:post-core-role-assign-roles doc:name="User Roles - Assign Roles" doc:id="d6be20cb-b061-4097-a1da-51786fc0dbb1" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-role-assign-roles-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -344,17 +341,17 @@ output application/x-www-form-urlencoded
     "assignments[0][contextlevel]": payload.'assignments[0][contextlevel]',
     "assignments[0][instanceid]": payload.'assignments[0][instanceid]'
 }]]]></moodle:post-core-role-assign-roles-body>
-		</moodle:post-core-role-assign-roles>
+        </moodle:post-core-role-assign-roles>
     </flow>
     <flow name="post:\core_role_unassign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="457d11cf-7c9d-4e0c-ae8f-960e3054d8c4" config-ref="moodle-rest-api-httpListenerConfig" path="/core_role_unassign_roles">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="ae8cd957-fe91-4f49-b864-9efeb3b59257" name="accesstoken_Flow"/>
-		<moodle:post-core-role-unassign-roles doc:name="User Roles - Unassign Roles" doc:id="862ec53d-2f4e-489d-8897-5329b61801d0" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-role-unassign-roles-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="ae8cd957-fe91-4f49-b864-9efeb3b59257" name="accesstoken_Flow" />
+        <moodle:post-core-role-unassign-roles doc:name="User Roles - Unassign Roles" doc:id="862ec53d-2f4e-489d-8897-5329b61801d0" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-role-unassign-roles-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -367,17 +364,17 @@ output application/x-www-form-urlencoded
     "unassignments[0][contextlevel]": payload.'unassignments[0][contextlevel]',
     "unassignments[0][instanceid]": payload.'unassignments[0][instanceid]'
 }]]]></moodle:post-core-role-unassign-roles-body>
-		</moodle:post-core-role-unassign-roles>
+        </moodle:post-core-role-unassign-roles>
     </flow>
     <flow name="post:\core_user_create_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="89a168ec-a158-47bd-90ae-573e87b3503c" config-ref="moodle-rest-api-httpListenerConfig" path="/core_user_create_users">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="3a0e53fc-43b4-481a-a007-a694a59bc6c9" name="accesstoken_Flow"/>
-		<moodle:post-core-user-create-users doc:name="User - Create users" doc:id="8b54e8c3-8b2f-4654-a9ef-d32b62184ef5" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-user-create-users-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="3a0e53fc-43b4-481a-a007-a694a59bc6c9" name="accesstoken_Flow" />
+        <moodle:post-core-user-create-users doc:name="User - Create users" doc:id="8b54e8c3-8b2f-4654-a9ef-d32b62184ef5" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-user-create-users-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -416,17 +413,17 @@ output application/x-www-form-urlencoded
     "users[0][preferences][0][type]": payload."users[0][preferences][0][type]",
     "users[0][preferences][0][value]": payload."users[0][preferences][0][value]"
 }]]]></moodle:post-core-user-create-users-body>
-		</moodle:post-core-user-create-users>
+        </moodle:post-core-user-create-users>
     </flow>
     <flow name="post:\core_user_delete_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="a334e47d-2495-4873-a534-39044f0d90a0" config-ref="moodle-rest-api-httpListenerConfig" path="/core_user_delete_users">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="bd80fa5e-c45f-4be3-b0d3-5247de58cfba" name="accesstoken_Flow"/>
-		<moodle:post-core-user-delete-users doc:name="User - Delete Users" doc:id="90185a28-ec18-447a-945d-8b89af47f024" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-user-delete-users-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="bd80fa5e-c45f-4be3-b0d3-5247de58cfba" name="accesstoken_Flow" />
+        <moodle:post-core-user-delete-users doc:name="User - Delete Users" doc:id="90185a28-ec18-447a-945d-8b89af47f024" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-user-delete-users-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -435,17 +432,17 @@ output application/x-www-form-urlencoded
     moodlewsrestformat: "json",
     "userids[0]": payload.'userids[0]'
 }]]]></moodle:post-core-user-delete-users-body>
-		</moodle:post-core-user-delete-users>
+        </moodle:post-core-user-delete-users>
     </flow>
     <flow name="post:\core_user_get_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="f65ce42c-c12e-4705-8a16-3a0289415463" config-ref="moodle-rest-api-httpListenerConfig" path="/core_user_get_users">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="6d76ab4f-5658-45f6-af7d-c0416565e88b" name="accesstoken_Flow"/>
-		<moodle:post-core-user-get-users doc:name="User - Get Users" doc:id="c525e528-4121-43c5-bb6e-a229c918a319" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-user-get-users-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="6d76ab4f-5658-45f6-af7d-c0416565e88b" name="accesstoken_Flow" />
+        <moodle:post-core-user-get-users doc:name="User - Get Users" doc:id="c525e528-4121-43c5-bb6e-a229c918a319" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-user-get-users-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -455,17 +452,17 @@ output application/x-www-form-urlencoded
     field: payload.field,
     "values[0]": payload.'values[0]'
 }]]]></moodle:post-core-user-get-users-body>
-		</moodle:post-core-user-get-users>
+        </moodle:post-core-user-get-users>
     </flow>
     <flow name="post:\core_user_get_users_by_field:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="d62b9012-3450-40fa-a41f-c3960f0bfccf" config-ref="moodle-rest-api-httpListenerConfig" path="/core_user_get_users_by_field">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="eb189c1e-ad61-4099-8be2-a605b8e5d6ca" name="accesstoken_Flow"/>
-		<moodle:post-core-user-get-users-by-field doc:name="User - Get Users by Id" doc:id="d67ce6e6-4f55-4440-a8cd-b91749c55580" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-user-get-users-by-field-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="eb189c1e-ad61-4099-8be2-a605b8e5d6ca" name="accesstoken_Flow" />
+        <moodle:post-core-user-get-users-by-field doc:name="User - Get Users by Id" doc:id="d67ce6e6-4f55-4440-a8cd-b91749c55580" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-user-get-users-by-field-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -475,17 +472,17 @@ output application/x-www-form-urlencoded
     field: payload.field,
     "values[0]": payload.'values[0]'
 }]]]></moodle:post-core-user-get-users-by-field-body>
-		</moodle:post-core-user-get-users-by-field>
+        </moodle:post-core-user-get-users-by-field>
     </flow>
     <flow name="post:\core_user_update_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="a65733b5-fde4-4e87-9e44-01982737adfb" config-ref="moodle-rest-api-httpListenerConfig" path="/core_user_update_users">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="38300cc6-2598-49dd-8cc1-6202d2803ca2" name="accesstoken_Flow"/>
-		<moodle:post-core-user-update-users doc:name="User - Update Users" doc:id="0c0851da-073f-45f6-8036-1c5d10448280" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-user-update-users-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="38300cc6-2598-49dd-8cc1-6202d2803ca2" name="accesstoken_Flow" />
+        <moodle:post-core-user-update-users doc:name="User - Update Users" doc:id="0c0851da-073f-45f6-8036-1c5d10448280" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-user-update-users-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -531,33 +528,33 @@ output application/x-www-form-urlencoded
     "users[0][preferences][0][type]": payload.'users[0][preferences][0][type]',
     "users[0][preferences][0][value]": payload.'users[0][preferences][0][value]'
 }]]]></moodle:post-core-user-update-users-body>
-		</moodle:post-core-user-update-users>
+        </moodle:post-core-user-update-users>
     </flow>
     <flow name="post:\enrol_manual_enrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="ff1db9d5-807f-4922-b0d5-41f3479e621e" config-ref="moodle-rest-api-httpListenerConfig" path="/enrol_manual_enrol_users">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="72a8dd49-edfb-4b9d-a04a-02ae969857bf" name="accesstoken_Flow"/>
-		<moodle:post-enrol-manual-enrol-users doc:name="Enrollment - Enroll Users" doc:id="c263d42d-8472-4c74-a421-e5df726ef63b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-enrol-manual-enrol-users-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="72a8dd49-edfb-4b9d-a04a-02ae969857bf" name="accesstoken_Flow" />
+        <moodle:post-enrol-manual-enrol-users doc:name="Enrollment - Enroll Users" doc:id="c263d42d-8472-4c74-a421-e5df726ef63b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-enrol-manual-enrol-users-body><![CDATA[#[%dw 2.0
 output application/json
 ---
 {
   message: "Sucess"
 } as Object {encoding: "UTF-8", mediaType: "application/json"}]]]></moodle:post-enrol-manual-enrol-users-body>
-		</moodle:post-enrol-manual-enrol-users>
+        </moodle:post-enrol-manual-enrol-users>
     </flow>
     <flow name="post:\enrol_manual_unenrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="b8088844-3af5-40ad-b2e7-4c1baacf81dd" config-ref="moodle-rest-api-httpListenerConfig" path="/enrol_manual_unenrol_users">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="b9b728aa-8555-4f97-8352-21566f4abad7" name="accesstoken_Flow"/>
-		<moodle:post-core-enrol-unenrol-user-enrolment doc:name="Enrollment - Unenroll Users" doc:id="329f859c-0371-48b1-83df-c2668a215cef" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-core-enrol-unenrol-user-enrolment-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="b9b728aa-8555-4f97-8352-21566f4abad7" name="accesstoken_Flow" />
+        <moodle:post-core-enrol-unenrol-user-enrolment doc:name="Enrollment - Unenroll Users" doc:id="329f859c-0371-48b1-83df-c2668a215cef" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-core-enrol-unenrol-user-enrolment-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -568,17 +565,17 @@ output application/x-www-form-urlencoded
     "enrolments[0][userid]": payload.'enrolments[0][userid]',
     "enrolments[0][courseid]": payload.'enrolments[0][courseid]'
 }]]]></moodle:post-core-enrol-unenrol-user-enrolment-body>
-		</moodle:post-core-enrol-unenrol-user-enrolment>
+        </moodle:post-core-enrol-unenrol-user-enrolment>
     </flow>
     <flow name="post:\gradereport_overview_get_course_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="1f5b5cad-96e7-401c-bb3b-3079d1946a08" config-ref="moodle-rest-api-httpListenerConfig" path="/gradereport_overview_get_course_grades">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="7efe1f42-f3e5-4666-8e88-2afc2dc1cbd1" name="accesstoken_Flow"/>
-		<moodle:post-gradereport-overview-get-course-grades doc:name="Grade Report - Get Course Grades" doc:id="a3028fde-2c7b-40e2-a564-d13a61024711" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-gradereport-overview-get-course-grades-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="7efe1f42-f3e5-4666-8e88-2afc2dc1cbd1" name="accesstoken_Flow" />
+        <moodle:post-gradereport-overview-get-course-grades doc:name="Grade Report - Get Course Grades" doc:id="a3028fde-2c7b-40e2-a564-d13a61024711" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-gradereport-overview-get-course-grades-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -588,17 +585,17 @@ output application/x-www-form-urlencoded
  
     userid: payload.userid
 }]]]></moodle:post-gradereport-overview-get-course-grades-body>
-		</moodle:post-gradereport-overview-get-course-grades>
+        </moodle:post-gradereport-overview-get-course-grades>
     </flow>
     <flow name="post:\mod_assign_get_assignments:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="f4757c60-f491-4ac5-8ea6-2fd0df4f831e" config-ref="moodle-rest-api-httpListenerConfig" path="/mod_assign_get_assignments">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="01c86798-24f8-4861-8920-face0ded869b" name="accesstoken_Flow"/>
-		<moodle:post-mod-assign-get-assignments doc:name="Assignments - Get all the course assignments" doc:id="a00f97b1-c4e5-4b45-a537-96955f3c1078" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-mod-assign-get-assignments-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="01c86798-24f8-4861-8920-face0ded869b" name="accesstoken_Flow" />
+        <moodle:post-mod-assign-get-assignments doc:name="Assignments - Get all the course assignments" doc:id="a00f97b1-c4e5-4b45-a537-96955f3c1078" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-mod-assign-get-assignments-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -608,17 +605,17 @@ output application/x-www-form-urlencoded
     'courseids[0]': payload.'courseids[0]'
     
 }]]]></moodle:post-mod-assign-get-assignments-body>
-		</moodle:post-mod-assign-get-assignments>
+        </moodle:post-mod-assign-get-assignments>
     </flow>
     <flow name="post:\mod_assign_get_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="755c65e9-ea58-4ba2-9a3e-d73e98c327c4" config-ref="moodle-rest-api-httpListenerConfig" path="/mod_assign_get_grades">
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="b31ca18a-fe29-42d5-8a45-a6f2d2fe6c20" name="accesstoken_Flow"/>
-		<moodle:post-mod-assign-get-grades doc:name="Assignments - Get assignment grades" doc:id="424b76d3-0d82-4b72-8faf-506e0ecc32a5" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-mod-assign-get-grades-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="b31ca18a-fe29-42d5-8a45-a6f2d2fe6c20" name="accesstoken_Flow" />
+        <moodle:post-mod-assign-get-grades doc:name="Assignments - Get assignment grades" doc:id="424b76d3-0d82-4b72-8faf-506e0ecc32a5" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-mod-assign-get-grades-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -627,17 +624,17 @@ output application/x-www-form-urlencoded
     moodlewsrestformat: "json",
     'assignmentids[0]': payload.'assignmentids[0]'
 }]]]></moodle:post-mod-assign-get-grades-body>
-		</moodle:post-mod-assign-get-grades>
+        </moodle:post-mod-assign-get-grades>
     </flow>
     <flow name="post:\mod_assign_get_submission_status:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="ffc9dba7-bb8d-45c4-a0d2-17814a3bdad5" config-ref="moodle-rest-api-httpListenerConfig" path="/mod_assign_get_submission_status">
-			<http:error-response statusCode="#[vars.httpStatus default 500]" >
-				<http:body ><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
-			</http:error-response>
-		</http:listener>
-		<flow-ref doc:name="Flow Reference" doc:id="48f37f34-2e59-4acc-806b-b6bb5d6834e0" name="accesstoken_Flow"/>
-		<moodle:post-mod-assign-get-submission-status doc:name="Assignments - Get assignment submissions" doc:id="dbfb5d8b-4c00-47a9-8a58-16cdf2c65cef" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-			<moodle:post-mod-assign-get-submission-status-body ><![CDATA[#[%dw 2.0
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
+            </http:error-response>
+        </http:listener>
+        <flow-ref doc:name="Flow Reference" doc:id="48f37f34-2e59-4acc-806b-b6bb5d6834e0" name="accesstoken_Flow" />
+        <moodle:post-mod-assign-get-submission-status doc:name="Assignments - Get assignment submissions" doc:id="dbfb5d8b-4c00-47a9-8a58-16cdf2c65cef" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+            <moodle:post-mod-assign-get-submission-status-body><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -647,6 +644,814 @@ output application/x-www-form-urlencoded
     assignid: payload.assignid,
     userid: payload.userid
 }]]]></moodle:post-mod-assign-get-submission-status-body>
-		</moodle:post-mod-assign-get-submission-status>
+        </moodle:post-mod-assign-get-submission-status>
+    </flow>
+    <flow name="post:\core_calendar_create_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  events: [
+    {
+      id: 12,
+      name: "Weekly Standup Meeting",
+      description: "Team weekly sync up",
+      format: 1,
+      courseid: 5,
+      groupid: 0,
+      userid: 23,
+      repeatid: null,
+      modulename: "meeting",
+      instance: 101,
+      eventtype: "site",
+      timestart: 1725945600,
+      timeduration: 3600,
+      visible: 1,
+      uuid: "123e4567-e89b-12d3-a456-426614174000",
+      sequence: 1,
+      timemodified: 1725950000,
+      subscriptionid: null
+    }
+  ],
+  warnings: [
+    {
+      item: "course",
+      itemid: 5,
+      warningcode: "invalidcourse",
+      message: "Course not found"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_calendar_delete_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_calendar_get_action_events_by_timesort:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  events: [
+    {
+      id: 201,
+      name: "Final Exam",
+      description: "End of term examination for all students",
+      descriptionformat: 1,
+      location: "Main Auditorium",
+      categoryid: 10,
+      groupid: 0,
+      userid: 45,
+      repeatid: null,
+      eventcount: 1,
+      component: "exam",
+      modulename: "quiz",
+      activityname: "Final Exam Quiz",
+      activitystr: "Quiz",
+      instance: 301,
+      eventtype: "course",
+      timestart: 1728624000,
+      timeduration: 7200,
+      timesort: 1728624000,
+      timeusermidnight: 1728604800,
+      visible: 1,
+      timemodified: 1728610000,
+      overdue: 0,
+      icon: {
+        key: "quiz",
+        component: "mod_quiz",
+        alttext: "Quiz icon",
+        iconurl: "https://example.com/icons/quiz.png",
+        iconclass: "icon-quiz"
+      },
+      category: {
+        id: 10,
+        name: "Examinations",
+        idnumber: "EXAM-2025",
+        description: "All exam-related events",
+        parent: 1,
+        coursecount: 12,
+        visible: 1,
+        timemodified: 1728600000,
+        depth: 2,
+        nestedname: "Academics / Exams",
+        url: "https://example.com/category/exams"
+      },
+      course: {
+        id: 5,
+        fullname: "Computer Science 101",
+        shortname: "CS101",
+        idnumber: "CS101-25",
+        summary: "Introduction to computer science",
+        summaryformat: 0,
+        startdate: 1725945600,
+        enddate: 1735680000,
+        visible: 1,
+        showactivitydates: 1,
+        showcompletionconditions: 1,
+        pdfexportfont: "Helvetica",
+        fullnamedisplay: "Computer Science 101 (CS101)",
+        viewurl: "https://example.com/course/cs101",
+        courseimage: "https://example.com/images/cs101.png",
+        progress: 75,
+        hasprogress: 1,
+        isfavourite: 0,
+        hidden: 0,
+        timeaccess: 1728612000,
+        showshortname: 1,
+        coursecategory: "Science & Technology"
+      },
+      subscription: {
+        displayeventsource: 1,
+        subscriptionname: "Exam Calendar",
+        subscriptionurl: "https://example.com/calendar/subscription"
+      },
+      canedit: 1,
+      candelete: 1,
+      deleteurl: "https://example.com/event/201/delete",
+      editurl: "https://example.com/event/201/edit",
+      viewurl: "https://example.com/event/201",
+      formattedtime: "October 11, 2025 10:00 AM - 12:00 PM",
+      formattedlocation: "Main Auditorium",
+      isactionevent: 1,
+      iscourseevent: 1,
+      iscategoryevent: 0,
+      groupname: null,
+      normalisedeventtype: "course",
+      normalisedeventtypetext: "Course Event",
+      action: {
+        name: "Open Quiz",
+        url: "https://example.com/mod/quiz/view.php?id=301",
+        itemcount: 1,
+        actionable: 1,
+        showitemcount: 0
+      },
+      purpose: "assessment",
+      branded: 0,
+      url: "https://example.com/event/201"
+    }
+  ],
+  firstid: 201,
+  lastid: 201
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_calendar_get_calendar_event_by_id:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  event: {
+    id: 201,
+    name: "Final Exam",
+    description: "End of term examination for all students",
+    descriptionformat: 1,
+    location: "Main Auditorium",
+    categoryid: 10,
+    groupid: 0,
+    userid: 45,
+    repeatid: null,
+    eventcount: 1,
+    component: "exam",
+    modulename: "quiz",
+    activityname: "Final Exam Quiz",
+    activitystr: "Quiz",
+    instance: 301,
+    eventtype: "course",
+    timestart: 1728624000,
+    timeduration: 7200,
+    timesort: 1728624000,
+    timeusermidnight: 1728604800,
+    visible: 1,
+    timemodified: 1728610000,
+    overdue: 0,
+    icon: {
+      key: "quiz",
+      component: "mod_quiz",
+      alttext: "Quiz icon",
+      iconurl: "https://example.com/icons/quiz.png",
+      iconclass: "icon-quiz"
+    },
+    category: {
+      id: 10,
+      name: "Examinations",
+      idnumber: "EXAM-2025",
+      description: "All exam-related events",
+      parent: 1,
+      coursecount: 12,
+      visible: 1,
+      timemodified: 1728600000,
+      depth: 2,
+      nestedname: "Academics / Exams",
+      url: "https://example.com/category/exams"
+    },
+    course: {
+      id: 5,
+      fullname: "Computer Science 101",
+      shortname: "CS101",
+      idnumber: "CS101-25",
+      summary: "Introduction to computer science",
+      summaryformat: 0,
+      startdate: 1725945600,
+      enddate: 1735680000,
+      visible: 1,
+      showactivitydates: 1,
+      showcompletionconditions: 1,
+      pdfexportfont: "Helvetica",
+      fullnamedisplay: "Computer Science 101 (CS101)",
+      viewurl: "https://example.com/course/cs101",
+      courseimage: "https://example.com/images/cs101.png",
+      progress: 75,
+      hasprogress: 1,
+      isfavourite: 0,
+      hidden: 0,
+      timeaccess: 1728612000,
+      showshortname: 1,
+      coursecategory: "Science & Technology"
+    },
+    subscription: {
+      displayeventsource: 1,
+      subscriptionname: "Exam Calendar",
+      subscriptionurl: "https://example.com/calendar/subscription"
+    },
+    canedit: 1,
+    candelete: 1,
+    deleteurl: "https://example.com/event/201/delete",
+    editurl: "https://example.com/event/201/edit",
+    viewurl: "https://example.com/event/201",
+    formattedtime: "October 11, 2025 10:00 AM - 12:00 PM",
+    formattedlocation: "Main Auditorium",
+    isactionevent: 0,
+    iscourseevent: 1,
+    iscategoryevent: 0,
+    groupname: null,
+    normalisedeventtype: "course",
+    normalisedeventtypetext: "Course Event",
+    action: {
+      name: "Open Quiz",
+      url: "https://example.com/mod/quiz/view.php?id=301",
+      itemcount: 1,
+      actionable: 1,
+      showitemcount: 0
+    },
+    purpose: "assessment",
+    branded: 0,
+    url: "https://example.com/event/201"
+  },
+  warnings: [
+    {
+      item: "course",
+      itemid: 99,
+      warningcode: "invalidcourse",
+      message: "Course not found"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_calendar_get_calendar_events:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  events: [
+    {
+      id: 101,
+      name: "Course Orientation",
+      description: "Introduction to the course and overview of syllabus",
+      format: 1,
+      courseid: 5,
+      categoryid: 2,
+      groupid: 0,
+      userid: 23,
+      repeatid: 0,
+      modulename: "lecture",
+      instance: 45,
+      eventtype: "course",
+      timestart: 1725945600,
+      timeduration: 7200,
+      visible: 1,
+      uuid: "123e4567-e89b-12d3-a456-426614174000",
+      sequence: 1,
+      timemodified: 1725950000,
+      subscriptionid: null
+    }, 
+    {
+      id: 102,
+      name: "Weekly Lab",
+      description: "Hands-on session for programming practice",
+      format: 2,
+      courseid: 5,
+      categoryid: null,
+      groupid: 1,
+      userid: 23,
+      repeatid: 10,
+      modulename: null,
+      instance: 46,
+      eventtype: "group",
+      timestart: 1726032000,
+      timeduration: 5400,
+      visible: 1,
+      uuid: null,
+      sequence: 2,
+      timemodified: 1726035000,
+      subscriptionid: null
+    }
+  ],
+  warnings: [
+    {
+      item: "course",
+      itemid: 5,
+      warningcode: "invalidcourse",
+      message: "Course not found"
+    }, 
+    {
+      item: "event",
+      itemid: 102,
+      warningcode: "invalidevent",
+      message: "Event ID does not exist"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_cohort_add_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  warnings: []
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_cohort_create_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 3,
+    name: "IT Cohort 1234567890",
+    idnumber: "ITC1234567890",
+    description: "This is a test cohort",
+    descriptionformat: 1,
+    visible: true,
+    theme: ""
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_cohort_delete_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: "success",
+  removedmembers: [
+    {
+      cohortid: 3,
+      userid: 15
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_cohort_delete_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: "success",
+  deletedcohorts: [
+    3
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_cohort_get_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  cohorts: [
+    {
+      cohortid: 3,
+      userids: [
+        15, 
+        18, 
+        22
+      ]
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_cohort_get_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 4,
+    name: "Science Cohort",
+    idnumber: "SCI-2025",
+    description: "Cohort for all science stream students",
+    descriptionformat: 1,
+    visible: 1,
+    theme: "classic",
+    customfields: [
+      {
+        name: "Department",
+        shortname: "dept",
+        "type": "text",
+        valueraw: "Science",
+        value: "Science"
+      }
+    ]
+  }, 
+  {
+    id: 5,
+    name: "Arts Cohort",
+    idnumber: "ART-2025",
+    description: "Cohort for arts students",
+    descriptionformat: 0,
+    visible: 1,
+    customfields: []
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_cohort_update_cohorts:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  warnings: [
+    {
+      item: "cohort",
+      itemid: 3,
+      warningcode: "update_success",
+      message: "Cohort updated successfully"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_add_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_assign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_create_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 7,
+    courseid: 15,
+    name: "Lab Grouping A",
+    description: "This grouping is for lab sessions",
+    descriptionformat: 1,
+    idnumber: "GRP-2025-01",
+    customfields: [
+      {
+        shortname: "priority",
+        value: "high"
+      }
+    ]
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_create_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 10,
+    courseid: 101,
+    name: "Example Group",
+    description: "Description for the group",
+    descriptionformat: 1,
+    enrolmentkey: "secret123",
+    idnumber: "GRP001",
+    visibility: 0,
+    participation: 1,
+    customfields: [
+      {
+        shortname: "customfield1",
+        value: "customvalue1"
+      }
+    ]
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_delete_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_delete_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_delete_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_get_course_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 15,
+    courseid: 101,
+    name: "Lab Grouping",
+    description: "All lab groups",
+    descriptionformat: 1,
+    idnumber: "LAB2025"
+  }, 
+  {
+    id: 16,
+    courseid: 101,
+    name: "Project Teams",
+    description: "Team groupings for project work",
+    descriptionformat: 1,
+    idnumber: "PRJTEAM01"
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_get_course_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 12,
+    courseid: 101,
+    name: "Group One",
+    description: "Description for Group One",
+    descriptionformat: 1,
+    enrolmentkey: "secret123",
+    idnumber: "G001",
+    visibility: 0,
+    participation: 1
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_get_group_members:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    groupid: 5,
+    userids: [
+      21, 
+      22, 
+      23
+    ]
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_get_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    id: 1,
+    courseid: 1,
+    name: "Group 1",
+    description: "Description for group 1",
+    descriptionformat: 1,
+    enrolmentkey: "secret123",
+    idnumber: "G001",
+    visibility: 0,
+    participation: 1,
+    customfields: [
+      {
+        name: "Custom Field 1",
+        shortname: "custom1",
+        "type": "text",
+        valueraw: "raw value",
+        value: "Custom Value 1"
+      }
+    ]
+  }
+] as Array {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_unassign_grouping:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_update_groupings:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\core_group_update_groups:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Sucess"
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="post:\gradereport_user_get_grade_items:application\x-www-form-urlencoded:moodle-rest-api-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  usergrades: [
+    {
+      courseid: 10,
+      courseidnumber: "CSE101",
+      userid: 501,
+      userfullname: "John Doe",
+      useridnumber: "JD123",
+      maxdepth: 3,
+      gradeitems: [
+        {
+          id: 101,
+          itemname: "Assignment 1",
+          itemtype: "mod",
+          itemmodule: "assign",
+          iteminstance: 55,
+          itemnumber: 1,
+          idnumber: "A1",
+          categoryid: 20,
+          outcomeid: 0,
+          scaleid: 0,
+          locked: 0,
+          cmid: 88,
+          weightraw: 0.2,
+          weightformatted: "20%",
+          status: "graded",
+          graderaw: 85,
+          gradedatesubmitted: 1694256000,
+          gradedategraded: 1694300000,
+          gradehiddenbydate: 0,
+          gradeneedsupdate: 0,
+          gradeishidden: 0,
+          gradeislocked: 0,
+          gradeisoverridden: 0,
+          gradeformatted: "85.0",
+          grademin: 0,
+          grademax: 100,
+          rangeformatted: "0–100",
+          percentageformatted: "85%",
+          lettergradeformatted: "B",
+          rank: 5,
+          numusers: 50,
+          averageformatted: "72%",
+          feedback: "Well done!",
+          feedbackformat: 1
+        }
+      ]
+    }
+  ],
+  warnings: [
+    {
+      item: "course",
+      itemid: 10,
+      warningcode: "gradelocked",
+      message: "Grade item is locked and cannot be updated"
+    }
+  ]
+} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
     </flow>
 </mule>

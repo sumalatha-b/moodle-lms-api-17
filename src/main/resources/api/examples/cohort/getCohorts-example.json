@@ -1,0 +1,29 @@
+[
+  {
+    "id": 4,
+    "name": "Science Cohort",
+    "idnumber": "SCI-2025",
+    "description": "Cohort for all science stream students",
+    "descriptionformat": 1,
+    "visible": 1,
+    "theme": "classic",
+    "customfields": [
+      {
+        "name": "Department",
+        "shortname": "dept",
+        "type": "text",
+        "valueraw": "Science",
+        "value": "Science"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Arts Cohort",
+    "idnumber": "ART-2025",
+    "description": "Cohort for arts students",
+    "descriptionformat": 0,
+    "visible": 1,
+    "customfields": []
+  }
+]
