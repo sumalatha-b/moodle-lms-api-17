@@ -777,8 +777,8 @@ output application/x-www-form-urlencoded
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "members[0][cohorttype][type]": payload.'members[0][cohorttype][type]',
     "members[0][cohorttype][value]": payload.'members[0][cohorttype][value]',
-    "members[0][usertype][type]": payload.'members[0][usertype][type]',
-    "members[0][usertype][value]": payload.'members[0][usertype][value]'
+    ("members[0][usertype][type]": payload.'members[0][usertype][type]') if(!isEmpty(payload.'members[0][usertype][type]')),
+    ("members[0][usertype][value]": payload.'members[0][usertype][value]')if(!isEmpty(payload.'members[0][usertype][value]'))
 }]]]></moodle:post-core-cohort-add-cohort-members-body>
 		</moodle:post-core-cohort-add-cohort-members>
     </flow>
