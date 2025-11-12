@@ -36,9 +36,9 @@
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,                    
-    wsfunction: "core_course_create_categories",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "categories[0][name]": payload.'categories[0][name]',
     "categories[0][parent]": payload.'categories[0][parent]',
     "categories[0][idnumber]": payload.'categories[0][idnumber]',
@@ -60,9 +60,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,                            
-    wsfunction: "core_course_create_courses",
-    moodlewsrestformat: payload.moodlewsrestformat,
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ('courses[0][fullname]': payload.'courses[0][fullname]') if (!isEmpty(payload.'courses[0][fullname]')),
     ('courses[0][shortname]': payload.'courses[0][shortname]') if (!isEmpty(payload.'courses[0][shortname]')),
     ('courses[0][categoryid]': payload.'courses[0][categoryid]')if (!isEmpty(payload.'courses[0][categoryid]')),
@@ -105,9 +105,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,                      
-    wsfunction: "core_course_delete_categories",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                      
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "categories[0][id]": payload.'categories[0][id]',                  
     "categories[0][newparent]": payload.'categories[0][newparent]',  
     "categories[0][recursive]": payload.'categories[0][recursive]'    
@@ -126,9 +126,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,                
-    wsfunction: "core_course_delete_courses",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "courseids[0]": payload.'courseids[0]'        
 }]]]></moodle:post-core-course-delete-courses-body>
         </moodle:post-core-course-delete-courses>
@@ -145,9 +145,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,                         
-    wsfunction: "core_course_get_categories",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                         
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "criteria[0][key]": payload.'criteria[0][key]',           
     "criteria[0][value]": payload.'criteria[0][value]',      
     addsubcategories: payload.addsubcategories         
@@ -166,9 +166,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,            
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json"
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat))
 }]]]></moodle:post-core-course-get-courses-body>
         </moodle:post-core-course-get-courses>
     </flow>
@@ -184,9 +184,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,              
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json"
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,              
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat))
 }]]]></moodle:post-core-course-get-courses-by-field-body>
         </moodle:post-core-course-get-courses-by-field>
     </flow>
@@ -202,9 +202,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,                    
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                    
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "categories[0][id]": payload.'categories[0][id]',                  
     "categories[0][name]": payload.'categories[0][name]',            
     "categories[0][idnumber]": payload.'categories[0][idnumber]',      
@@ -227,10 +227,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,                    
-    wsfunction: "core_course_update_courses",
-    moodlewsrestformat: "json",
-
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                    
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "courses[0][id]": payload.'courses[0][id]',
     "courses[0][fullname]": payload.'courses[0][fullname]',
     "courses[0][shortname]": payload.'courses[0][shortname]',
@@ -274,9 +273,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,           
-    wsfunction: "core_enrol_get_enrolled_users",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     courseid: payload.courseid               
 }]]]></moodle:post-core-enrol-get-enrolled-users-body>
         </moodle:post-core-enrol-get-enrolled-users>
@@ -293,9 +292,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,               
-    wsfunction: "core_enrol_get_users_courses",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,               
+   (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     userid: payload.userid,                  
     returnusercount: payload.returnusercount
 }]]]></moodle:post-core-enrol-get-users-courses-body>
@@ -313,9 +312,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,     
-    wsfunction: "core_enrol_unenrol_user_enrolment",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,     
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ueid: payload.ueid               
 }]]]></moodle:post-enrol-manual-unenrol-users-body>
         </moodle:post-enrol-manual-unenrol-users>
@@ -332,9 +331,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "core_role_assign_roles",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "assignments[0][roleid]": payload.'assignments[0][roleid]',
     "assignments[0][userid]": payload.'assignments[0][userid]',
     "assignments[0][contextid]": payload.'assignments[0][contextid]',
@@ -355,9 +354,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "core_role_unassign_roles",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "unassignments[0][roleid]": payload.'unassignments[0][roleid]',
     "unassignments[0][userid]": payload.'unassignments[0][userid]',
     "unassignments[0][contextid]": payload.'unassignments[0][contextid]',
@@ -378,9 +377,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "core_user_create_users",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "users[0][createpassword]": payload."users[0][createpassword]",
     "users[0][username]": payload."users[0][username]",
     "users[0][auth]": payload."users[0][auth]",
@@ -427,9 +426,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "core_user_delete_users",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+   (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "userids[0]": payload.'userids[0]'
 }]]]></moodle:post-core-user-delete-users-body>
         </moodle:post-core-user-delete-users>
@@ -446,9 +445,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "core_user_get_users_by_field",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     field: payload.field,
     "values[0]": payload.'values[0]'
 }]]]></moodle:post-core-user-get-users-body>
@@ -466,9 +465,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "core_user_get_users_by_field",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     field: payload.field,
     "values[0]": payload.'values[0]'
 }]]]></moodle:post-core-user-get-users-by-field-body>
@@ -486,10 +485,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "core_user_update_users",
-    moodlewsrestformat: "json",
- 
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "users[0][id]": payload.'users[0][id]',
     "users[0][username]": payload.'users[0][username]',
     "users[0][auth]": payload.'users[0][auth]',
@@ -539,11 +537,16 @@ output application/x-www-form-urlencoded
         <flow-ref doc:name="Flow Reference" doc:id="72a8dd49-edfb-4b9d-a04a-02ae969857bf" name="accesstoken_Flow" />
         <moodle:post-enrol-manual-enrol-users doc:name="Enrollment - Enroll Users" doc:id="c263d42d-8472-4c74-a421-e5df726ef63b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
             <moodle:post-enrol-manual-enrol-users-body><![CDATA[#[%dw 2.0
-output application/json
+output application/x-www-form-urlencoded
 ---
 {
-  message: "Sucess"
-} as Object {encoding: "UTF-8", mediaType: "application/json"}]]]></moodle:post-enrol-manual-enrol-users-body>
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+    "enrolments[0][roleid]": payload.'enrolments[0][roleid]',
+    "enrolments[0][userid]": payload.'enrolments[0][userid]',
+    "enrolments[0][courseid]": payload.'enrolments[0][courseid]'
+}]]]></moodle:post-enrol-manual-enrol-users-body>
         </moodle:post-enrol-manual-enrol-users>
     </flow>
     <flow name="post:\enrol_manual_unenrol_users:application\x-www-form-urlencoded:moodle-rest-api-config">
@@ -558,9 +561,9 @@ output application/json
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "enrol_manual_unenrol_users",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
  
     "enrolments[0][userid]": payload.'enrolments[0][userid]',
     "enrolments[0][courseid]": payload.'enrolments[0][courseid]'
@@ -579,9 +582,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "gradereport_overview_get_course_grades",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
  
     userid: payload.userid
 }]]]></moodle:post-gradereport-overview-get-course-grades-body>
@@ -599,9 +602,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "mod_assign_get_assignments",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     'courseids[0]': payload.'courseids[0]'
     
 }]]]></moodle:post-mod-assign-get-assignments-body>
@@ -619,9 +622,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     'assignmentids[0]': payload.'assignmentids[0]'
 }]]]></moodle:post-mod-assign-get-grades-body>
         </moodle:post-mod-assign-get-grades>
@@ -638,9 +641,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken.token,
-    wsfunction: "mod_assign_get_submission_status",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     assignid: payload.assignid,
     userid: payload.userid
 }]]]></moodle:post-mod-assign-get-submission-status-body>
@@ -658,9 +661,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,               
-    wsfunction: "core_calendar_create_calendar_events",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "events[0][name]": payload."events[0][name]",
     "events[0][description]": payload."events[0][description]",
     "events[0][format]": payload."events[0][format]",
@@ -687,9 +690,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                
-    wsfunction: "core_calendar_delete_calendar_events",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "events[0][eventid]": payload."events[0][eventid]",
     "events[0][repeat]": payload."events[0][repeat]"
 }]]]></moodle:post-core-calendar-delete-calendar-events-body>
@@ -707,9 +710,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                        
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     timesortfrom: payload.timesortfrom
 }]]]></moodle:post-core-calendar-get-action-events-by-timesort-body>
 		</moodle:post-core-calendar-get-action-events-by-timesort>
@@ -726,9 +729,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                
-    wsfunction: "core_calendar_get_calendar_event_by_id",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     eventid: payload.eventid
 }]]]></moodle:post-core-calendar-get-calendar-event-by-id-body>
 		</moodle:post-core-calendar-get-calendar-event-by-id>
@@ -745,9 +748,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                       
-    wsfunction: "core_calendar_get_calendar_events",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ("events[eventids][0]": payload.'events[eventids][0]') if(!isEmpty(payload.'events[eventids][0]')),
     ("events[courseids][0]": payload.'events[courseids][0]')if(!isEmpty(payload.'events[courseids][0]')),
     ("events[groupids][0]": payload.'events[groupids][0]')if(!isEmpty(payload.'events[groupids][0]')),
@@ -767,9 +770,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
-    wsfunction: "core_cohort_add_cohort_members",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "members[0][cohorttype][type]": payload.'members[0][cohorttype][type]',
     "members[0][cohorttype][value]": payload.'members[0][cohorttype][value]',
     "members[0][usertype][type]": payload.'members[0][usertype][type]',
@@ -789,9 +792,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                      
-    wsfunction: "core_cohort_create_cohorts",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]',
     "cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]',
     "cohorts[0][name]": payload.'cohorts[0][name]',
@@ -815,9 +818,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                      
-    wsfunction: "core_cohort_delete_cohort_members",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "members[0][cohortid]": payload.'members[0][cohortid]',
     "members[0][userid]": payload.'members[0][userid]'
 }]]]></moodle:post-core-cohort-delete-cohort-members-body>
@@ -835,9 +838,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                         
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "cohortids[0]": payload.'cohortids[0]'
 }]]]></moodle:post-core-cohort-delete-cohorts-body>
 		</moodle:post-core-cohort-delete-cohorts>
@@ -854,9 +857,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                          
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "cohortids[0]": payload.'cohortids[0]'                
 }]]]></moodle:post-core-cohort-get-cohort-members-body>
 		</moodle:post-core-cohort-get-cohort-members>
@@ -873,9 +876,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,              
-    wsfunction: payload.wsfunction,
-    moodlewsrestformat: "json"
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 }]]]></moodle:post-core-cohort-get-cohorts-body>
 		</moodle:post-core-cohort-get-cohorts>
     </flow>
@@ -891,9 +894,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                             
-    wsfunction: "core_cohort_update_cohorts",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "cohorts[0][id]": payload.'cohorts[0][id]',
     "cohorts[0][categorytype][type]": payload.'cohorts[0][categorytype][type]',
     "cohorts[0][categorytype][value]": payload.'cohorts[0][categorytype][value]',
@@ -920,9 +923,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,               
-    wsfunction: "core_group_add_group_members",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
     "members[0][groupid]": payload.'members[0][groupid]',
     "members[0][userid]": payload.'members[0][userid]'
@@ -941,9 +944,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                  
-    wsfunction: "core_group_assign_grouping",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
     "assignments[0][groupingid]": payload.'assignments[0][groupingid]',
     "assignments[0][groupid]": payload.'assignments[0][groupid]'
@@ -962,9 +965,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                       
-    wsfunction: "core_group_create_groupings",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
     "groupings[0][courseid]": payload.'groupings[0][courseid]',
     "groupings[0][name]": payload.'groupings[0][name]',
@@ -986,9 +989,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
-    wsfunction: "core_group_create_groups",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     'groups[0][courseid]': payload.'groups[0][courseid]',
     'groups[0][name]': payload.'groups[0][name]',
     'groups[0][description]': payload.'groups[0][description]',
@@ -1009,9 +1012,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,               
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,               
     wsfunction: "core_group_delete_group_members",
-    moodlewsrestformat: "json",
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
 
     "members[0][userid]": payload.'members[0][userid]',
     "members[0][groupid]": payload.'members[0][groupid]'
@@ -1030,9 +1033,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,             
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,             
     wsfunction: "core_group_delete_groupings",
-    moodlewsrestformat: "json",
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
     "groupingids[0]": payload.'groupingids[0]'
 }]]]></moodle:post-core-group-delete-groupings-body>
 		</moodle:post-core-group-delete-groupings>
@@ -1049,9 +1052,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,              
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,              
     wsfunction: "core_group_delete_groups",
-    moodlewsrestformat: "json",
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
     "groupids[0]": payload.'groupids[0]',      
     "groupids[1]": payload.'groupids[1]'       
 }]]]></moodle:post-core-group-delete-groups-body>
@@ -1069,9 +1072,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,           
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
     wsfunction: "core_group_get_course_groupings",
-    moodlewsrestformat: "json",
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
     courseid: payload.courseid          
 }]]]></moodle:post-core-group-get-course-groupings-body>
 		</moodle:post-core-group-get-course-groupings>
@@ -1088,9 +1091,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,           
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
     wsfunction: "core_group_get_course_groups",
-    moodlewsrestformat: "json",
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
     courseid: payload.courseid          
 }]]]></moodle:post-core-group-get-course-groups-body>
 		</moodle:post-core-group-get-course-groups>
@@ -1107,9 +1110,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,          
-    wsfunction: "core_group_get_group_members",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
     "groupids[0]": payload.'groupids[0]'
 }]]]></moodle:post-core-group-get-group-members-body>
@@ -1127,9 +1130,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,           
-    wsfunction: "core_group_get_groups",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     'groupids[0]': payload.'groupids[0]' 
 }]]]></moodle:post-core-group-get-groups-body>
 		</moodle:post-core-group-get-groups>
@@ -1146,9 +1149,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,                     
-    wsfunction: "core_group_unassign_grouping",
-    moodlewsrestformat: "json",
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     'unassignments[0][groupid]': payload.'unassignments[0][groupid]',     
     'unassignments[0][groupingid]': payload.'unassignments[0][groupingid]' 
 }]]]></moodle:post-core-group-unassign-grouping-body>
@@ -1166,9 +1169,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
-    wsfunction: "core_group_update_groupings",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "groupings[0][id]": payload.'groupings[0][id]',
     "groupings[0][name]": payload.'groupings[0][name]',
     "groupings[0][description]": payload.'groupings[0][description]',
@@ -1191,9 +1194,9 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
-    wsfunction: "core_group_update_groups",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "groups[0][id]": payload.'groups[0][id]',
     "groups[0][name]": payload.'groups[0][name]',
     "groups[0][description]": payload.'groups[0][description]',
@@ -1219,9 +1222,10 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: vars.moodleToken,
-    wsfunction: "gradereport_user_get_grade_items",
-    moodlewsrestformat: "json",
+    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+	
  
     courseid: payload.courseid,
     userid: payload.userid
