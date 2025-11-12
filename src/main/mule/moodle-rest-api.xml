@@ -186,7 +186,9 @@ output application/x-www-form-urlencoded
 {
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,              
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat))
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+    (field: payload.field) if (!isEmpty(payload.field)),
+    ("values[0]": payload.'values[0]') if (!isEmpty(payload.'values[0]'))
 }]]]></moodle:post-core-course-get-courses-by-field-body>
         </moodle:post-core-course-get-courses-by-field>
     </flow>
