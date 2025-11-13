@@ -297,8 +297,8 @@ output application/x-www-form-urlencoded
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,               
    (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    userid: payload.userid,                  
-    returnusercount: payload.returnusercount
+    (userid: payload.userid) if (!isEmpty(payload.userid)),                  
+    (returnusercount: payload.returnusercount)if(!isEmpty(payload.returnusercount))
 }]]]></moodle:post-core-enrol-get-users-courses-body>
         </moodle:post-core-enrol-get-users-courses>
     </flow>
@@ -588,7 +588,7 @@ output application/x-www-form-urlencoded
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
  
-    userid: payload.userid
+    (userid: payload.userid) if (!isEmpty(payload.userid))
 }]]]></moodle:post-gradereport-overview-get-course-grades-body>
         </moodle:post-gradereport-overview-get-course-grades>
     </flow>
@@ -1229,8 +1229,8 @@ output application/x-www-form-urlencoded
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 	
  
-    courseid: payload.courseid,
-    userid: payload.userid
+    (courseid: payload.courseid) if (!isEmpty(payload.courseid)),
+    (userid: payload.userid) if (!isEmpty(payload.userid))
 }]]]></moodle:post-gradereport-user-get-grade-items-body>
 		</moodle:post-gradereport-user-get-grade-items>
     </flow>
