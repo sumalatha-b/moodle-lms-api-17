@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:moodle-rest-lms="http://www.mulesoft.org/schema/mule/moodle-rest-lms" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/moodle-rest-lms http://www.mulesoft.org/schema/mule/moodle-rest-lms/current/mule-moodle-rest-lms.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd">
+	<flow name="moodleToSfCreateUpdateFlow" doc:id="7f7fe9a6-58ff-475d-b017-7ab1da7a4630" >
+		<http:listener doc:name="Listener" doc:id="2330cb51-3035-4c61-be96-9d7e89a1ac35" config-ref="moodle-rest-api-httpListenerConfig" path="/moodle/courses/{id}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="b1051be6-c93c-4143-9b15-93f62960a790" message="Moodle to Salesforce Create &amp; Update Flow Started"/>
+		<ee:transform doc:name="moodle" doc:id="9617c8e0-c5e3-4f02-ba65-9a0dc96e6d16" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"wstoken": "02771f60ade5748fb182d17e45e72ca2",
+	"wsfunction": "core_course_get_courses_by_field",
+	"moodlewsrestformat": "json",
+	"field": "id",
+	"value": attributes.uriParams.id
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="b75c03aa-c529-4918-ab0b-912064821898" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" />
+		<moodle:post-core-course-get-courses-by-field doc:name="Course - Get Courses by Field" doc:id="53232838-19bf-469f-8ccd-bb509618b42c" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+			<moodle:post-core-course-get-courses-by-field-body ><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+---
+payload]]]></moodle:post-core-course-get-courses-by-field-body>
+		</moodle:post-core-course-get-courses-by-field>
+		<ee:transform doc:name="Transform Message" doc:id="042ebdfe-579f-4045-9e26-616846eec5ea" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.courses map
+{
+    
+    "Name": $.fullname,
+    "Moodle_Course_ID__c": $.id,
+    "Short_Name__c": $.shortname default "",
+    "Category_ID__c": $.categoryid as Number default 1,
+    "ID_Number__c": $.idnumber default "",
+    "Summary__c": $.summary default "",
+    "Summary_Format__c": $.summaryformat as Number default 1,
+    "Format__c": $.format default "topics",
+    "Show_Grades__c": if($.showgrades  == 1) true else false,
+    "News_Items__c": $.newsitems as Number default 5,
+    "Start_Date__c": $.startdate as String,
+    "End_Date__c": $.enddate as String,
+    "Number_of_Sections__c": $.numsections as Number default 10,
+    "Max_File_Size__c": $.maxbytes as Number default 2097152,
+    "Show_Reports__c": if($.showreports  == 1) true else false,
+    "Visible__c": if($.visible == 1) true else false,
+    "Hidden_Sections__c": $.hiddensections as Number default 0,
+    "Group_Mode__c": $.groupmode as Number default 1,
+    "Group_Mode_Force__c": if($.groupmodeforce ==1) true else false,
+    "Default_Grouping_ID__c": $.defaultgroupingid as Number default 0,
+    "Enable_Completion__c": if($.enablecompletion ==1) true else false,
+    "Completion_Notify__c": if($.completionnotify ==1) true else false,
+    "Forced_Language__c": if(!isEmpty($.lang)) $.lang else "en",
+    "Force_Theme__c": if(!isEmpty($.theme)) $.theme else "boost"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a60d888e-132a-4660-a7ce-4a906a1bfb21" message="#[payload]"/>
+		<salesforce:upsert doc:name="Upsert" doc:id="1d8307c8-6043-4862-9ab9-ef2aebaf0353" objectType="Moodle_Course__c" externalIdFieldName="Moodle_Course_ID__c" config-ref="Salesforce_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="e9451624-50c4-4ee5-a498-f4405c87ed29" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="74def940-3afd-4f46-84b2-dd84c06ff2c9" message="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3820a8c6-6ea5-4f51-9fb0-e823852d70b8" message="Moodle to Salesforce Create &amp; Update Flow Ended"/>
+	</flow>
+	<flow name="moodleToSalesforceDeleteFlow" doc:id="42450c31-3af4-4412-987c-ad7520400504" >
+		<http:listener doc:name="Listener" doc:id="c1457f03-206d-4364-9e8a-a6b784ddd184" config-ref="moodle-rest-api-httpListenerConfig" path="/moodle/delete/courses/{id}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="44ab6efd-3b96-4338-a689-dbd5fac46445" message="Moodle to Salesforce Delete Flow Started"/>
+		<ee:transform doc:name="Transform Message" doc:id="db4a8987-41e8-4074-9ce8-cf24a06576b3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"wstoken": "02771f60ade5748fb182d17e45e72ca2",
+	"wsfunction": "core_course_get_courses_by_field",
+	"moodlewsrestformat": "json",
+	"field": "id",
+	"value": attributes.uriParams.id
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="id" ><![CDATA[attributes.uriParams.'id']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="3899f513-deff-4454-afb1-1d7386e141e1" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		<moodle:post-core-course-get-courses-by-field doc:name="Course - Get Courses by Field" doc:id="5ee32727-fb0e-46fa-b4de-f1c805d63516" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+			<moodle:post-core-course-get-courses-by-field-body ><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+---
+payload]]]></moodle:post-core-course-get-courses-by-field-body>
+		</moodle:post-core-course-get-courses-by-field>
+		<choice doc:name="Choice" doc:id="dfb85fe6-ccbf-4584-a735-54327bf87265" >
+			<when expression="#[!isEmpty(payload.courses)]">
+				<ee:transform doc:name="sfRequestPayload" doc:id="640f9be8-5fc5-4d52-a658-c2b441fd08f1">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload.courses map
+{
+    
+    "Name": $.fullname,
+    "Moodle_Course_ID__c": $.id
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="9a18bd9e-63e1-41a9-afa6-864da1a4a39f" message="#[payload]" />
+				<salesforce:query doc:name="Query" doc:id="e5cc8431-2768-4b71-b121-1c7d4815a72d" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query><![CDATA[select id, Name from Moodle_Course__c where Name = :Name]]></salesforce:salesforce-query>
+			<salesforce:parameters><![CDATA[#[output application/java
+---
+{
+	Name : "'" ++ payload.Name[0] ++ "'"
+}]]]></salesforce:parameters>
+		</salesforce:query>
+				<ee:transform doc:name="Transform Message" doc:id="2065c0f2-68f4-455c-88e7-560480ad9112">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload.Id]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<choice doc:name="Choice" doc:id="202b99de-7328-48b3-97e9-41c8c36aacae">
+			<when expression="#[!isEmpty(payload)]">
+				<salesforce:delete doc:name="Delete" doc:id="b54a1dac-0b33-490b-817a-fe593e5033e8" config-ref="Salesforce_Config" />
+				<ee:transform doc:name="Transform Message" doc:id="2520f136-1c7e-47b2-833a-11f9c71cd1b4">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</when>
+			<otherwise>
+				<logger level="INFO" doc:name="Logger" doc:id="41d00dc2-b77a-41a0-9f15-a8335bcca58f" message="empty id's" />
+			</otherwise>
+		</choice>
+				<logger level="INFO" doc:name="Logger" doc:id="81abbd94-db82-4215-9ce8-5fe8b3b3f504" message="#[payload]" />
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="0c051738-3e41-40c8-982d-3192aabcb069" message="Course not present in moodle"/>
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="c0afd7be-3955-4dc8-a54d-37d3ed33c16b" message="Moodle to Salesforce Delete Flow Ended" />
+	</flow>
+</mule>
