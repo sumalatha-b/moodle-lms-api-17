@@ -27,10 +27,10 @@ http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/m
 		</http:listener-connection>
     </http:listener-config>
     <apikit:config name="moodle-rest-api-config" api="moodle-rest-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-	<moodle-access-token:config name="Moodle_Access_Token_Config" doc:name="Moodle Access Token Config" doc:id="58cf1d72-e3c4-440b-a3cd-5b010b98a565" >
-		<moodle-access-token:unsecured-connection baseUri="${moodle.tokenBaseUri}" />
-	</moodle-access-token:config>
 	<moodle:config name="Moodle_Config" doc:name="Moodle Config" doc:id="de187657-5c83-4376-bc26-7c4a61475edd" >
 		<moodle:unsecured-connection baseUri="${moodle.baseUri}"/>
+	</moodle:config>
+		<moodle:config name="Moodle_Config1" doc:name="Moodle Config" doc:id="6659edc7-fd5c-4e35-bfb1-a18b8091e19d" >
+		<moodle:unsecured-connection baseUri="${moodle.tokenBaseUri}"/>
 	</moodle:config>
 </mule>

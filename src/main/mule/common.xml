@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:moodle-access-token="http://www.mulesoft.org/schema/mule/moodle-access-token" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/schema/mule/moodle-access-token/current/mule-moodle-access-token.xsd">
+<mule xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle" xmlns:moodle-access-token="http://www.mulesoft.org/schema/mule/moodle-access-token"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/moodle-access-token http://www.mulesoft.org/schema/mule/moodle-access-token/current/mule-moodle-access-token.xsd
+http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd">
+
 	<sub-flow name="accesstoken_Flow" doc:id="882a51ef-aefd-47b1-8a55-f51e0274c4e2" >
 		<logger level="INFO" doc:name="Token Flow Started  Logger" doc:id="211b5ca3-4b74-4731-953e-82730a9b0ff0" message="Token Flow Started "/>
-		<moodle-access-token:get-login-token doc:name="Moodle Access Token" doc:id="19716186-dbdc-4302-b44f-a651c3a4a5be" arg5="#[correlationId]" config-ref="Moodle_Access_Token_Config" arg2="#[p('moodle.username')]" arg3="#[p('moodle.password')]" arg4="#[p('moodle.service')]" target="moodleToken"/>
+		<moodle:get-login-token doc:name="Moodle Access Token" doc:id="93002435-8d00-43ca-af65-68f4d766175a" config-ref="Moodle_Config1" usernameQueryParam="#[p('moodle.username')]" passwordQueryParam="#[p('moodle.password')]" serviceQueryParam="#[p('moodle.service')]" correlationIdHeader="#[correlationId]" target="moodleToken"/>
 		<logger level="INFO" doc:name="Token Flow Ended Logger" doc:id="ae62b100-c0ac-4e82-a11e-3d413547a292" message="Token Flow Ended  "/>
 	</sub-flow>
 </mule>

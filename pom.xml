@@ -63,14 +63,8 @@
 		</dependency>
 		<dependency>
 			<groupId>57a49eeb-906b-45be-acf5-deb2e88a1380</groupId>
-			<artifactId>moodle-access-token</artifactId>
-			<version>1.0.0-BETA</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
-			<groupId>57a49eeb-906b-45be-acf5-deb2e88a1380</groupId>
 			<artifactId>moodle</artifactId>
-			<version>1.0.3-BETA</version>
+			<version>1.0.7-BETA</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
