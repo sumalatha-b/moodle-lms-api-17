@@ -11,13 +11,14 @@ http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/m
 	<flow name="moodleToSfCreateUpdateFlow" doc:id="7f7fe9a6-58ff-475d-b017-7ab1da7a4630" >
 		<http:listener doc:name="Listener" doc:id="2330cb51-3035-4c61-be96-9d7e89a1ac35" config-ref="moodle-rest-api-httpListenerConfig" path="/moodle/courses/{id}"/>
 		<logger level="INFO" doc:name="Logger" doc:id="b1051be6-c93c-4143-9b15-93f62960a790" message="Moodle to Salesforce Create &amp; Update Flow Started"/>
+		<flow-ref doc:name="Flow Reference" doc:id="251ac81b-2312-4bfb-ba22-df200fa097f4" name="accesstoken_Flow"/>
 		<ee:transform doc:name="moodle" doc:id="9617c8e0-c5e3-4f02-ba65-9a0dc96e6d16" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
 {
-	"wstoken": "02771f60ade5748fb182d17e45e72ca2",
+	"wstoken": vars.moodleToken.token,
 	"wsfunction": "core_course_get_courses_by_field",
 	"moodlewsrestformat": "json",
 	"field": "id",
@@ -68,7 +69,7 @@ payload.courses map
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="a60d888e-132a-4660-a7ce-4a906a1bfb21" message="#[payload]"/>
-		<salesforce:upsert doc:name="Upsert" doc:id="1d8307c8-6043-4862-9ab9-ef2aebaf0353" objectType="Moodle_Course__c" externalIdFieldName="Moodle_Course_ID__c" config-ref="Salesforce_Config"/>
+		<salesforce:upsert objectType="Moodle_Course__c" doc:name="Upsert" doc:id="820f4b41-e010-4bdf-83d8-a23c97f058d9" config-ref="Salesforce_Config" externalIdFieldName="Moodle_Course_ID__c"/>
 		<ee:transform doc:name="Transform Message" doc:id="e9451624-50c4-4ee5-a498-f4405c87ed29" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -83,13 +84,14 @@ payload]]></ee:set-payload>
 	<flow name="moodleToSalesforceDeleteFlow" doc:id="42450c31-3af4-4412-987c-ad7520400504" >
 		<http:listener doc:name="Listener" doc:id="c1457f03-206d-4364-9e8a-a6b784ddd184" config-ref="moodle-rest-api-httpListenerConfig" path="/moodle/delete/courses/{id}"/>
 		<logger level="INFO" doc:name="Logger" doc:id="44ab6efd-3b96-4338-a689-dbd5fac46445" message="Moodle to Salesforce Delete Flow Started"/>
+		<flow-ref doc:name="Flow Reference" doc:id="1d86da0a-3752-40ab-9aec-7c1058386189" name="accesstoken_Flow"/>
 		<ee:transform doc:name="Transform Message" doc:id="db4a8987-41e8-4074-9ce8-cf24a06576b3" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
 {
-	"wstoken": "02771f60ade5748fb182d17e45e72ca2",
+	"wstoken": vars.moodleToken.token,
 	"wsfunction": "core_course_get_courses_by_field",
 	"moodlewsrestformat": "json",
 	"field": "id",
@@ -123,14 +125,14 @@ payload.courses map
 			</ee:message>
 		</ee:transform>
 				<logger level="INFO" doc:name="Logger" doc:id="9a18bd9e-63e1-41a9-afa6-864da1a4a39f" message="#[payload]" />
-				<salesforce:query doc:name="Query" doc:id="e5cc8431-2768-4b71-b121-1c7d4815a72d" config-ref="Salesforce_Config">
-			<salesforce:salesforce-query><![CDATA[select id, Name from Moodle_Course__c where Name = :Name]]></salesforce:salesforce-query>
-			<salesforce:parameters><![CDATA[#[output application/java
+				<salesforce:query doc:name="Query" doc:id="b261d35b-9ede-4f60-8f69-3fc397947624" config-ref="Salesforce_Config" >
+					<salesforce:salesforce-query ><![CDATA[select id, Name from Moodle_Course__c where Name = :Name]]></salesforce:salesforce-query>
+					<salesforce:parameters ><![CDATA[#[output application/java
 ---
 {
 	Name : "'" ++ payload.Name[0] ++ "'"
 }]]]></salesforce:parameters>
-		</salesforce:query>
+				</salesforce:query>
 				<ee:transform doc:name="Transform Message" doc:id="2065c0f2-68f4-455c-88e7-560480ad9112">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
@@ -156,7 +158,8 @@ payload]]></ee:set-payload>
 			</otherwise>
 		</choice>
 				<logger level="INFO" doc:name="Logger" doc:id="81abbd94-db82-4215-9ce8-5fe8b3b3f504" message="#[payload]" />
-			</when>
+			
+</when>
 			<otherwise >
 				<logger level="INFO" doc:name="Logger" doc:id="0c051738-3e41-40c8-982d-3192aabcb069" message="Course not present in moodle"/>
 			</otherwise>
