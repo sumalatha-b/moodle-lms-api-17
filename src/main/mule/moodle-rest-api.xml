@@ -1176,16 +1176,16 @@ output application/x-www-form-urlencoded
 output application/x-www-form-urlencoded
 ---
 {
-    wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
+     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "groupings[0][id]": payload.'groupings[0][id]',
-    "groupings[0][name]": payload.'groupings[0][name]',
-    "groupings[0][description]": payload.'groupings[0][description]',
-    "groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]',
-    "groupings[0][idnumber]": payload.'groupings[0][idnumber]',
-    "groupings[0][customfields][0][shortname]": payload.'groupings[0][customfields][0][shortname]',
-    "groupings[0][customfields][0][value]": payload.'groupings[0][customfields][0][value]'
+    ("groupings[0][id]": payload.'groupings[0][id]') if(!isEmpty(payload.'groupings[0][id]')),
+    ("groupings[0][name]": payload.'groupings[0][name]') if(!isEmpty(payload.'groupings[0][name]')),
+    ("groupings[0][description]": payload.'groupings[0][description]') if(!isEmpty(payload.'groupings[0][description]')),
+    ("groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]') if(!isEmpty(payload.'groupings[0][descriptionformat]')),
+    ("groupings[0][idnumber]": payload.'groupings[0][idnumber]') if(!isEmpty(payload.'groupings[0][idnumber]')),
+    ("groupings[0][customfields][0][shortname]": payload.'groupings[0][customfields][0][shortname]') if(!isEmpty(payload.'groupings[0][customfields][0][shortname]')),
+    ("groupings[0][customfields][0][value]": payload.'groupings[0][customfields][0][value]') if(!isEmpty(payload.'groupings[0][customfields][0][value]'))
 }]]]></moodle:post-core-group-update-groupings-body>
 		</moodle:post-core-group-update-groupings>
     </flow>
@@ -1204,16 +1204,16 @@ output application/x-www-form-urlencoded
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "groups[0][id]": payload.'groups[0][id]',
-    "groups[0][name]": payload.'groups[0][name]',
-    "groups[0][description]": payload.'groups[0][description]',
-    "groups[0][descriptionformat]": payload.'groups[0][descriptionformat]',
-    "groups[0][enrolmentkey]": payload.'groups[0][enrolmentkey]',
-    "groups[0][idnumber]": payload.'groups[0][idnumber]',
-    "groups[0][visibility]": payload.'groups[0][visibility]',
-    "groups[0][participation]": payload.'groups[0][participation]',
-    "groups[0][customfields][0][shortname]": payload.'groups[0][customfields][0][shortname]',
-    "groups[0][customfields][0][value]": payload.'groups[0][customfields][0][value]'
+    ("groups[0][id]": payload.'groups[0][id]') if(!isEmpty(payload.'groups[0][id]')),
+	("groups[0][enrolmentkey]": payload.'groups[0][enrolmentkey]')if(!isEmpty(payload.'groups[0][enrolmentkey]')),
+    ('groups[0][name]': payload.'groups[0][name]')if(!isEmpty(payload.'groups[0][name]')),
+    ('groups[0][description]': payload.'groups[0][description]')if(!isEmpty(payload.'groups[0][description]')),
+    ('groups[0][descriptionformat]': payload.'groups[0][descriptionformat]')if(!isEmpty(payload.'groups[0][descriptionformat]')),
+    ('groups[0][idnumber]': payload.'groups[0][idnumber]') if(!isEmpty(payload.'groups[0][idnumber]')),
+	('groups[0][visibility]': payload.'groups[0][visibility]') if(!isEmpty(payload.'groups[0][visibility]')),
+	('groups[0][participation]': payload.'groups[0][participation]') if(!isEmpty(payload.'groups[0][participation]')),
+	('groups[0][customfields][0][shortname]': payload.'groups[0][customfields][0][shortname]') if(!isEmpty(payload.'groups[0][customfields][0][shortname]')),
+	('groups[0][customfields][0][value]': payload.'groups[0][customfields][0][value]') if(!isEmpty(payload.'groups[0][customfields][0][value]'))
 }]]]></moodle:post-core-group-update-groups-body>
 		</moodle:post-core-group-update-groups>
     </flow>
