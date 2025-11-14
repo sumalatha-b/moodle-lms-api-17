@@ -58,21 +58,26 @@ output application/json
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Moodle Request Payload Logger" doc:id="63e368cd-9e4f-48b6-938f-b803d0e9eb46" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
-		<moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="329d087c-7658-4e7c-bca2-8edc5347df5a" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+		<moodle:post-core-course-create-courses doc:name="Course - Create Courses" doc:id="329d087c-7658-4e7c-bca2-8edc5347df5a" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]" target="createCourseResponse">
 			<moodle:post-core-course-create-courses-body ><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 payload]]]></moodle:post-core-course-create-courses-body>
 		</moodle:post-core-course-create-courses>
-		<logger level="INFO" doc:name="Moodle Response Payload Logger" doc:id="ddb2c2e7-5804-4281-be07-540922fa7f99" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
-		<ee:transform doc:name="Moodle Response Payload" doc:id="7a8e9b9d-07ef-4338-9808-ff16c89f6c9f" >
+		<logger level="INFO" doc:name="Moodle Response Payload Logger" doc:id="ddb2c2e7-5804-4281-be07-540922fa7f99" message="#[%dw 2.0&#10;output application/json&#10;---&#10;vars.createCourseResponse]"/>
+		<ee:transform doc:name="SF Request Payload" doc:id="7a8e9b9d-07ef-4338-9808-ff16c89f6c9f" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-payload]]></ee:set-payload>
+[{
+	"Moodle_Course_ID__c": vars.createCourseResponse.id[0]
+}]]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Update SF Request Logger" doc:id="0c8669af-41e8-4291-be46-bab9539ac572" message="#[payload]"/>
+		<salesforce:upsert objectType="Moodle_Course__c" externalIdFieldName="Moodle_Course_ID__c" doc:name="Upsert" doc:id="3ec1c90b-c49f-43be-8c05-5ae338459d08" config-ref="Salesforce_Config" />
+		<logger level="INFO" doc:name="Update SF Response Logger" doc:id="3f6a9a68-45e3-4ceb-a0d6-af5d0030e02b" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
 		<logger level="INFO" doc:name="Salesforce to Moodle Create Flow Ended Logger" doc:id="17b0f81b-3a64-432e-9841-c14e67ff40a8" message="Salesforce to Moodle Create Flow Ended"/>
 	</flow>
 	<flow name="sftomoodleUpdateFlow" doc:id="cecf220e-c800-4824-a1de-f19d3f8d4892" >
