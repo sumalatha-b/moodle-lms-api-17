@@ -1017,10 +1017,10 @@ output application/x-www-form-urlencoded
 {
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,               
     wsfunction: "core_group_delete_group_members",
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    "members[0][userid]": payload.'members[0][userid]',
-    "members[0][groupid]": payload.'members[0][groupid]'
+    ("members[0][userid]": payload.'members[0][userid]') if (!isEmpty(payload.'members[0][userid]')),
+    ("members[0][groupid]": payload.'members[0][groupid]') if (!isEmpty(payload.'members[0][groupid]'))
 }]]]></moodle:post-core-group-delete-group-members-body>
 		</moodle:post-core-group-delete-group-members>
     </flow>
@@ -1038,7 +1038,7 @@ output application/x-www-form-urlencoded
 {
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,             
     wsfunction: "core_group_delete_groupings",
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "groupingids[0]": payload.'groupingids[0]'
 }]]]></moodle:post-core-group-delete-groupings-body>
 		</moodle:post-core-group-delete-groupings>
@@ -1057,7 +1057,7 @@ output application/x-www-form-urlencoded
 {
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,              
     wsfunction: "core_group_delete_groups",
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     "groupids[0]": payload.'groupids[0]',      
     "groupids[1]": payload.'groupids[1]'       
 }]]]></moodle:post-core-group-delete-groups-body>
@@ -1076,9 +1076,9 @@ output application/x-www-form-urlencoded
 ---
 {
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
-    wsfunction: "core_group_get_course_groupings",
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
-    courseid: payload.courseid          
+    (wsfunction: payload.wsfunction)if (!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+    (courseid: payload.courseid) if(!isEmpty(payload.courseid))        
 }]]]></moodle:post-core-group-get-course-groupings-body>
 		</moodle:post-core-group-get-course-groupings>
     </flow>
@@ -1095,9 +1095,9 @@ output application/x-www-form-urlencoded
 ---
 {
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,           
-    wsfunction: "core_group_get_course_groups",
-    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(moodlewsrestformat)),
-    courseid: payload.courseid          
+    (wsfunction: payload.wsfunction)if (!isEmpty(payload.wsfunction)),
+    (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
+    (courseid: payload.courseid)if(!isEmpty(payload.courseid))         
 }]]]></moodle:post-core-group-get-course-groups-body>
 		</moodle:post-core-group-get-course-groups>
     </flow>
@@ -1117,7 +1117,7 @@ output application/x-www-form-urlencoded
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
 
-    "groupids[0]": payload.'groupids[0]'
+    ("groupids[0]": payload.'groupids[0]') if(!isEmpty(payload.'groupids[0]'))
 }]]]></moodle:post-core-group-get-group-members-body>
 		</moodle:post-core-group-get-group-members>
     </flow>
@@ -1136,7 +1136,7 @@ output application/x-www-form-urlencoded
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    'groupids[0]': payload.'groupids[0]' 
+    ('groupids[0]': payload.'groupids[0]') if (!isEmpty(payload.'groupids[0]'))
 }]]]></moodle:post-core-group-get-groups-body>
 		</moodle:post-core-group-get-groups>
     </flow>
@@ -1155,8 +1155,8 @@ output application/x-www-form-urlencoded
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    'unassignments[0][groupid]': payload.'unassignments[0][groupid]',     
-    'unassignments[0][groupingid]': payload.'unassignments[0][groupingid]' 
+    ('unassignments[0][groupid]': payload.'unassignments[0][groupid]') if (!isEmpty(payload.'unassignments[0][groupid]')),     
+    ('unassignments[0][groupingid]': payload.'unassignments[0][groupingid]') if(!isEmpty(payload.'unassignments[0][groupingid]'))
 }]]]></moodle:post-core-group-unassign-grouping-body>
 		</moodle:post-core-group-unassign-grouping>
     </flow>
