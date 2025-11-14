@@ -49,7 +49,7 @@ output application/x-www-form-urlencoded
         </moodle:post-core-course-create-categories>
     </flow>
     <flow name="post:\core_course_create_courses:application\x-www-form-urlencoded:moodle-rest-api-config">
-        <http:listener doc:name="Listener" doc:id="40cea967-8999-4975-87a5-e26573be697a" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_create_courses">
+        <http:listener doc:name="Listener" doc:id="40cea967-8999-4975-87a5-e26573be697a" config-ref="moodle-rest-api-httpListenerConfig" path="/core_course_create_courses" allowedMethods="GET,POST">
             <http:error-response statusCode="#[vars.httpStatus default 500]">
                 <http:body><![CDATA[#[output application/json --- payload default error.description]]]></http:body>
             </http:error-response>
@@ -148,9 +148,9 @@ output application/x-www-form-urlencoded
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                         
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "criteria[0][key]": payload.'criteria[0][key]',           
-    "criteria[0][value]": payload.'criteria[0][value]',      
-    addsubcategories: payload.addsubcategories         
+    ("criteria[0][key]": payload.'criteria[0][key]') if(!isEmpty(payload.'criteria[0][key]')),           
+    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]')),      
+    (addsubcategories: payload.addsubcategories) if (!isEmpty(payload.addsubcategories))      
 }]]]></moodle:post-core-course-get-categories-body>
         </moodle:post-core-course-get-categories>
     </flow>
@@ -450,8 +450,8 @@ output application/x-www-form-urlencoded
     wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    field: payload.field,
-    "values[0]": payload.'values[0]'
+    ("criteria[0][key]": payload.'criteria[0][key]') if (!isEmpty(payload.'criteria[0][key]')),
+    ("criteria[0][value]": payload.'criteria[0][value]') if (!isEmpty(payload.'criteria[0][value]'))
 }]]]></moodle:post-core-user-get-users-body>
         </moodle:post-core-user-get-users>
     </flow>
@@ -470,8 +470,8 @@ output application/x-www-form-urlencoded
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    field: payload.field,
-    "values[0]": payload.'values[0]'
+    (field: payload.field) if (!isEmpty(payload.field)),
+    ("values[0]": payload.'values[0]') if(!isEmpty(payload.'values[0]'))
 }]]]></moodle:post-core-user-get-users-by-field-body>
         </moodle:post-core-user-get-users-by-field>
     </flow>
