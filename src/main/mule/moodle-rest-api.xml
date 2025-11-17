@@ -310,8 +310,8 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="a03de330-8bae-4c75-9456-41bc42f3f191" name="accesstoken_Flow" />
-        <moodle:post-enrol-manual-unenrol-users doc:name="Enrollment - Unenroll Users" doc:id="0bce3b71-0216-43e0-8d88-35bdb226bf7b" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-enrol-manual-unenrol-users-body><![CDATA[#[%dw 2.0
+		<moodle:post-core-enrol-unenrol-user-enrolment doc:name="Enrollment - Unenroll Users" doc:id="7ad67733-c419-41ab-acdb-25226df9d029" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+			<moodle:post-core-enrol-unenrol-user-enrolment-body ><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
@@ -319,8 +319,8 @@ output application/x-www-form-urlencoded
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ueid: payload.ueid               
-}]]]></moodle:post-enrol-manual-unenrol-users-body>
-        </moodle:post-enrol-manual-unenrol-users>
+}]]]></moodle:post-core-enrol-unenrol-user-enrolment-body>
+		</moodle:post-core-enrol-unenrol-user-enrolment>
     </flow>
     <flow name="post:\core_role_assign_roles:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="497317ca-e461-45f4-a1f5-75992af2ae30" config-ref="moodle-rest-api-httpListenerConfig" path="/core_role_assign_roles">
@@ -559,19 +559,19 @@ output application/x-www-form-urlencoded
             </http:error-response>
         </http:listener>
         <flow-ref doc:name="Flow Reference" doc:id="b9b728aa-8555-4f97-8352-21566f4abad7" name="accesstoken_Flow" />
-        <moodle:post-core-enrol-unenrol-user-enrolment doc:name="Enrollment - Unenroll Users" doc:id="329f859c-0371-48b1-83df-c2668a215cef" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
-            <moodle:post-core-enrol-unenrol-user-enrolment-body><![CDATA[#[%dw 2.0
+		<moodle:post-enrol-manual-unenrol-users doc:name="Enrollment - Unenroll Users" doc:id="23e82e07-7a47-4d3d-9125-54667ecc69ae" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]">
+			<moodle:post-enrol-manual-unenrol-users-body ><![CDATA[#[%dw 2.0
 output application/x-www-form-urlencoded
 ---
 {
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
- 
-    "enrolments[0][userid]": payload.'enrolments[0][userid]',
-    "enrolments[0][courseid]": payload.'enrolments[0][courseid]'
-}]]]></moodle:post-core-enrol-unenrol-user-enrolment-body>
-        </moodle:post-core-enrol-unenrol-user-enrolment>
+     ("enrolments[0][roleid]": payload.'enrolments[0][roleid]') if(!isEmpty(payload.'enrolments[0][roleid]')),
+    ("enrolments[0][userid]": payload.'enrolments[0][userid]') if(!isEmpty(payload.payload.'enrolments[0][userid]')),
+    ("enrolments[0][courseid]": payload.'enrolments[0][courseid]') if (!isEmpty(payload.'enrolments[0][courseid]'))
+}]]]></moodle:post-enrol-manual-unenrol-users-body>
+		</moodle:post-enrol-manual-unenrol-users>
     </flow>
     <flow name="post:\gradereport_overview_get_course_grades:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="1f5b5cad-96e7-401c-bb3b-3079d1946a08" config-ref="moodle-rest-api-httpListenerConfig" path="/gradereport_overview_get_course_grades">
@@ -755,9 +755,9 @@ output application/x-www-form-urlencoded
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
     ("events[eventids][0]": payload.'events[eventids][0]') if(!isEmpty(payload.'events[eventids][0]')),
-    ("events[courseids][0]": payload.'events[courseids][0]')if(!isEmpty(payload.'events[courseids][0]')),
-    ("events[groupids][0]": payload.'events[groupids][0]')if(!isEmpty(payload.'events[groupids][0]')),
-    ("events[categoryids][0]": payload.'events[categoryids][0]')if(!isEmpty(payload.'events[categoryids][0]'))
+    ("events[courseids][0]": payload.'events[courseids][0]') if(!isEmpty(payload.'events[courseids][0]')),
+    ("events[groupids][0]": payload.'events[groupids][0]') if(!isEmpty(payload.'events[groupids][0]')),
+    ("events[categoryids][0]": payload.'events[categoryids][0]') if(!isEmpty(payload.'events[categoryids][0]'))
 }]]]></moodle:post-core-calendar-get-calendar-events-body>
 		</moodle:post-core-calendar-get-calendar-events>
     </flow>
