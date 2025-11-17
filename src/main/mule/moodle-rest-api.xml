@@ -974,7 +974,7 @@ output application/x-www-form-urlencoded
 
     "groupings[0][courseid]": payload.'groupings[0][courseid]',
     "groupings[0][name]": payload.'groupings[0][name]',
-    "groupings[0][description]": payload.'groupings[0][description]',
+   ("groupings[0][description]": payload.'groupings[0][description]')  if (!isEmpty(payload.'groupings[0][description]')),
     "groupings[0][descriptionformat]": payload.'groupings[0][descriptionformat]',
     "groupings[0][idnumber]": payload.'groupings[0][idnumber]'
 }]]]></moodle:post-core-group-create-groupings-body>
