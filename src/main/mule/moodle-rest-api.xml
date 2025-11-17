@@ -754,12 +754,13 @@ output application/x-www-form-urlencoded
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    ("events[eventids][0]": payload.'events[eventids][0]') if(!isEmpty(payload.'events[eventids][0]')),
-    ("events[courseids][0]": payload.'events[courseids][0]') if(!isEmpty(payload.'events[courseids][0]')),
-    ("events[groupids][0]": payload.'events[groupids][0]') if(!isEmpty(payload.'events[groupids][0]')),
-    ("events[categoryids][0]": payload.'events[categoryids][0]') if(!isEmpty(payload.'events[categoryids][0]'))
+    ("events[0][eventids]": payload.'events[0][eventids]') if(!isEmpty(payload.'events[0][eventids]')),
+    ("events[0][courseids]": payload.'events[0][courseids]') if(!isEmpty(payload.'events[0][courseids]')),
+    ("events[0][groupids]": payload.'events[0][groupids]') if(!isEmpty(payload.'events[0][groupids]')),
+    ("events[0][categoryids]": payload.'events[0][categoryids]') if(!isEmpty(payload.'events[0][categoryids]'))
 }]]]></moodle:post-core-calendar-get-calendar-events-body>
 		</moodle:post-core-calendar-get-calendar-events>
+		<logger level="INFO" doc:name="Logger" doc:id="aa2d43e4-f691-410e-8175-b83f619ab640" />
     </flow>
     <flow name="post:\core_cohort_add_cohort_members:application\x-www-form-urlencoded:moodle-rest-api-config">
         <http:listener doc:name="Listener" doc:id="b58f351f-3d2c-4468-a7ce-9fb2db19ac84" config-ref="moodle-rest-api-httpListenerConfig" path="/core_cohort_add_cohort_members">
@@ -776,8 +777,8 @@ output application/x-www-form-urlencoded
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    "members[0][cohorttype][type]": payload.'members[0][cohorttype][type]',
-    "members[0][cohorttype][value]": payload.'members[0][cohorttype][value]',
+    ("members[0][cohorttype][type]": payload.'members[0][cohorttype][type]') if(!isEmpty(payload.'members[0][cohorttype][type]')),
+    ("members[0][cohorttype][value]": payload.'members[0][cohorttype][value]') if(!isEmpty(payload.'members[0][cohorttype][value]')),
     ("members[0][usertype][type]": payload.'members[0][usertype][type]') if(!isEmpty(payload.'members[0][usertype][type]')),
     ("members[0][usertype][value]": payload.'members[0][usertype][value]')if(!isEmpty(payload.'members[0][usertype][value]'))
 }]]]></moodle:post-core-cohort-add-cohort-members-body>
@@ -971,7 +972,6 @@ output application/x-www-form-urlencoded
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-
     "groupings[0][courseid]": payload.'groupings[0][courseid]',
     "groupings[0][name]": payload.'groupings[0][name]',
    ("groupings[0][description]": payload.'groupings[0][description]')  if (!isEmpty(payload.'groupings[0][description]')),
