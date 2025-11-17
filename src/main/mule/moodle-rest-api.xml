@@ -716,7 +716,7 @@ output application/x-www-form-urlencoded
      wstoken: if(!isEmpty(payload.wstoken)) payload.wstoken else vars.moodleToken.token,                            
     (wsfunction: payload.wsfunction) if(!isEmpty(payload.wsfunction)),
     (moodlewsrestformat: payload.moodlewsrestformat) if(!isEmpty(payload.moodlewsrestformat)),
-    timesortfrom: payload.timesortfrom
+    (timesortfrom: payload.timesortfrom) if (!isEmpty(payload.timesortfrom))
 }]]]></moodle:post-core-calendar-get-action-events-by-timesort-body>
 		</moodle:post-core-calendar-get-action-events-by-timesort>
     </flow>
