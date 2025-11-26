@@ -3,8 +3,8 @@ https:
   port: "8081"
   
 moodle:
-  baseUri: "https://mulesoft.moodlecloud.com/webservice/rest/server.php"
-  tokenBaseUri: "https://mulesoft.moodlecloud.com/login/token.php"
+  baseUri: "https://nexturn1.moodlecloud.com/webservice/rest/server.php"
+  tokenBaseUri: "https://nexturn1.moodlecloud.com/login/token.php"
   username: "admin"
   password: "Nexturn@12345"
   service: "apis"

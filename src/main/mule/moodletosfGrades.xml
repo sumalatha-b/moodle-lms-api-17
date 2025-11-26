@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:moodle="http://www.mulesoft.org/schema/mule/moodle"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/moodle http://www.mulesoft.org/schema/mule/moodle/current/mule-moodle.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<flow name="moodletosfGradesFlow" doc:id="b2d5d9a7-fa53-4e27-a4cd-22c72605f934" >
+		<http:listener doc:name="Listener" doc:id="23e7a0bd-ed56-4efc-ada0-33c3344b87be" config-ref="moodle-rest-api-httpListenerConfig" path="/grades/{id}"/>
+		<logger level="INFO" doc:name="Moodle to Salesforce Create &amp; Update Flow Started Logger" doc:id="96817477-aebd-4fdb-bccf-cae078f72994" message="Moodle to Salesforce Create &amp; Update Flow Started" />
+		<flow-ref doc:name="accesstoken_Flow" doc:id="87ea8747-7c82-4d58-82f1-28b65d4d9cfb" name="accesstoken_Flow" />
+		<scatter-gather doc:name="Scatter-Gather" doc:id="23097e9c-702f-4391-bbcb-aba4686df67b" >
+			<route >
+				<ee:transform doc:name="moodleUserRequest" doc:id="09593ddd-244b-48ad-8e39-8e7971d36ec1">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"wstoken": vars.moodleToken.token default "47b414c2fa7615f781424a84e904db86",
+	"wsfunction": "core_user_get_users",
+	"moodlewsrestformat": "json",
+	"criteria[0][key]": "id",
+	"criteria[0][value]": attributes.uriParams.id
+}]]></ee:set-payload>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="userId"><![CDATA[%dw 2.0
+output application/json
+---
+attributes.uriParams.id]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+				<logger level="INFO" doc:name="Moodle User Request Logger" doc:id="c6ae3c98-d440-419a-be37-376e4d7397e0" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" />
+				<moodle:post-core-user-get-users doc:name="User - Get Users" doc:id="313c34df-d675-42ee-a0df-a73dd1d4bebf" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]" target="getUserResponse" >
+					<moodle:post-core-user-get-users-body ><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+---
+payload]]]></moodle:post-core-user-get-users-body>
+				</moodle:post-core-user-get-users>
+			</route>
+			<route >
+				<ee:transform doc:name="moodleGradesRequest" doc:id="99a14f00-d736-4fd8-bb9a-e9c8f0bb5a56">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"wstoken": vars.moodleToken.token default "47b414c2fa7615f781424a84e904db86",
+	"wsfunction": "gradereport_overview_get_course_grades",
+	"moodlewsrestformat": "json",
+	"userid": attributes.uriParams.id
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<logger level="INFO" doc:name="Moodle Grades Request Logger" doc:id="a5a99b09-4339-4cfc-8db1-8959c3cb26e2" message="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" />
+				<moodle:post-gradereport-overview-get-course-grades doc:name="Grade Report - Get Course Grades" doc:id="1401aa58-b0ab-4d7b-b064-bef3dd4fa6e5" config-ref="Moodle_Config" correlationIdHeader="#[correlationId]" target="getGradesResponse">
+					<moodle:post-gradereport-overview-get-course-grades-body ><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+---
+payload]]]></moodle:post-gradereport-overview-get-course-grades-body>
+				</moodle:post-gradereport-overview-get-course-grades>
+			</route>
+		</scatter-gather>
+		<ee:transform doc:name="SF Request" doc:id="c95b8cc5-1b1b-447c-8023-10337206bf5d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+vars.getGradesResponse.grades map {
+"Name": vars.getUserResponse.users.fullname[0],
+"CourseId__c": $.courseid as String,
+"Grade__c": $.grade,
+"Rank__c": $.rank as String,
+"Username__c": vars.getUserResponse.users.username[0],
+"CreatedOn__c": now()
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="SF Request Logger" doc:id="d64fed86-d50b-41d9-b321-2c910e3728f1" message="#[payload]"/>
+		<salesforce:upsert doc:name="Upsert" doc:id="ad39fad6-ebce-49f6-8737-c8bd79c5cac4" config-ref="Salesforce_Config" objectType="Moodle_get_grades__c" externalIdFieldName="CourseId__c"/>
+		<ee:transform doc:name="SF Response Payload" doc:id="3a63f591-898e-4ae0-9726-11db70d9d8a1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="SF Resposne Logger" doc:id="3a793c5c-41a9-45a7-bfad-847d81a649a1" message="#[payload]"/>
+		<logger level="INFO" doc:name="Moodle to Salesforce Create &amp; Update Flow Ended Logger" doc:id="fae9cab5-b271-41af-b170-97740ec920e5" message="Moodle to Salesforce Create &amp; Update Flow Ended" />
+	</flow>
+</mule>
