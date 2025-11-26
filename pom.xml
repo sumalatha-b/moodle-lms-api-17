@@ -62,9 +62,9 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>57a49eeb-906b-45be-acf5-deb2e88a1380</groupId>
+			<groupId>1ce2d19f-fb3c-4f06-9a6f-7061cae8e44e</groupId>
 			<artifactId>moodle</artifactId>
-			<version>1.0.7-BETA</version>
+			<version>1.0.0-BETA</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
